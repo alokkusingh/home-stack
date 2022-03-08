@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stmt-parser-service
+  namespace: home-stack
+spec:
+  selector:
+    app: stmt-parser-service
+  ports:
+    - protocol: TCP
+      port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stmt-parser-service
+  namespace: home-stack
+spec:
+  selector:
+    matchLabels:
+      app: stmt-parser-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: stmt-parser-service
+    spec:
+      containers:
+        - name: stmt-parser
+          image: alokkusingh/statement-parser
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config

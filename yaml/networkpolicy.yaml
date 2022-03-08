@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: home-np
+  namespace: home-stack
+spec:
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              network/home-np: "true"
+  podSelector:
+    matchLabels:
+      network/home-np: "true"
