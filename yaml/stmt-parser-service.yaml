@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: stmt-parser-service
+  name: stmtparser-service
   namespace: home-stack
 spec:
   selector:
-    app: stmt-parser
+    app: stmtparser
   ports:
     - protocol: TCP
       port: 8081
@@ -13,24 +13,31 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stmt-parser-deployment
+  name: stmtparser-deployment
   namespace: home-stack
 spec:
   selector:
     matchLabels:
-      app: stmt-parser
+      app: stmtparser
   replicas: 1
   template:
     metadata:
       labels:
-        app: stmt-parser
+        app: stmtparser
     spec:
       containers:
         - name: stmt-parser-container
           image: alokkusingh/statement-parser
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8081
           volumeMounts:
-            - name: config-volume
-              mountPath: /config
+            - name: stmt-volume
+              mountPath: /Users/aloksingh/BankStatements
+      volumes:
+        - name: stmt-volume
+          hostPath:
+            # directory location on host
+            path: /home/alok/data/git/BankStatements
+            # this field is optional
+            type: Directory
