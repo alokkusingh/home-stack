@@ -38,3 +38,17 @@ kubectl delete -f yaml/dashboard-service.yaml  --namespace=home-stack
 ````
 kubectl delete namespace home-stack 
 ````
+
+### Miscellaneous commands
+#### Get all 
+````
+kubectl get all --namespace home-stack
+````
+#### Get Pod Log
+````
+kubectl logs pod/dashboard-deployment-65cf5b8858-7x8z8 --namespace home-stack
+````
+#### Describe a Pod
+````
+kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-stack
+````

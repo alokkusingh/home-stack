@@ -5,7 +5,7 @@ metadata:
   namespace: home-stack
 spec:
   selector:
-    app: stmt-parser-service
+    app: stmt-parser
   ports:
     - protocol: TCP
       port: 8081
@@ -13,20 +13,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: stmt-parser-service
+  name: stmt-parser-deployment
   namespace: home-stack
 spec:
   selector:
     matchLabels:
-      app: stmt-parser-service
+      app: stmt-parser
   replicas: 1
   template:
     metadata:
       labels:
-        app: stmt-parser-service
+        app: stmt-parser
     spec:
       containers:
-        - name: stmt-parser
+        - name: stmt-parser-container
           image: alokkusingh/statement-parser
           imagePullPolicy: Always
           ports:
