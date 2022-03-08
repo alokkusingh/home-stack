@@ -26,13 +26,13 @@ kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 ````
 #### Dashboard Service - Pod/Deployment/Service
 ````
-kubectl apply --validate=true --dry-run=client --filename=https://github.com/alokkusingh/home-stack/blob/main/yaml/dashboard-service.yaml 
+kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
 ````
 ````
-kubectl apply -f https://github.com/alokkusingh/home-stack/blob/main/yaml/dashboard-service.yaml  --namespace=home-stack
+kubectl apply -f yaml/dashboard-service.yaml  --namespace=home-stack
 ````
 ````
-kubectl delete -f https://github.com/alokkusingh/home-stack/blob/main/yaml/dashboard-service.yaml  --namespace=home-stack
+kubectl delete -f yaml/dashboard-service.yaml  --namespace=home-stack
 ````
 ### Delete Stack
 ````
