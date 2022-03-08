@@ -8,21 +8,21 @@ Home Project Stack
 ### Deployment of home-stack Kubernetes Stack
 #### Create Namespaces
 ````
-kubectl apply -f https://github.com/alokkusingh/home-stack/blob/main/yaml/namespace.yaml
+kubectl apply -f yaml/namespace.yaml
 ````
 #### Create Network policy
 ````
-kubectl apply -f https://github.com/alokkusingh/home-stack/blob/main/yaml/networkpolicy.yaml
+kubectl apply -f yaml/networkpolicy.yaml
 ````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
-kubectl apply --validate=true --dry-run=client --filename=https://github.com/alokkusingh/home-stack/blob/main/yaml/stmt-parser-service.yaml 
+kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
 ````
 ````
-kubectl apply -f https://github.com/alokkusingh/home-stack/blob/main/yaml/stmt-parser-service.yaml  --namespace=home-stack
+kubectl apply -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 ````
 ````
-kubectl delete -f https://github.com/alokkusingh/home-stack/blob/main/yaml/stmt-parser-service.yaml  --namespace=home-stack
+kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 ````
 #### Dashboard Service - Pod/Deployment/Service
 ````
