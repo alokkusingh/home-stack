@@ -14,6 +14,16 @@ kubectl apply -f yaml/namespace.yaml
 ````
 kubectl apply -f yaml/networkpolicy.yaml
 ````
+#### MySQL Service - Pod/Deployment/Service
+````
+kubectl apply --validate=true --dry-run=client -f yaml/mysql-service.yaml 
+````
+````
+kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
+````
+````
+kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
