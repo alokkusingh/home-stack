@@ -27,6 +27,9 @@ kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
 ````
 kubectl exec -it deployment.apps/mysql --namespace home-stack -- bash
 ````
+````
+kubectl logs deployment.apps/mysql --namespace home-stack
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
@@ -40,6 +43,9 @@ kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 ````
 kubectl exec -it deployment.apps/stmtparser-deployment --namespace home-stack -- bash
 ````
+````
+kubectl logs deployment.apps/stmtparser-deployment --namespace home-stack
+````
 #### Dashboard Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
@@ -52,6 +58,9 @@ kubectl delete -f yaml/dashboard-service.yaml  --namespace=home-stack
 ````
 ````
 kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- /bin/sh
+````
+````
+kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
 ````
 ### Delete Stack
 ````
