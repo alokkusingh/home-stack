@@ -24,6 +24,9 @@ kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
 ````
 kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
 ````
+````
+kubectl exec -it pod/mysql-787cd58f96-8mx8p --namespace home-stack -- /bin/sh
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
