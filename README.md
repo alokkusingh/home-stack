@@ -50,6 +50,9 @@ kubectl apply -f yaml/dashboard-service.yaml  --namespace=home-stack
 ````
 kubectl delete -f yaml/dashboard-service.yaml  --namespace=home-stack
 ````
+````
+kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- bash
+````
 ### Delete Stack
 ````
 kubectl delete namespace home-stack 
