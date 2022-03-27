@@ -25,7 +25,7 @@ kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
 kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
 ````
 ````
-kubectl exec -it pod/mysql-787cd58f96-8mx8p --namespace home-stack -- /bin/sh
+kubectl exec -it deployment.apps/mysql --namespace home-stack -- bash
 ````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
@@ -36,6 +36,9 @@ kubectl apply -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 ````
 ````
 kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
+````
+````
+kubectl exec -it deployment.apps/stmtparser-deployment --namespace home-stack -- bash
 ````
 #### Dashboard Service - Pod/Deployment/Service
 ````
