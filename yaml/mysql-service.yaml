@@ -6,9 +6,11 @@ metadata:
 spec:
   ports:
     - port: 3306
+      nodePort: 83306
+  type: NodePort
   selector:
     app: mysql
-  clusterIP: None
+  #clusterIP: None
 ---
 apiVersion: apps/v1
 kind: Deployment
