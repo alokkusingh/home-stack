@@ -44,6 +44,9 @@ kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 kubectl exec -it deployment.apps/stmtparser-deployment --namespace home-stack -- bash
 ````
 ````
+kubectl exec -it deployment.apps/stmtparser-deployment --namespace home-stack -- tail -f /opt/logs/spring-batch.log
+````
+````
 kubectl logs deployment.apps/stmtparser-deployment --namespace home-stack
 ````
 #### Dashboard Service - Pod/Deployment/Service
