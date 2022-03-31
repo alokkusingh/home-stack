@@ -30,6 +30,9 @@ kubectl exec -it deployment.apps/mysql --namespace home-stack -- mysql -u root -
 ````
 kubectl logs deployment.apps/mysql --namespace home-stack
 ````
+````
+mysql -u root -p home-stack --host 127.0.0.1 --port 32306
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
