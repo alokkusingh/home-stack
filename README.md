@@ -25,7 +25,7 @@ kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
 kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
 ````
 ````
-kubectl exec -it deployment.apps/mysql --namespace home-stack -- bash
+kubectl exec -it deployment.apps/mysql --namespace home-stack -- mysql -u root -p home-stack
 ````
 ````
 kubectl logs deployment.apps/mysql --namespace home-stack
