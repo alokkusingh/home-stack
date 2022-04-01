@@ -34,6 +34,8 @@ spec:
           volumeMounts:
             - name: stmt-volume
               mountPath: /Users/aloksingh/BankStatements
+            - name: tz-config
+              mountPath: /etc/localtime
       volumes:
         - name: stmt-volume
           hostPath:
@@ -41,3 +43,7 @@ spec:
             path: /home/alok/data/git/BankStatements
             # this field is optional
             type: Directory
+        - name: tz-config
+            hostPath:
+              path: /usr/share/zoneinfo/Asia/Kolkata
+              type: File
