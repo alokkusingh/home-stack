@@ -44,6 +44,6 @@ spec:
             # this field is optional
             type: Directory
         - name: tz-config
-            hostPath:
-              path: /usr/share/zoneinfo/Asia/Kolkata
-              type: File
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File
