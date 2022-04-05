@@ -43,8 +43,8 @@ spec:
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
-            - name: tz-config
-              mountPath: /etc/localtime
+            #- name: tz-config
+            #  mountPath: /etc/localtime
       volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
