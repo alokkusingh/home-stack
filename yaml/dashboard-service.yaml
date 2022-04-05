@@ -38,8 +38,8 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
-            - name: tz-config
-              mountPath: /etc/localtime
+            #- name: tz-config
+            #  mountPath: /etc/localtime
       volumes:
         - name: tz-config
           hostPath:

@@ -34,8 +34,8 @@ spec:
           volumeMounts:
             - name: stmt-volume
               mountPath: /Users/aloksingh/BankStatements
-            - name: tz-config
-              mountPath: /etc/localtime
+            #- name: tz-config
+            #  mountPath: /etc/localtime
       volumes:
         - name: stmt-volume
           hostPath:
