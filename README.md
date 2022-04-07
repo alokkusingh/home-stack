@@ -87,3 +87,7 @@ kubectl logs pod/dashboard-deployment-65cf5b8858-7x8z8 --namespace home-stack
 ````
 kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-stack
 ````
+#### Get All Pods under All Namespaces
+````
+kubectl get -A pods
+````
