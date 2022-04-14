@@ -22,8 +22,8 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  strategy:
-    type: Recreate
+  #strategy:
+  #  type: Recreate
   template:
     metadata:
       labels:
