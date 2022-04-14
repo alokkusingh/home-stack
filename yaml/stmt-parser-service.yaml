@@ -6,6 +6,8 @@ metadata:
 spec:
   selector:
     app: stmtparser
+  # Defining headless service
+  clusterIp: None
   ports:
     - protocol: TCP
       port: 8081
