@@ -245,7 +245,8 @@ spec:
     - port: 8000
       targetPort: 8000
   type: LoadBalancer # Alok: this has to be changed to LoadBalancer to access the dashboard externally
-  externalIPs: 192.168.0.200 # Alok: this is needed because public IP cant be assigned automatic
+  externalIPs:
+    - 192.168.0.200 # Alok: this is needed because public IP cant be assigned automatic
   selector:
     k8s-app: dashboard-metrics-scraper
 
