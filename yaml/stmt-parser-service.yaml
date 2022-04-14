@@ -16,6 +16,7 @@ metadata:
   name: stmtparser-deployment
   namespace: home-stack
 spec:
+  serviceName: stmtparser-service
   selector:
     matchLabels:
       app: stmtparser
