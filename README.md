@@ -73,6 +73,17 @@ kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
 ````
 kubectl delete namespace home-stack 
 ````
+#### Kubernetes Dashboard - Pod/Deployment/Service
+````
+kubectl apply --validate=true --dry-run=client -f yaml/kubernetes-dashboard.yaml 
+````
+````
+kubectl apply -f yaml/kubernetes-dashboard.yaml 
+````
+````
+kubectl delete -f yaml/kubernetes-dashboard.yaml 
+````
+
 
 ### Miscellaneous commands
 #### Get all 
