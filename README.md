@@ -77,14 +77,7 @@ kubectl delete namespace home-stack
 ````
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml
 ````
-Change service type to LoadBalancer to access the dashboard externally
-````
-kubectl edit svc -n kubernetes-dashboard kubernetes-dashboard
-
-	spec:
-	  type: LoadBalancer	# this has to be changed to LoadBalancer to access the dashboard externally 
-````
-Hard code the Node IPs - as below
+Change service type to LoadBalancer to access the dashboard externally and Hard code the Node IPs - as below
 ````
 kubectl edit svc -n kubernetes-dashboard kubernetes-dashboard
 
