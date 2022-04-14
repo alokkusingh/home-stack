@@ -25,10 +25,10 @@ kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
 kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
 ````
 ````
-kubectl exec -it deployment.apps/mysql --namespace home-stack -- mysql -u root -p home-stack
+kubectl exec -it pod/mysql-0 --namespace home-stack -- mysql -u root -p home-stack
 ````
 ````
-kubectl logs deployment.apps/mysql --namespace home-stack
+kubectl logs pod/mysql-0 --namespace home-stack
 ````
 ````
 mysql -u root -p home-stack --host 127.0.0.1 --port 32306
@@ -45,13 +45,13 @@ kubectl apply -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
 ````
 ````
-kubectl exec -it deployment.apps/stmtparser-deployment --namespace home-stack -- bash
+kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- bash
 ````
 ````
-kubectl exec -it deployment.apps/stmtparser-deployment --namespace home-stack -- tail -f /opt/logs/spring-batch.log
+kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- tail -f /opt/logs/spring-batch.log
 ````
 ````
-kubectl logs deployment.apps/stmtparser-deployment --namespace home-stack
+kubectl logs pod/stmtparser-deployment-0 --namespace home-stack
 ````
 #### Dashboard Service - Pod/Deployment/Service
 ````
