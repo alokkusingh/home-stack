@@ -75,16 +75,21 @@ kubectl delete namespace home-stack
 ````
 #### Kubernetes Dashboard - Pod/Deployment/Service
 ````
-kubectl apply --validate=true --dry-run=client -f yaml/kubernetes-dashboard.yaml 
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml
 ````
 ````
-kubectl apply -f yaml/kubernetes-dashboard.yaml 
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.5.0/aio/deploy/recommended.yaml
 ````
 ````
-kubectl delete -f yaml/kubernetes-dashboard.yaml 
+kubectl get all --namespace kubernetes-dashboard
 ````
-
-
+````
+kubectl get secrets -n kubernetes-dashboard
+````
+````
+kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
+````
+url: https://jgte (try in Mozilla)
 ### Miscellaneous commands
 #### Get all 
 ````
