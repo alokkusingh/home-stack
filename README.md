@@ -90,6 +90,20 @@ kubectl get secrets -n kubernetes-dashboard
 kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
 ````
 url: https://jgte (try in Mozilla)
+#### Metrics Server
+````
+kubectl apply -f yaml/metrix-server.yaml
+````
+````
+kubectl delete -f yaml/metrix-server.yaml
+````
+````
+kubectl get deployment metrics-server -n kube-system
+````
+````
+kubectl top nodes
+````
+
 ### Miscellaneous commands
 #### Get all 
 ````
