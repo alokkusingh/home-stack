@@ -7,7 +7,7 @@ Home Project Stack
 | --- | --- | --- | --- | --- | --- |
 | Stmt Parser | Springboot Service| ClusterIP (Headless) | StatefulSet | | NA |
 | Home Dashboard | ReactJS App on Nginx| NodePort | Deployment | http://jgte:30080 | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress |
-| Database | MySQL | NodePort | StatefulSet | | |
+| Database | MySQL | NodePort | StatefulSet | | - NodePort because I want to access SQL from outside of the cluster |
 | Kubernetes Dashboard |  | LoadBalancer (static IP) | Deployment | https://jgte/ | |
 | Kubernetes Matrix | Generating resource utilization matrix | ClusterIP | Deployment | NA | |
 | Kubernetes Matrix Scraper | Matrix scrapper from pods | ClusterIP | Deployment | NA | |
