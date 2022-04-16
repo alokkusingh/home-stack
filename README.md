@@ -1,9 +1,7 @@
 # home-stack
 Home Project Stack
 
-## Services and their ports
-1. Statement Parser - 8081
-2. Dashboard (Nginx) - 80
+## Services 
 
 | Application | Description | Interface Type | Deployment or StatefulSet | URL | Comments |
 | --- | --- | --- | --- | --- | --- |
@@ -42,7 +40,10 @@ kubectl logs pod/mysql-0 --namespace home-stack
 ````
 mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 ````
+---
+**Note:**
 Follow the link to configure sqldeveloper in Mac to connect to remote MySQL server - https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/
+---
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
@@ -98,7 +99,6 @@ kubectl get secrets -n kubernetes-dashboard
 ````
 kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
 ````
-url: https://jgte (try in Mozilla)
 ### Kubernetes Metrics Server
 ````
 kubectl apply -f yaml/metrix-server.yaml
