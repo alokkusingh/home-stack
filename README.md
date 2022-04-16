@@ -5,6 +5,15 @@ Home Project Stack
 1. Statement Parser - 8081
 2. Dashboard (Nginx) - 80
 
+| Application | Description | Interface Type | Deployment or StatefulSet | URL | Comments |
+| --- | --- | --- | --- | --- | --- |
+| Stmt Parser | Springboot Service| ClusterIP (Headless) | StatefulSet | | NA |
+| Home Dashboard | ReactJS App on Nginx| NodePort | Deployment | http://jgte:30080 | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress |
+| Database | MySQL | NodePort | StatefulSet | | |
+| Kubernetes Dashboard |  | LoadBalancer (static IP) | Deployment | https://jgte/ | |
+| Kubernetes Matrix | Enabling Pod CPU/memory extraction | ClusterIP | Deployment | NA | |
+| Kubernetes Matrix Scraper | Matrix scrapper from pods | ClusterIP | Deployment | NA | |
+
 ### Deployment of home-stack Kubernetes Stack
 #### Create Namespaces
 ````
