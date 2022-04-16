@@ -69,11 +69,11 @@ kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- 
 ````
 kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
 ````
-### Delete Stack
+#### Delete Stack
 ````
 kubectl delete namespace home-stack 
 ````
-#### Kubernetes Dashboard - Pod/Deployment/Service
+### Kubernetes Dashboard - Pod/Deployment/Service
 ````
 kubectl apply -f yaml/kubernetes-dashboard.yaml
 ````
@@ -90,7 +90,7 @@ kubectl get secrets -n kubernetes-dashboard
 kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
 ````
 url: https://jgte (try in Mozilla)
-#### Metrics Server
+### Kubernetes Metrics Server
 ````
 kubectl apply -f yaml/metrix-server.yaml
 ````
