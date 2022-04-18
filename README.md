@@ -146,5 +146,6 @@ kubectl get -A pods
 ````
 ## Service Mash - Istio
 ### Install
+To be explored - seems microk8s isteo addon not supported for ARMx64 architecture.
 
 
