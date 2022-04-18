@@ -5,7 +5,7 @@
 <p style='margin-top:1em; text-align:center'>
 <b>Home Project Stack</b></p>
 <p style='margin-left:1em;'>
-The stack is deployed using Kubernetes cluster enabled using microk8s.<br>
+The stack is deployed using Kubernetes cluster enabled using microk8s. microk8s is installed using snap package manger. Package is provided by Canonical.<br>
 - Resources: quad-core ARMx64 processor with 8GB RAM<br>
 - Kernel: GNU/Linux 5.4.0-1058-raspi aarch64<br>
 - OS: Ubuntu 20.04.4.<br><br>
@@ -146,6 +146,5 @@ kubectl get -A pods
 ````
 ## Service Mash - Istio
 ### Install
-To be explored - seems microk8s isteo addon not supported for ARMx64 architecture.
-
+To be explored - seems microk8s isteo addon not supported for ARMx64 architecture. Where the same is supported for minikube.
 
