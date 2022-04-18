@@ -146,5 +146,7 @@ kubectl get -A pods
 ````
 ## Service Mesh - Istio
 ### Install
-To be explored - seems microk8s isteo addon not supported for ARMx64 architecture. Where the same is supported for minikube.
 
+---
+    To be explored - seems microk8s isteo addon not supported for ARMx64 architecture. Where the same is supported for minikube.
+---
