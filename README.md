@@ -56,7 +56,7 @@ mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 ````
 ---
 **Note:**
->[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/)
+>[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
 ---
 #### Statement Parser Service - Pod/Deployment/Service
 ````
