@@ -1,5 +1,19 @@
 # home-stack
-Home Project Stack
+
+<div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Home Project Stack</b></p>
+<p style='margin-left:1em;'>
+The stack is deployed using Kubernetes cluster enabled using microk8s.<br>
+- Resources: quad-core ARMx64 processor with 8GB RAM<br>
+- Kernel: GNU/Linux 5.4.0-1058-raspi aarch64<br>
+- OS: Ubuntu 20.04.4.<br><br>
+As of now it is deployed on single node cluster.
+</p>
+<p style='margin-bottom:1em; margin-right:1em; text-align:right; font-family:Georgia'> <b>- Alok Singh</b> 
+</p></span>
+</div>
 
 ## Services 
 
@@ -130,3 +144,7 @@ kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-sta
 ````
 kubectl get -A pods
 ````
+## Service Mash - Istio
+### Install
+
+
