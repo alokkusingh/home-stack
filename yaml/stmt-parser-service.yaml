@@ -50,7 +50,7 @@ spec:
               protocol: UDP
             - containerPort: 5778
               protocol: TCP
-            args: ["--collector.host-port=jaeger-collector.jaeger-infra.svc:14267"]
+          args: ["--collector.host-port=jaeger-collector.jaeger-infra.svc:14267"]
       volumes:
         - name: stmt-volume
           hostPath:
