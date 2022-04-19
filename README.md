@@ -25,6 +25,7 @@ As of now it is deployed on single node cluster.
 | Kubernetes Dashboard |  | LoadBalancer (static IP) | Deployment | https://jgte/ | |
 | Kubernetes Matrix | Generating resource utilization matrix | ClusterIP | Deployment | NA | |
 | Kubernetes Matrix Scraper | Matrix scrapper from pods | ClusterIP | Deployment | NA | |
+| Jaeger Dashboard |  | NodePort | Deployment | http://jgte:31686/ | |
 
 ### Deployment of home-stack Kubernetes Stack
 #### Create Namespaces
