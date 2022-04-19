@@ -5,7 +5,7 @@
 <p style='margin-top:1em; text-align:center'>
 <b>Home Project Stack</b></p>
 <p style='margin-left:1em;'>
-The stack is deployed using Kubernetes cluster enabled using microk8s. microk8s is installed using snap package manger. Package is provided by Canonical.<br>
+The stack is deployed using Kubernetes cluster enabled using microk8s. microk8s is installed using snap package manger. Package is provided by Canonical (publisher of Ubuntu).<br>
 - Resources: quad-core ARMx64 processor with 8GB RAM<br>
 - Kernel: GNU/Linux 5.4.0-1058-raspi aarch64<br>
 - OS: Ubuntu 20.04.4<br><br>
@@ -92,6 +92,16 @@ kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- 
 ````
 ````
 kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
+````
+#### Jaeger Service
+````
+kubectl apply --validate=true --dry-run=client -f yaml/jaeger-all-in-one-template.yaml 
+````
+````
+kubectl apply -f yaml/jaeger-all-in-one-template.yaml  --namespace=home-stack
+````
+````
+kubectl delete -f yaml/jaeger-all-in-one-template.yaml  --namespace=home-stack
 ````
 #### Delete Stack
 ````
