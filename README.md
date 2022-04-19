@@ -96,13 +96,13 @@ kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
 ````
 #### Jaeger Service
 ````
-kubectl apply --validate=true --dry-run=client -f yaml/jaeger-all-in-one-template.yaml 
+kubectl apply --validate=true --dry-run=client -f yaml/jaeger-all-in-one-template.yml 
 ````
 ````
-kubectl apply -f yaml/jaeger-all-in-one-template.yaml  --namespace=home-stack
+kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ````
 ````
-kubectl delete -f yaml/jaeger-all-in-one-template.yaml  --namespace=home-stack
+kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ````
 #### Delete Stack
 ````
