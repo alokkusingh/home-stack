@@ -50,7 +50,6 @@ spec:
               protocol: UDP
             - containerPort: 5778
               protocol: TCP
-          args: ["--reporter.type=tchannel", "--reporter.tchannel.host-port=jaeger-collector:14267"]
       volumes:
         - name: stmt-volume
           hostPath:
