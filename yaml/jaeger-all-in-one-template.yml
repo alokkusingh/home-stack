@@ -115,7 +115,7 @@ items:
 - apiVersion: v1
   kind: Service
   metadata:
-    name: jaeger
+    name: jaeger-agent
     namespace: home-stack
     labels:
       app: jaeger

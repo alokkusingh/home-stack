@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: dashboard-container
-          image: alokkusingh/home-dashboard:1.1.0
+          image: alokkusingh/home-dashboard
           imagePullPolicy: Always
           ports:
             - containerPort: 80
