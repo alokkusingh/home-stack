@@ -40,7 +40,7 @@ spec:
             #- name: tz-config
             #  mountPath: /etc/localtime
         - name: jaeger-agent
-          image: jaegertracing/jaeger-agent
+          image: jaegertracing/jaeger-agent:1.6
           ports:
             - containerPort: 5775
               protocol: UDP
@@ -50,6 +50,7 @@ spec:
               protocol: UDP
             - containerPort: 5778
               protocol: TCP
+          args: ["--reporter.tchannel.host-port=jaeger-collector:14267"]
       volumes:
         - name: stmt-volume
           hostPath:
