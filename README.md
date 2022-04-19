@@ -1,9 +1,30 @@
 # home-stack
-Home Project Stack
 
-## Services and their ports
-1. Statement Parser - 8081
-2. Dashboard (Nginx) - 80
+<div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
+<span>
+<p style='margin-top:1em; text-align:center'>
+<b>Home Project Stack</b></p>
+<p style='margin-left:1em;'>
+The stack is deployed using Kubernetes cluster enabled using microk8s. microk8s is installed using snap package manger. Package is provided by Canonical.<br>
+- Resources: quad-core ARMx64 processor with 8GB RAM<br>
+- Kernel: GNU/Linux 5.4.0-1058-raspi aarch64<br>
+- OS: Ubuntu 20.04.4<br><br>
+As of now it is deployed on single node cluster.
+</p>
+<p style='margin-bottom:1em; margin-right:1em; text-align:right; font-family:Georgia'> <b>- Alok Singh</b> 
+</p></span>
+</div>
+
+## Services 
+
+| Application | Description | Interface Type | Deployment or StatefulSet | URL | Comments |
+| --- | --- | --- | --- | --- | --- |
+| Stmt Parser | Springboot Service| ClusterIP (Headless) | StatefulSet | | NA |
+| Home Dashboard | ReactJS App on Nginx| NodePort | Deployment | http://jgte:30080 | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress |
+| Database | MySQL | NodePort | StatefulSet | | - NodePort because I want to access SQL from outside of the cluster |
+| Kubernetes Dashboard |  | LoadBalancer (static IP) | Deployment | https://jgte/ | |
+| Kubernetes Matrix | Generating resource utilization matrix | ClusterIP | Deployment | NA | |
+| Kubernetes Matrix Scraper | Matrix scrapper from pods | ClusterIP | Deployment | NA | |
 
 ### Deployment of home-stack Kubernetes Stack
 #### Create Namespaces
@@ -33,7 +54,10 @@ kubectl logs pod/mysql-0 --namespace home-stack
 ````
 mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 ````
-Follow the link to configure sqldeveloper in Mac to connect to remote MySQL server - https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/
+---
+**Note:**
+>[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
+---
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
@@ -69,11 +93,11 @@ kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- 
 ````
 kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
 ````
-### Delete Stack
+#### Delete Stack
 ````
 kubectl delete namespace home-stack 
 ````
-#### Kubernetes Dashboard - Pod/Deployment/Service
+### Kubernetes Dashboard - Pod/Deployment/Service
 ````
 kubectl apply -f yaml/kubernetes-dashboard.yaml
 ````
@@ -89,8 +113,7 @@ kubectl get secrets -n kubernetes-dashboard
 ````
 kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
 ````
-url: https://jgte (try in Mozilla)
-#### Metrics Server
+### Kubernetes Metrics Server
 ````
 kubectl apply -f yaml/metrix-server.yaml
 ````
@@ -121,3 +144,9 @@ kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-sta
 ````
 kubectl get -A pods
 ````
+## Service Mesh - Istio
+### Install
+
+---
+>To be explored - seems microk8s isteo addon not supported for ARMx64 architecture. Where the same is supported for minikube.
+---
