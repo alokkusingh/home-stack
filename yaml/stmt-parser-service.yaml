@@ -39,6 +39,11 @@ spec:
               mountPath: /Users/aloksingh/BankStatements
             #- name: tz-config
             #  mountPath: /etc/localtime
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 256Mi
       volumes:
         - name: stmt-volume
           hostPath:
