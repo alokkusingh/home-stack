@@ -39,6 +39,18 @@ spec:
               mountPath: /Users/aloksingh/BankStatements
             #- name: tz-config
             #  mountPath: /etc/localtime
+        - name: jaeger-agent
+          image: jaegertracing/jaeger-agent
+          ports:
+            - containerPort: 5775
+              protocol: UDP
+            - containerPort: 6831
+              protocol: UDP
+            - containerPort: 6832
+              protocol: UDP
+            - containerPort: 5778
+              protocol: TCP
+            args: [ "--collector.host-port=jaeger-collector.jaeger-infra.svc:14267" ]
       volumes:
         - name: stmt-volume
           hostPath:
