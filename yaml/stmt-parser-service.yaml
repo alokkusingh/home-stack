@@ -41,9 +41,9 @@ spec:
             #  mountPath: /etc/localtime
           resources:
             limits:
-              memory: 700Mi
+              memory: 512Mi
             requests:
-              memory: 356Mi
+              memory: 256Mi
       volumes:
         - name: stmt-volume
           hostPath:
