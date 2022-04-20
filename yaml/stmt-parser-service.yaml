@@ -43,7 +43,7 @@ spec:
             limits:
               memory: 700Mi
             requests:
-              memory: 256Mi
+              memory: 356Mi
       volumes:
         - name: stmt-volume
           hostPath:
