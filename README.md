@@ -32,6 +32,14 @@ As of now it is deployed on single node cluster.
 ````
 kubectl apply -f yaml/namespace.yaml
 ````
+#### Create ConfigMap
+````
+kubectl apply -f yaml/config-map.yaml
+````
+#### Create Secrets
+````
+kubectl apply -f yaml/secrets.yaml
+````
 #### Create Network policy
 ````
 kubectl apply -f yaml/networkpolicy.yaml
