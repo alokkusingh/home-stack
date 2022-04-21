@@ -1,1 +1,31 @@
-<mxfile host="app.diagrams.net" modified="2022-04-21T11:07:21.111Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15" version="17.4.6" etag="ZfjYXuQ-z6p7aFf7DT2H" type="github"><diagram id="4tHRqjT4SER2oBwaS5Ux">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-04-21T11:25:21.961Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15" etag="p6fGFB08mwYXnF4IYy0D" version="17.4.6" type="github">
+  <diagram id="4tHRqjT4SER2oBwaS5Ux" name="Page-1">
+    <mxGraphModel dx="894" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="W5IorMKZYv1s7FYucmOT-13" value="" style="rounded=1;arcSize=10;dashed=1;strokeColor=#F59D56;fillColor=none;gradientColor=none;dashPattern=8 4;strokeWidth=2;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="190" y="270" width="500" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="W5IorMKZYv1s7FYucmOT-12" value="&lt;font style=&quot;font-size: 8px&quot;&gt;Kubernetes&lt;br&gt;Cluster&lt;br&gt;&lt;/font&gt;" style="dashed=0;html=1;shape=mxgraph.aws3.instance;fillColor=#F58536;gradientColor=none;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="240" width="50" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="W5IorMKZYv1s7FYucmOT-14" value="" style="rounded=1;arcSize=10;dashed=1;strokeColor=#ff0000;fillColor=none;gradientColor=none;dashPattern=8 4;strokeWidth=2;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="240" y="320" width="330" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="W5IorMKZYv1s7FYucmOT-15" value="" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=node;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="290" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="W5IorMKZYv1s7FYucmOT-16" value="&lt;font color=&quot;#ffffff&quot; style=&quot;font-size: 8px&quot;&gt;home&lt;br&gt;stack&lt;/font&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=ns;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="260" y="291" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="W5IorMKZYv1s7FYucmOT-17" value="" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pv;fontSize=8;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="610" y="360" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="W5IorMKZYv1s7FYucmOT-18" value="" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pvc;fontSize=8;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="670" y="200" width="40" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
