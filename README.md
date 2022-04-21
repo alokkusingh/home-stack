@@ -171,4 +171,4 @@ kubectl get -A pods
 ---
 
 ## Deployment Architecture
-![alt text](https://raw.githubusercontent.com/alokkusingh/home-stack/blob/main/image/HomeStack.drawio.png?raw=true "Solution Architecture")
+![alt text](https://github.com/alokkusingh/home-stack/blob/main/HomeStacj.drawio.png?raw=true)
