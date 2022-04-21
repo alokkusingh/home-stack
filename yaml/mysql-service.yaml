@@ -33,9 +33,11 @@ spec:
         - image: mysql:8.0-oracle
           name: mysql
           env:
-            # Use secret in real usage
             - name: MYSQL_ROOT_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: root-password
             - name: MYSQL_ROOT_HOST
               value: '%'
           ports:
