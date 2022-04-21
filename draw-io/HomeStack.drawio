@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-04-21T14:03:43.389Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15" etag="yJH_dH8oKQx08Fdgo3Qt" version="17.4.6" type="github">
+<mxfile host="app.diagrams.net" modified="2022-04-21T14:10:12.066Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15" etag="c4R-RC4RU7ofu10D-bT2" version="17.4.6" type="github">
   <diagram id="4tHRqjT4SER2oBwaS5Ux" name="Page-1">
     <mxGraphModel dx="894" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -137,6 +137,24 @@
         </mxCell>
         <mxCell id="EQcA2PhLmgyI1PLI6B75-54" value="" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=master;labelBackgroundColor=none;fontSize=13;fontColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="290" y="960" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="EQcA2PhLmgyI1PLI6B75-55" value="&lt;span style=&quot;font-size: 8px&quot;&gt;kube&lt;br&gt;dns&lt;br&gt;&lt;/span&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pod" vertex="1" parent="1">
+          <mxGeometry x="263" y="643" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="EQcA2PhLmgyI1PLI6B75-56" value="&lt;span style=&quot;font-size: 8px&quot;&gt;matrix&lt;br&gt;server&lt;br&gt;&lt;/span&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pod" vertex="1" parent="1">
+          <mxGeometry x="320" y="643" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="EQcA2PhLmgyI1PLI6B75-57" value="&lt;span style=&quot;font-size: 8px&quot;&gt;calico&lt;br&gt;node&lt;br&gt;&lt;/span&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pod" vertex="1" parent="1">
+          <mxGeometry x="385" y="643" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="EQcA2PhLmgyI1PLI6B75-58" value="&lt;span style=&quot;font-size: 8px&quot;&gt;calico&lt;br&gt;kube controller&lt;br&gt;&lt;/span&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pod" vertex="1" parent="1">
+          <mxGeometry x="440" y="643" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="EQcA2PhLmgyI1PLI6B75-59" value="&lt;span style=&quot;font-size: 8px&quot;&gt;dashboard&lt;br&gt;&lt;/span&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pod" vertex="1" parent="1">
+          <mxGeometry x="320" y="796" width="50" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="EQcA2PhLmgyI1PLI6B75-60" value="&lt;span style=&quot;font-size: 8px&quot;&gt;matrix&lt;br&gt;scrapper&lt;br&gt;&lt;/span&gt;" style="sketch=0;html=1;dashed=0;whitespace=wrap;fillColor=#2875E2;strokeColor=#ffffff;points=[[0.005,0.63,0],[0.1,0.2,0],[0.9,0.2,0],[0.5,0,0],[0.995,0.63,0],[0.72,0.99,0],[0.5,1,0],[0.28,0.99,0]];shape=mxgraph.kubernetes.icon;prIcon=pod" vertex="1" parent="1">
+          <mxGeometry x="400" y="796" width="50" height="48" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
