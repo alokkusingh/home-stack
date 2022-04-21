@@ -8,7 +8,7 @@ data:
   db-url: jdbc:mysql://mysql:3306/home-stack
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
   logging-level-com-zaxxer-hikari: TRACE
-  spring-jpa-show-sql: TRUE
+  spring-jpa-show-sql: xyz
 ---
 apiVersion: v1
 kind: ConfigMap
