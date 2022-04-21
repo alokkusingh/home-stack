@@ -7,6 +7,7 @@ data:
   db-schema: home-stack
   db-url: jdbc:mysql://mysql:3306/home-stack
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
+  logging-level-com-zaxxer-hikari: TRACE
 ---
 apiVersion: v1
 kind: ConfigMap
