@@ -50,6 +50,21 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: stmt-password
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: logging-level-com-zaxxer-hikari-HikariConfig
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: logging-level-com-zaxxer-hikari
+            - name: SPRING_JPA_SHOW-SQL
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: spring-jpa-show-sql
           ports:
             - containerPort: 8081
           volumeMounts:
