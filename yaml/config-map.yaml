@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stmt-parser-cofig
+data:
+  test-config: dummyValue
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboard-cofig
+data:
+  test-config: dummyValue
