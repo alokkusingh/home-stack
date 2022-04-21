@@ -33,6 +33,8 @@ spec:
           image: alokkusingh/statement-parser
           imagePullPolicy: Always
           env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
