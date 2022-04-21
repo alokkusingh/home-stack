@@ -32,6 +32,22 @@ spec:
         - name: stmt-parser-container
           image: alokkusingh/statement-parser
           imagePullPolicy: Always
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-user-name
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-password
           ports:
             - containerPort: 8081
           volumeMounts:
