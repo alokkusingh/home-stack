@@ -60,11 +60,6 @@ spec:
                 configMapKeyRef:
                   name: stmt-parser-cofig
                   key: logging-level-com-zaxxer-hikari
-            - name: SPRING_JPA_SHOW-SQL
-              valueFrom:
-                configMapKeyRef:
-                  name: stmt-parser-cofig
-                  key: spring-jpa-show-sql
           ports:
             - containerPort: 8081
           volumeMounts:
