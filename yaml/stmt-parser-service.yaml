@@ -61,10 +61,10 @@ spec:
                   name: stmt-parser-cofig
                   key: logging-level-com-zaxxer-hikari
             - name: LOGGING_LEVEL_COM_ALOK
-                valueFrom:
-                  configMapKeyRef:
-                    name: stmt-parser-cofig
-                    key: logging-level-com-alok
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: logging-level-com-alok
           ports:
             - containerPort: 8081
           volumeMounts:
