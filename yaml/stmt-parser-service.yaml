@@ -6,7 +6,6 @@ metadata:
 spec:
   selector:
     app: stmtparser
-  # Defining headless service
   ports:
     - protocol: TCP
       port: 8081
