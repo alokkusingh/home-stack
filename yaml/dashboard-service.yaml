@@ -40,6 +40,10 @@ spec:
           volumeMounts:
             #- name: tz-config
             #  mountPath: /etc/localtime
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
       volumes:
         - name: tz-config
           hostPath:
