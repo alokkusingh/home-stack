@@ -7,7 +7,7 @@ spec:
   selector:
     app: stmtparser
   # Defining headless service
-  clusterIP: None
+  # clusterIP: None
   ports:
     - protocol: TCP
       port: 8081
