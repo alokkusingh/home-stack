@@ -63,7 +63,6 @@ metadata:
   namespace: home-stack
 data:
   nginx.conf: |
-    # Load the OpenTracing module
     load_module modules/ngx_http_opentracing_module.so;
 
     worker_processes  1;
@@ -103,16 +102,11 @@ data:
           root   /usr/share/nginx/html;
           index  index.html index.htm;
 
-          # Operation name changed to request_method for consistency with our microservices conf
-          # The default is the name of the first location block entered
           opentracing_operation_name $request_method;
 
-          # Adding tags for each trace, you can customize this quite a bit
           opentracing_tag http_user_agent $http_user_agent;
           opentracing_tag http_uri $request_uri;
 
-          # For some reason this is crucial for all of these to work
-          # if anyone has insights into why please share
           log_subrequest on;
 
           location / {
