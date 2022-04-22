@@ -40,12 +40,14 @@ spec:
           volumeMounts:
             #- name: tz-config
             #  mountPath: /etc/localtime
-            - name: nginx-conf
-                mountPath: /etc/nginx/nginx.conf
-                subPath: nginx.conf
-                readOnly: true
       volumes:
         - name: tz-config
           hostPath:
             path: /usr/share/zoneinfo/Asia/Kolkata
             type: File
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
