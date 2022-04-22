@@ -39,6 +39,12 @@ data:
           keepalive 30;
        }
 
+      upstream jaeger-query {
+         server jaeger-query:80;
+
+         keepalive 30;
+      }
+
        server {
           listen 80;
           root   /usr/share/nginx/html;
@@ -62,7 +68,24 @@ data:
           location /fin {
              rewrite ^/fin/(.*) /fin/$1 break;
              proxy_pass  	     http://statement-parser/;
-               proxy_set_header  Host             $host:8081;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             opentracing_propagate_context;
+          }
+
+          location /jaeger {
+             rewrite ^/jaeger/(.*) /$1 break;
+             proxy_pass  	     http://jaeger-query/;
+             proxy_set_header  Host             $host;
              proxy_set_header  X-Real-IP        $remote_addr;
              proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
              proxy_set_header  Via    		      "nginx";
