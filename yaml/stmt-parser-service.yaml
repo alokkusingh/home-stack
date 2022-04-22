@@ -6,11 +6,11 @@ metadata:
 spec:
   selector:
     app: stmtparser
+  # Defining headless service
+  #clusterIP: None
   ports:
     - protocol: TCP
       port: 8081
-      targetPort: 8081
-  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: StatefulSet
