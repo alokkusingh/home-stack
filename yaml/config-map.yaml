@@ -8,6 +8,7 @@ data:
   db-url: jdbc:mysql://mysql:3306/home-stack
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
   logging-level-com-zaxxer-hikari: TRACE
+  logging-level-com-alok: DEBUG
 ---
 apiVersion: v1
 kind: ConfigMap
