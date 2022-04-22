@@ -49,9 +49,3 @@ spec:
           hostPath:
             path: /usr/share/zoneinfo/Asia/Kolkata
             type: File
-        - name: nginx-conf
-          configMap:
-            name: nginx-conf
-            items:
-              - key: nginx.conf
-                path: nginx.conf
