@@ -9,6 +9,7 @@ spec:
   ports:
     - protocol: TCP
       port: 8081
+  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: StatefulSet
