@@ -74,6 +74,9 @@ kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- tail -f /
 ````
 kubectl logs pod/stmtparser-deployment-0 --namespace home-stack
 ````
+````
+kubectl rollout restart statefulset.apps/stmtparser-deployment -n home-stack
+````
 #### Dashboard Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
