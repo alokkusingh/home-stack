@@ -9,6 +9,8 @@ data:
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
   logging-level-com-zaxxer-hikari: TRACE
   logging-level-com-alok: INFO
+  spring-datasource-hikari-minimum-idle: 3
+  spring-datasource-hikari-maximum-pool-size: 10
 ---
 apiVersion: v1
 kind: ConfigMap

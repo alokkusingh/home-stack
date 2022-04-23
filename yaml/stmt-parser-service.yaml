@@ -65,6 +65,16 @@ spec:
                 configMapKeyRef:
                   name: stmt-parser-cofig
                   key: logging-level-com-alok
+            - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
+                valueFrom:
+                  configMapKeyRef:
+                    name: stmt-parser-cofig
+                    key: spring-datasource-hikari-minimum-idle
+            - name: SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE
+                valueFrom:
+                  configMapKeyRef:
+                    name: stmt-parser-cofig
+                    key: spring-datasource-hikari-maximum-pool-size
           ports:
             - containerPort: 8081
           volumeMounts:
