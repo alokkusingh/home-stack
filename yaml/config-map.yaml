@@ -64,6 +64,12 @@ data:
        }
 
        server {
+          # IP whitelisting
+          allow 192.168.0.151;
+          allow 192.168.0.152;
+          allow 192.168.0.154;
+          allow 192.168.0.200:
+          deny all;
 
           listen 80;
           root   /usr/share/nginx/html;
@@ -77,12 +83,6 @@ data:
           log_subrequest on;
 
           location / {
-          # IP whitelisting
-          allow 192.168.0.151;
-          allow 192.168.0.152;
-          allow 192.168.0.154;
-          deny all;
-
              #root   /usr/share/nginx/html;
              #index  index.html index.htm;
              try_files $uri /index.html;
@@ -90,13 +90,7 @@ data:
              opentracing_propagate_context;
           }
 
-          location /fin/ {
-    # IP whitelisting
-    allow 192.168.0.151;
-    allow 192.168.0.152;
-    allow 192.168.0.154;
-    deny all;
-
+          location /fin {
              rewrite ^/fin/(.*) /fin/$1 break;
              proxy_pass  	     http://statement-parser/;
              proxy_set_header  Host             $host:8081;
