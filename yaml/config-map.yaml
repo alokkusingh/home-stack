@@ -39,6 +39,13 @@ data:
     }
 
     http {
+
+       # IP whitelisting
+       allow 192.168.0.151;
+       allow 192.168.0.152;
+       allow 192.168.0.154;
+       deny all;
+
        # Turn on tracing for all requests
        opentracing on;
 
