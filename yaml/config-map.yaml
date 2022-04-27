@@ -65,9 +65,10 @@ data:
 
        server {
           # IP whitelisting
-          allow 192.168.0.151;
+          allow 192.168.0.151; # Mac-Book Air
           allow 192.168.0.152;
-          allow 192.168.0.154;
+          allow 192.168.0.153; # iPhone
+          allow 192.168.0.154; # motoG
           deny all;
 
           listen 80;
