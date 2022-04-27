@@ -68,7 +68,6 @@ data:
           allow 192.168.0.151;
           allow 192.168.0.152;
           allow 192.168.0.154;
-          allow 192.168.0.200;
           deny all;
 
           listen 80;
