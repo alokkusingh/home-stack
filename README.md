@@ -169,7 +169,7 @@ kubectl get -A pods
 | Application | Description | Interface Type | Deployment or StatefulSet | URL | Comments |
 | --- | --- | --- | --- | --- | --- |
 | Stmt Parser | Springboot Service| ClusterIP (Headless) | StatefulSet | | NA |
-| Home Dashboard | ReactJS App on Nginx| NodePort | Deployment | http://jgte:30080 | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress |
+| Home Dashboard | ReactJS App on Nginx| NodePort | Deployment | http://jgte:30080 | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress - externalTrafficPolicy: Local to disable SNATing |
 | Database | MySQL | NodePort | StatefulSet | | - NodePort because I want to access SQL from outside of the cluster |
 | Kubernetes Dashboard |  | LoadBalancer (static IP) | Deployment | https://jgte/ | |
 | Kubernetes Matrix | Generating resource utilization matrix | ClusterIP | Deployment | NA | |
