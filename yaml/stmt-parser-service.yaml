@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: stmt-parser-container
-          image: alokkusingh/statement-parser
+          image: alokkusingh/statement-parser:1.0.0
           imagePullPolicy: Always
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,
