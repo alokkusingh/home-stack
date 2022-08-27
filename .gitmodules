@@ -4,3 +4,12 @@
 [submodule "spring-batch-pdf-parser"]
 	path = spring-batch-pdf-parser
 	url = https://github.com/alokkusingh/spring-batch-pdf-parser.git
+[submodule "yaml/rest-proxy"]
+	path = yaml/rest-proxy
+	url = https://github.com/alokkusingh/rest-proxy.git
+[submodule "rest-proxy"]
+	path = rest-proxy
+	url = https://github.com/alokkusingh/rest-proxy.git
+[submodule "mqtt-proxy"]
+	path = mqtt-proxy
+	url = https://github.com/alokkusingh/mqtt-proxy.git
