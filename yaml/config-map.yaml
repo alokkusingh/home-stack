@@ -56,7 +56,7 @@ data:
        access_log /var/log/nginx/access.log main;
 
        upstream statement-parser {
-          server stmtparser-service:8081;
+          server 10.152.183.129:8081;
 
           keepalive 30;
        }
