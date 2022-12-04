@@ -63,12 +63,12 @@ data:
 
        server {
           # IP whitelisting
-          allow 192.168.0.151; # Mac-Book Air
-          allow 192.168.0.152;
-          allow 192.168.0.153; # iPhone
-          allow 192.168.0.154; # motoG
-          allow 192.168.0.155; # Mac-Book Pro
-          deny all;
+          # allow 192.168.0.151; # Mac-Book Air
+          # allow 192.168.0.152;
+          # allow 192.168.0.153; # iPhone
+          # allow 192.168.0.154; # motoG
+          # allow 192.168.1.155; # Mac-Book Pro
+          # deny all;
 
           listen 80;
           root   /usr/share/nginx/html;
