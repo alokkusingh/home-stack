@@ -75,6 +75,16 @@ spec:
                 configMapKeyRef:
                   name: stmt-parser-cofig
                   key: spring-datasource-hikari-maximum-pool-size
+            - name: IOT_SECURE_TRUSTSTORE-PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: iot-secure-truststore-password
+            - name: IOT_SECURE_KEYSTORE-PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: iot-secure-keystore-password
           ports:
             - containerPort: 8081
           volumeMounts:
