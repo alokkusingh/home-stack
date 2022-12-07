@@ -38,19 +38,24 @@ spec:
               port: 8081
             initialDelaySeconds: 30
             timeoutSeconds: 2
-            periodSeconds: 8
-            failureThreshold: 3
+            periodSeconds: 10
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /fin/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 100
+            initialDelaySeconds: 60
             timeoutSeconds: 2
-            periodSeconds: 3
+            periodSeconds: 30
             failureThreshold: 3
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,
             # with the characters changed to upper case, and the dots changed to underscores
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: stmt-parser-cofig
+                  key: spring-profiles-active
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
