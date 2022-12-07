@@ -136,6 +136,22 @@ kubectl get deployment metrics-server -n kube-system
 ````
 kubectl top nodes
 ````
+### Horizon Autoscaling
+#### Create HorizonTalPodAutoscaler
+````
+kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
+````
+````
+kubectl get hpa --namespace home-stack
+````
+
+#### Update Scale to 1
+````
+kubectl edit hpa dashboard-deployment --namespace home-stack
+````
+````
+kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
+````
 
 ### Miscellaneous commands
 #### Get all 
