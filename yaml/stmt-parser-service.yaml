@@ -34,7 +34,7 @@ spec:
           imagePullPolicy: Always
           readinessProbe:
             httpGet:
-              path: /fin/actuator/health/readiness
+              path: /fin/actuator/health
               port: 8081
             initialDelaySeconds: 10
             timeoutSeconds: 2
@@ -42,7 +42,7 @@ spec:
             failureThreshold: 1
           livenessProbe:
             httpGet:
-              path: /fin/actuator/health/liveness
+              path: /fin/actuator/health
               port: 8081
             initialDelaySeconds: 20
             timeoutSeconds: 2
