@@ -32,21 +32,21 @@ spec:
         - name: stmt-parser-container
           image: alokkusingh/statement-parser:latest
           imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /fin/actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 1
           readinessProbe:
             httpGet:
-              path: /fin/actuator/health
+              path: /fin/actuator/health/readiness
               port: 8081
             initialDelaySeconds: 100
             timeoutSeconds: 2
             periodSeconds: 3
-            failureThreshold: 1
-          livenessProbe:
-            httpGet:
-              path: /fin/actuator/health
-              port: 8081
-            initialDelaySeconds: 121
-            timeoutSeconds: 2
-            periodSeconds: 8
             failureThreshold: 1
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,
