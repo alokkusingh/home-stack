@@ -39,7 +39,7 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 2
             periodSeconds: 8
-            failureThreshold: 1
+            failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /fin/actuator/health/readiness
@@ -47,7 +47,7 @@ spec:
             initialDelaySeconds: 100
             timeoutSeconds: 2
             periodSeconds: 3
-            failureThreshold: 1
+            failureThreshold: 3
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,
             # with the characters changed to upper case, and the dots changed to underscores
