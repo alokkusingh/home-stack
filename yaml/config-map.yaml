@@ -11,6 +11,7 @@ data:
   logging-level-com-alok: INFO
   spring-datasource-hikari-minimum-idle: "3"
   spring-datasource-hikari-maximum-pool-size: "10"
+  spring-profiles-active: "prod"
 ---
 apiVersion: v1
 kind: ConfigMap
