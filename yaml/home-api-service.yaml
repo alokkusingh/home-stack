@@ -112,7 +112,7 @@ spec:
             limits:
               memory: 512Mi
             requests:
-              memory: 128Mi
+              memory: 256Mi
       volumes:
         - name: tz-config
           hostPath:
