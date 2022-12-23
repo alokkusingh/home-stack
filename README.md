@@ -55,6 +55,28 @@ mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 **Note:**
 >[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
 ---
+#### Home API Service - Pod/Deployment/Service
+````
+kubectl apply --validate=true --dry-run=client -f yaml/home-api-service.yaml 
+````
+````
+kubectl apply -f yaml/home-api-service.yaml  --namespace=home-stack
+````
+````
+kubectl delete -f yaml/home-api-service.yaml  --namespace=home-stack
+````
+````
+kubectl exec -it pod/home-api-deployment-0 --namespace home-stack -- bash
+````
+````
+kubectl exec -it pod/home-api-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
+````
+````
+kubectl logs pod/home-api-deployment-0 --namespace home-stack
+````
+````
+kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
