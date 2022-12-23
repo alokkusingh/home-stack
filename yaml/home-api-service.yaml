@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-api-service
+  namespace: home-stack
+spec:
+  selector:
+    app: home-api
+  # Defining headless service
+  #clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 8081
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: home-api-deployment
+  namespace: home-stack
+spec:
+  serviceName: home-api-service
+  selector:
+    matchLabels:
+      app: home-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: home-api
+    spec:
+      containers:
+        - name: stmt-parser-container
+          image: alokkusingh/home-api-service:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /home/api/actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /home/api/actuator/health/readiness
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 3
+          env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: spring-profiles-active
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-user-name
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-password
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-com-zaxxer-hikari-HikariConfig
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-com-zaxxer-hikari
+            - name: LOGGING_LEVEL_COM_ALOK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-com-alok
+            - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: spring-datasource-hikari-minimum-idle
+            - name: SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: spring-datasource-hikari-maximum-pool-size
+            - name: IOT_SECURE_TRUSTSTORE-PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: iot-secure-truststore-password
+            - name: IOT_SECURE_KEYSTORE-PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: iot-secure-keystore-password
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 128Mi
+      volumes:
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File
