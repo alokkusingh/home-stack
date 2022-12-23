@@ -13,3 +13,12 @@
 [submodule "mqtt-proxy"]
 	path = mqtt-proxy
 	url = https://github.com/alokkusingh/mqtt-proxy.git
+[submodule "home-api-service"]
+	path = home-api-service
+	url = https://github.com/alokkusingh/home-api-service.git
+[submodule "home-commons"]
+	path = home-commons
+	url = https://github.com/alokkusingh/home-commons.git
+[submodule "home-etl-service"]
+	path = home-etl-service
+	url = https://github.com/alokkusingh/home-etl-service.git
