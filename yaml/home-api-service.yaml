@@ -29,7 +29,7 @@ spec:
         app: home-api
     spec:
       containers:
-        - name: shome-api-container
+        - name: home-api-container
           image: alokkusingh/home-api-service:latest
           imagePullPolicy: Always
           livenessProbe:
