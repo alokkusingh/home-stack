@@ -16,13 +16,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: home-api-deployment
+  labels:
+    app: home-api
   namespace: home-stack
 spec:
-  serviceName: home-api-service
+  replicas: 1
   selector:
     matchLabels:
       app: home-api
-  replicas: 1
   template:
     metadata:
       labels:
