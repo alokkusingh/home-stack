@@ -16,6 +16,21 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: home-etl-cofig
+  namespace: home-stack
+data:
+  db-schema: home-stack
+  db-url: jdbc:mysql://mysql:3306/home-stack
+  logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
+  logging-level-com-zaxxer-hikari: TRACE
+  logging-level-com-alok: INFO
+  spring-datasource-hikari-minimum-idle: "2"
+  spring-datasource-hikari-maximum-pool-size: "10"
+  spring-profiles-active: "prod"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: home-api-cofig
   namespace: home-stack
 data:

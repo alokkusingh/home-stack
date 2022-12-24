@@ -77,6 +77,28 @@ kubectl logs pod/home-api-deployment-0 --namespace home-stack
 ````
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ````
+#### Home ETL Service - Pod/Statefulset/Service
+````
+kubectl apply --validate=true --dry-run=client -f yaml/home-etl-service.yaml 
+````
+````
+kubectl apply -f yaml/home-etl-service.yaml  --namespace=home-stack
+````
+````
+kubectl delete -f yaml/home-etl-service.yaml  --namespace=home-stack
+````
+````
+kubectl exec -it pod/home-etl-deployment-0 --namespace home-stack -- bash
+````
+````
+kubectl exec -it pod/home-etl-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
+````
+````
+kubectl logs pod/home-etl-deployment-0 --namespace home-stack
+````
+````
+kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 

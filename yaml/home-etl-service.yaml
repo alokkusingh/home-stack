@@ -1,0 +1,121 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-etl-service
+  namespace: home-stack
+spec:
+  selector:
+    app: home-etl
+  # Defining headless service
+  #clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 8081
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: home-etl-deployment
+  namespace: home-stack
+spec:
+  serviceName: home-etl-service
+  selector:
+    matchLabels:
+      app: home-etl
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: home-etl
+    spec:
+      containers:
+        - name: home-etl-container
+          image: alokkusingh/home-etl-service:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /home/etl/actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /home/etl/actuator/health/readiness
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 3
+          env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: spring-profiles-active
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-user-name
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-password
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: logging-level-com-zaxxer-hikari-HikariConfig
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: logging-level-com-zaxxer-hikari
+            - name: LOGGING_LEVEL_COM_ALOK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: logging-level-com-alok
+            - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: spring-datasource-hikari-minimum-idle
+            - name: SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: spring-datasource-hikari-maximum-pool-size
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: stmt-volume
+              mountPath: /Users/aloksingh/BankStatements
+            #- name: tz-config
+            #  mountPath: /etc/localtime
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
+      volumes:
+        - name: stmt-volume
+          hostPath:
+            # directory location on host
+            path: /home/alok/data/git/BankStatements
+            # this field is optional
+            type: Directory
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File
