@@ -13,7 +13,7 @@ spec:
       port: 8081
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: home-api-deployment
   namespace: home-stack
