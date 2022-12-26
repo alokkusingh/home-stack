@@ -4,7 +4,9 @@ metadata:
   name: home-api-service
   namespace: home-stack
 spec:
+  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
   selector:
+    # XX-YYY
     app: home-api
   # Defining headless service
   #clusterIP: None
@@ -17,10 +19,14 @@ kind: Deployment
 metadata:
   name: home-api-deployment
   labels:
+    # This should be same as Service spec:selector
+    # XX-YYY
     app: home-api
   namespace: home-stack
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
   selector:
     matchLabels:
       app: home-api
@@ -37,7 +43,7 @@ spec:
             httpGet:
               path: /home/api/actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 30
+            initialDelaySeconds: 5
             timeoutSeconds: 2
             periodSeconds: 10
             failureThreshold: 5
@@ -45,10 +51,17 @@ spec:
             httpGet:
               path: /home/api/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 60
+            initialDelaySeconds: 10
             timeoutSeconds: 2
             periodSeconds: 30
             failureThreshold: 3
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,
             # with the characters changed to upper case, and the dots changed to underscores
@@ -107,13 +120,6 @@ spec:
                 configMapKeyRef:
                   name: home-api-cofig
                   key: iot-secure-keystore-password
-          ports:
-            - containerPort: 8081
-          resources:
-            limits:
-              memory: 512Mi
-            requests:
-              memory: 256Mi
       volumes:
         - name: tz-config
           hostPath:
