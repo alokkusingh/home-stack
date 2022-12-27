@@ -54,6 +54,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: home-common-cofig
+  namespace: home-stack
+data:
+  test-config: dummyValue
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: nginx-conf
   namespace: home-stack
 data:

@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: home-git
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: In
+                        values:
+                          - jgte
+          containers:
+            - name: home-git
+              image: alpine/git:2.36.3
+              imagePullPolicy: IfNotPresent
+              args:
+                - cd /Users/aloksingh/BankStatements; git config --global --add safe.directory /Users/aloksingh/BankStatements; git config --global user.email "alok.ku.singh@gmail.com"; git remote remove origin; git remote add origin $GIT_URL; git add . ; git commit -m "from k8s pod"; git push --set-upstream origin main;
+              command:
+                - /bin/sh
+                - -c
+              env:
+                - name: GIT_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: home-common-cofig
+                      key: git-url
+              volumeMounts:
+                - name: stmt-volume
+                  mountPath: /Users/aloksingh/BankStatements
+          restartPolicy: OnFailure
+          volumes:
+            - name: stmt-volume
+              hostPath:
+                # directory location on host
+                path: /home/alok/data/git/BankStatements
+                # this field is optional
+                type: Directory
