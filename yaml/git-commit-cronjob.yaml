@@ -3,7 +3,9 @@ kind: CronJob
 metadata:
   name: home-git
 spec:
-  schedule: "* * * * *"
+  schedule: "0 9 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
