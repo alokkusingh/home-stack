@@ -4,6 +4,7 @@ metadata:
   name: home-git
 spec:
   schedule: "0 9 * * *"
+  concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -38,7 +39,6 @@ spec:
                 - name: stmt-volume
                   mountPath: /Users/aloksingh/BankStatements
           restartPolicy: OnFailure
-          concurrencyPolicy: Forbid
           volumes:
             - name: stmt-volume
               hostPath:
