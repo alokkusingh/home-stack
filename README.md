@@ -99,6 +99,16 @@ kubectl logs pod/home-etl-deployment-0 --namespace home-stack
 ````
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ````
+#### Home GIT Commit CronJob
+````
+kubectl apply --validate=true --dry-run=client -f yaml/git-commit-cronjob.yaml 
+````
+````
+kubectl apply -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
+````
+````
+kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
+````
 #### Statement Parser Service - Pod/Deployment/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
