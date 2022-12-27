@@ -224,6 +224,10 @@ kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-sta
 ````
 kubectl get -A pods
 ````
+#### Describe a spec
+````
+kubectl explain --api-version="batch/v1beta1" cronjobs.spec
+````
 ## Service Mesh - Istio
 ### Install
 
