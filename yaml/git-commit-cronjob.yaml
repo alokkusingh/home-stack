@@ -10,7 +10,6 @@ spec:
     spec:
       template:
         spec:
-          concurrencyPolicy: Forbid
           affinity:
             nodeAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
@@ -39,6 +38,7 @@ spec:
                 - name: stmt-volume
                   mountPath: /Users/aloksingh/BankStatements
           restartPolicy: OnFailure
+          concurrencyPolicy: Forbid
           volumes:
             - name: stmt-volume
               hostPath:
