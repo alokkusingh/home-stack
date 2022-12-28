@@ -190,6 +190,16 @@ kubectl get deployment metrics-server -n kube-system
 ````
 kubectl top nodes
 ````
+### Ingress
+#### Ingress Controller - Enable Nginx Ingress Controller
+This will deploy a daemonset nginx-ingress-microk8s-controller
+````
+microk8s enable ingress
+````
+#### Ingress
+````
+kubectl apply -f yaml/ingress.yaml --namespace=home-stack
+````
 ### Horizon Autoscaling
 #### Create HorizonTalPodAutoscaler
 ````
@@ -240,14 +250,15 @@ kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 
 ### Services
 
-| Application               | Description                                   | Service Type             | Deployment/StatefulSet/CronJob/DaemonSet | URL                                | Comments                                                                                                                                     |
-|---------------------------|-----------------------------------------------|--------------------------|------------------------------------------|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
-| Home ETL Service          | ETL for bank statement and other sources      | ClusterIP (Headless)     | StatefulSet                              | /home/etl                          | NA                                                                                                                                           |
-| Home API Service          | API for Bank/Expense/Tax/Investment/etc...    | ClusterIP                | Deployment                               | /home/api                          | GraalVM based native Image                                                                                                                   |
-| Home Dashboard            | ReactJS App on Nginx                          | NodePort                 | Deployment                               | http://jgte:30080                  | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress - externalTrafficPolicy: Local to disable SNATing |
-| Home GIT Cronjob          | Cronjob to update GIT with uploaded statement | None                     | CronJob                                  | NA                                 | NA                                                                                                                                           |
-| Database                  | MySQL                                         | NodePort                 | StatefulSet                              | jdbc:mysql://mysql:3306/home-stack | - NodePort because I want to access SQL from outside of the cluster                                                                          |
-| Kubernetes Dashboard      |                                               | LoadBalancer (static IP) | Deployment                               | https://jgte/                      |                                                                                                                                              |
-| Kubernetes Matrix         | Generating resource utilization matrix        | ClusterIP                | Deployment                               | NA                                 |                                                                                                                                              |
-| Kubernetes Matrix Scraper | Matrix scrapper from pods                     | ClusterIP                | Deployment                               | NA                                 |                                                                                                                                              |
-| Jaeger Dashboard          |                                               | NodePort                 | Deployment                               | http://jgte:31686/                 |                                                                                                                                              |
+| Application               | Description                                   | Service Type             | Deployment/StatefulSet/CronJob/DaemonSet | URL                                | Comments                                                                                                                                          |
+|---------------------------|-----------------------------------------------|--------------------------|------------------------------------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Home ETL Service          | ETL for bank statement and other sources      | ClusterIP (Headless)     | StatefulSet                              | /home/etl                          | NA                                                                                                                                                |
+| Home API Service          | API for Bank/Expense/Tax/Investment/etc...    | ClusterIP                | Deployment                               | /home/api                          | GraalVM based native Image                                                                                                                        |
+| Home Dashboard            | ReactJS App on Nginx                          | NodePort                 | Deployment                               | http://jgte:30080  or https://jgte | - For multinode deployment Interface has to be changed to ClusterIP and put behind Ingress - externalTrafficPolicy: Local to disable SNATing      |
+| Home GIT Cronjob          | Cronjob to update GIT with uploaded statement | None                     | CronJob                                  | NA                                 | NA                                                                                                                                                |
+| Database                  | MySQL                                         | NodePort                 | StatefulSet                              | jdbc:mysql://mysql:3306/home-stack | - NodePort because I want to access SQL from outside of the cluster                                                                               |
+| Kubernetes Dashboard      |                                               | LoadBalancer (static IP) | Deployment                               | https://jgte:8443/                 |                                                                                                                                                   |
+| Kubernetes Matrix         | Generating resource utilization matrix        | ClusterIP                | Deployment                               | NA                                 |                                                                                                                                                   |
+| Kubernetes Matrix Scraper | Matrix scrapper from pods                     | ClusterIP                | Deployment                               | NA                                 |                                                                                                                                                   |
+| Jaeger Dashboard          |                                               | NodePort                 | Deployment                               | http://jgte:31686/                 |                                                                                                                                                   |
+| Ingress Controller        | Nginx Ingress Controller                      | NodePort                 | DaemonSet                                | Port: 443                          | API/ETL/Dashboard are behind Nginx but still we have Dashboard accessible directly (from mobile cant access host name - require local DNS server) |
