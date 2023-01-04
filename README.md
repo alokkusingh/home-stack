@@ -77,6 +77,28 @@ kubectl logs pod/home-api-deployment-0 --namespace home-stack
 ````
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ````
+### Home Auth Service - Pod/Deployment/Service
+````
+kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
+````
+````
+kubectl apply -f yaml/home-auth-service.yaml  --namespace=home-stack
+````
+````
+kubectl delete -f yaml/home-auth-service.yaml  --namespace=home-stack
+````
+````
+kubectl exec -it pod/home-auth-deployment-0 --namespace home-stack -- bash
+````
+````
+kubectl exec -it pod/home-auth-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
+````
+````
+kubectl logs pod/home-auth-deployment-0 --namespace home-stack
+````
+````
+kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
+````
 #### Home ETL Service - Pod/Statefulset/Service
 ````
 kubectl apply --validate=true --dry-run=client -f yaml/home-etl-service.yaml 
