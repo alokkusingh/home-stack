@@ -25,11 +25,11 @@ spec:
                 name: home-etl-service
                 port:
                   number: 8081
-          - path: /home/api
+          - path: /home/auth
             pathType: Prefix
             backend:
               service:
-                name: home-api-service
+                name: home-auth-service
                 port:
                   number: 8081
           - path: /

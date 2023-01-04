@@ -1,0 +1,82 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-auth-service
+  namespace: home-stack
+spec:
+  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
+  selector:
+    # XX-YYY
+    app: home-auth
+  # Defining headless service
+  #clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-auth-deployment
+  labels:
+    # This should be same as Service spec:selector
+    # XX-YYY
+    app: home-auth
+  namespace: home-stack
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: home-auth
+  template:
+    metadata:
+      labels:
+        app: home-auth
+    spec:
+      containers:
+        - name: home-auth-container
+          image: alokkusingh/home-auth-service:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /home/auth/actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /home/auth/actuator/health/readiness
+              port: 8081
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 3
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
+          env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
+            - name: OAUTH_GOOGLE_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: home-auth-cofig
+                  key: oauth-google-client-id
+            - name: LOGGING_LEVEL_COM_ALOK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-auth-cofig
+                  key: logging-level-com-alok
+      volumes:
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File

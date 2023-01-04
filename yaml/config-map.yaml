@@ -46,6 +46,14 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: home-auth-cofig
+  namespace: home-stack
+data:
+  test: some-test
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: dashboard-cofig
   namespace: home-stack
 data:
