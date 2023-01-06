@@ -39,3 +39,34 @@ spec:
                 name: dashboard-service
                 port:
                   number: 80
+    - host: alok-home.com
+      http:
+        paths:
+          - path: /home/api
+            pathType: Prefix
+            backend:
+              service:
+                name: home-api-service
+                port:
+                  number: 8081
+          - path: /home/etl
+            pathType: Prefix
+            backend:
+              service:
+                name: home-etl-service
+                port:
+                  number: 8081
+          - path: /home/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: home-auth-service
+                port:
+                  number: 8081
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-service
+                port:
+                  number: 80
