@@ -10,13 +10,13 @@ spec:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 80
-      nodePort: 30080
-  type: NodePort
+      #targetPort: 80
+      #nodePort: 30080
+  #type: NodePort
   # turn off SNAT for NodePort and LoadBalancer - so that remote IP is sent to application (this was needed for Nginx IP whitelisting)
   # but with the undesired effect that kube-proxy only proxies proxy requests to local endpoints,
   # and does not forward traffic to other nodes
-  externalTrafficPolicy: Local
+  #externalTrafficPolicy: Local
 ---
 apiVersion: apps/v1
 kind: Deployment
