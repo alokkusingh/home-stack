@@ -194,11 +194,16 @@ kubectl delete -f yaml/kubernetes-dashboard.yaml
 kubectl get all --namespace kubernetes-dashboard
 ````
 ````
+kubectl create token kubernetes-dashboard --duration=999999h -n kubernetes-dashboard
+````
+the below note needed
+````
 kubectl get secrets -n kubernetes-dashboard
 ````
 ````
 kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
 ````
+
 ### Kubernetes Metrics Server
 ````
 kubectl apply -f yaml/metrix-server.yaml
