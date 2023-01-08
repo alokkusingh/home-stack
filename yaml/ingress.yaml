@@ -73,3 +73,13 @@ spec:
                 name: dashboard-service
                 port:
                   number: 80
+    - host: dashboard.alok.live
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-service
+                port:
+                  number: 80
