@@ -83,3 +83,10 @@ spec:
                 name: dashboard-service
                 port:
                   number: 80
+          - path: /home/api
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultbackend
+                port:
+                  number: 80
