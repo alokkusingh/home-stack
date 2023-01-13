@@ -83,3 +83,24 @@ spec:
                 name: dashboard-service
                 port:
                   number: 80
+          - path: /home/api/actuator
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultbackend
+                port:
+                  number: 80
+          - path: /home/etl/actuator
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultbackend
+                port:
+                  number: 80
+          - path: /home/auth/actuator
+            pathType: Prefix
+            backend:
+              service:
+                name: defaultbackend
+                port:
+                  number: 80
