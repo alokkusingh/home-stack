@@ -15,6 +15,43 @@ As of now it is deployed on single node cluster.
 </p></span>
 </div>
 
+## Table of contents 
+<!-- TOC -->
+* [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
+    * [Create Namespaces](#create-namespaces)
+    * [Create ConfigMap](#create-configmap)
+    * [Create Secrets](#create-secrets)
+    * [Create Network policy](#create-network-policy)
+    * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
+    * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
+    * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
+    * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
+    * [Home GIT Commit CronJob](#home-git-commit-cronjob)
+    * [Statement Parser Service - Pod/Deployment/Service](#)
+    * [Dashboard Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
+    * [Jaeger Service](#jaeger-service)
+    * [Delete Stack](#delete-stack)
+* [Kubernetes Dashboard](#kubernetes-dashboard)
+    * [Pod/Deployment/Service](#poddeploymentservice)
+    * [Kubernetes Metrics Server](#kubernetes-metrics-server)
+* [Ingress](#ingress)
+  * [Enable Ingress Controller](#ingress-controller---enable-nginx-ingress-controller)
+  * [Deploy Ingress](#ingress-1)
+* [Horizon Autoscaling](#horizon-autoscaling)
+  * [Create HorizonTalPodAutoscaler](#create-horizontalpodautoscaler)
+  * [Update Scale to 1](#update-scale-to-1)
+* [Miscellaneous commands](#miscellaneous-commands)
+  * [Get all](#get-all)
+  * [Get Pod Log](#get-pod-log)
+  * [Describe a Pod](#describe-a-pod)
+  * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
+  * [Describe a spec](#describe-a-spec)
+* [Service Mesh - Istio](#service-mesh---istio)
+  * [Install](#install)
+* [Deployment Architecture](#deployment-architecture)
+  * [Services](#services)
+<!-- TOC -->
+
 ### Deployment of home-stack Kubernetes Stack
 #### Create Namespaces
 ````
@@ -183,7 +220,8 @@ kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ````
 kubectl delete namespace home-stack 
 ````
-### Kubernetes Dashboard - Pod/Deployment/Service
+## Kubernetes Dashboard
+### Pod/Deployment/Service
 ````
 kubectl apply -f yaml/kubernetes-dashboard.yaml
 ````
@@ -289,3 +327,11 @@ kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 | Kubernetes Matrix Scraper | Matrix scrapper from pods                     | ClusterIP                | Deployment                               | NA                                 |                                                                                                                                                   |
 | Jaeger Dashboard          |                                               | NodePort                 | Deployment                               | http://jgte:31686/                 |                                                                                                                                                   |
 | Ingress Controller        | Nginx Ingress Controller                      | NodePort                 | DaemonSet                                | Port: 443                          | API/ETL/Dashboard are behind Nginx but still we have Dashboard accessible directly (from mobile cant access host name - require local DNS server) |
+
+```mermaid
+graph LR
+    A[Write Code] --> B{Does it work?}
+    B -- Yes --> C[Great!]
+    B -- No --> D[Google]
+    D --> A
+```
