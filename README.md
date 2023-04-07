@@ -26,7 +26,7 @@ As of now it is deployed on single node cluster.
       * [Create Network policy](#create-network-policy)
       * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
       * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
-    * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
+      * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
       * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
       * [Home GIT Commit CronJob](#home-git-commit-cronjob)
       * [Statement Parser Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
@@ -36,9 +36,9 @@ As of now it is deployed on single node cluster.
   * [Kubernetes Dashboard](#kubernetes-dashboard)
     * [Pod/Deployment/Service](#poddeploymentservice)
     * [Kubernetes Metrics Server](#kubernetes-metrics-server)
-    * [Ingress](#ingress)
-      * [Ingress Controller - Enable Nginx Ingress Controller](#ingress-controller---enable-nginx-ingress-controller)
-      * [Ingress](#ingress-1)
+  * [Ingress](#ingress)
+    * [Ingress Controller - Enable Nginx Ingress Controller](#ingress-controller---enable-nginx-ingress-controller)
+    * [Ingress](#ingress-1)
   * [RBAC](#rbac)
     * [Enable RBAC](#enable-rbac)
     * [Create roll binding for cluster admin user: alok](#create-roll-binding-for-cluster-admin-user--alok)
@@ -50,15 +50,15 @@ As of now it is deployed on single node cluster.
       * [Create User Credentials](#create-user-credentials)
       * [Create User Context](#create-user-context)
       * [Use the context](#use-the-context)
-    * [Horizon Autoscaling](#horizon-autoscaling)
-      * [Create HorizonTalPodAutoscaler](#create-horizontalpodautoscaler)
-      * [Update Scale to 1](#update-scale-to-1)
-    * [Miscellaneous commands](#miscellaneous-commands)
-      * [Get all](#get-all)
-      * [Get Pod Log](#get-pod-log)
-      * [Describe a Pod](#describe-a-pod)
-      * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
-      * [Describe a spec](#describe-a-spec)
+  * [Horizon Autoscaling](#horizon-autoscaling)
+    * [Create HorizonTalPodAutoscaler](#create-horizontalpodautoscaler)
+    * [Update Scale to 1](#update-scale-to-1)
+  * [Miscellaneous commands](#miscellaneous-commands)
+    * [Get all](#get-all)
+    * [Get Pod Log](#get-pod-log)
+    * [Describe a Pod](#describe-a-pod)
+    * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
+    * [Describe a spec](#describe-a-spec)
   * [Service Mesh - Istio](#service-mesh---istio)
     * [Install](#install)
   * [Deployment Architecture](#deployment-architecture)
@@ -126,7 +126,7 @@ kubectl logs pod/home-api-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
-### Home Auth Service - Pod/Deployment/Service
+#### Home Auth Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
 ```
@@ -264,13 +264,13 @@ kubectl get deployment metrics-server -n kube-system
 ```shell
 kubectl top nodes
 ```
-### Ingress
-#### Ingress Controller - Enable Nginx Ingress Controller
+## Ingress
+### Ingress Controller - Enable Nginx Ingress Controller
 This will deploy a daemonset nginx-ingress-microk8s-controller
 ```shell
 microk8s enable ingress
 ```
-#### Ingress
+### Ingress
 ```shell
 kubectl apply -f yaml/ingress.yaml --namespace=home-stack
 ```
@@ -326,8 +326,8 @@ kubectl config set-context alok-home --cluster=home-cluster --namespace=home-sta
 ```shell
 kubectl config use-context alok-home
 ```
-### Horizon Autoscaling
-#### Create HorizonTalPodAutoscaler
+## Horizon Autoscaling
+### Create HorizonTalPodAutoscaler
 ```shell
 kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
 ```
@@ -335,7 +335,7 @@ kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
 kubectl get hpa --namespace home-stack
 ```
 
-#### Update Scale to 1
+### Update Scale to 1
 ```shell
 kubectl edit hpa dashboard-deployment --namespace home-stack
 ```
@@ -343,24 +343,24 @@ kubectl edit hpa dashboard-deployment --namespace home-stack
 kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
 ```
 
-### Miscellaneous commands
-#### Get all 
+## Miscellaneous commands
+### Get all 
 ```shell
 kubectl get all --all-namespaces
 ```
-#### Get Pod Log
+### Get Pod Log
 ```shell
 kubectl logs pod/dashboard-deployment-65cf5b8858-7x8z8 --namespace home-stack
 ```
-#### Describe a Pod
+### Describe a Pod
 ```shell
 kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-stack
 ```
-#### Get All Pods under All Namespaces
+### Get All Pods under All Namespaces
 ```shell
 kubectl get -A pods
 ```
-#### Describe a spec
+### Describe a spec
 ```shell
 kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 ```
