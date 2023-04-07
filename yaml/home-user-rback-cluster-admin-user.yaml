@@ -1,0 +1,14 @@
+# Bind alok to the Kubernetes cluster-admin role
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: k8s-user-cluster-admin
+subjects:
+  - kind: User
+    name: alok
+    namespace: home-dashboard
+    apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
