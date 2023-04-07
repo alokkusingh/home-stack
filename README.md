@@ -85,7 +85,8 @@ kubectl apply -f yaml/networkpolicy.yaml
 ### MySQL Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/mysql-service.yaml 
-``shell
+```
+```shell
 kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
 ```
 ```shell
@@ -229,7 +230,7 @@ kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
 ### Delete Stack
-```shell
+```
 kubectl delete namespace home-stack 
 ```
 ## Kubernetes Dashboard
