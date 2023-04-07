@@ -1,4 +1,4 @@
-# home-stack
+# Home Stack 
 
 <div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
 <span>
@@ -19,20 +19,20 @@ As of now it is deployed on single node cluster.
 <!-- TOC -->
 * [home-stack](#home-stack)
   * [Table of contents](#table-of-contents)
-    * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
-      * [Create Namespaces](#create-namespaces)
-      * [Create ConfigMap](#create-configmap)
-      * [Create Secrets](#create-secrets)
-      * [Create Network policy](#create-network-policy)
-      * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
-      * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
-      * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
-      * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
-      * [Home GIT Commit CronJob](#home-git-commit-cronjob)
-      * [Statement Parser Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
-      * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
-      * [Jaeger Service](#jaeger-service)
-      * [Delete Stack](#delete-stack)
+  * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
+    * [Create Namespaces](#create-namespaces)
+    * [Create ConfigMap](#create-configmap)
+    * [Create Secrets](#create-secrets)
+    * [Create Network policy](#create-network-policy)
+    * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
+    * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
+    * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
+    * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
+    * [Home GIT Commit CronJob](#home-git-commit-cronjob)
+    * [Statement Parser Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
+    * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
+    * [Jaeger Service](#jaeger-service)
+    * [Delete Stack](#delete-stack)
   * [Kubernetes Dashboard](#kubernetes-dashboard)
     * [Pod/Deployment/Service](#poddeploymentservice)
     * [Kubernetes Metrics Server](#kubernetes-metrics-server)
@@ -65,24 +65,24 @@ As of now it is deployed on single node cluster.
     * [Services](#services)
 <!-- TOC -->
 
-### Deployment of home-stack Kubernetes Stack
-#### Create Namespaces
+## Deployment of home-stack Kubernetes Stack
+### Create Namespaces
 ```shell
 kubectl apply -f yaml/namespace.yaml
 ```
-#### Create ConfigMap
+### Create ConfigMap
 ```shell
 kubectl apply -f yaml/config-map.yaml
 ```
-#### Create Secrets
+### Create Secrets
 ```shell
 kubectl apply -f yaml/secrets.yaml
 ```
-#### Create Network policy
+### Create Network policy
 ```shell
 kubectl apply -f yaml/networkpolicy.yaml
 ```
-#### MySQL Service - Pod/Deployment/Service
+### MySQL Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/mysql-service.yaml 
 ``shell
@@ -104,7 +104,7 @@ mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 **Note:**
 >[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
 ---
-#### Home API Service - Pod/Deployment/Service
+### Home API Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-api-service.yaml 
 ```
@@ -126,7 +126,7 @@ kubectl logs pod/home-api-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
-#### Home Auth Service - Pod/Deployment/Service
+### Home Auth Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
 ```
@@ -148,7 +148,7 @@ kubectl logs pod/home-auth-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
-#### Home ETL Service - Pod/Statefulset/Service
+### Home ETL Service - Pod/Statefulset/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-etl-service.yaml 
 ```
@@ -170,7 +170,7 @@ kubectl logs pod/home-etl-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
-#### Home GIT Commit CronJob
+### Home GIT Commit CronJob
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/git-commit-cronjob.yaml 
 ```
@@ -180,7 +180,7 @@ kubectl apply -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 ```shell
 kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 ```
-#### Statement Parser Service - Pod/Deployment/Service
+### Statement Parser Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
 ```
@@ -202,7 +202,7 @@ kubectl logs pod/stmtparser-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/stmtparser-deployment -n home-stack
 ```
-#### Dashboard Service - Pod/Deployment/Service
+### Dashboard Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
 ```
@@ -218,7 +218,7 @@ kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- 
 ```shell
 kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
 ```
-#### Jaeger Service
+### Jaeger Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/jaeger-all-in-one-template.yml 
 ```
@@ -228,7 +228,7 @@ kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```shell
 kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
-#### Delete Stack
+### Delete Stack
 ```shell
 kubectl delete namespace home-stack 
 ```
