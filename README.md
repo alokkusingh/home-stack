@@ -17,39 +17,52 @@ As of now it is deployed on single node cluster.
 
 ## Table of contents 
 <!-- TOC -->
-* [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
-    * [Create Namespaces](#create-namespaces)
-    * [Create ConfigMap](#create-configmap)
-    * [Create Secrets](#create-secrets)
-    * [Create Network policy](#create-network-policy)
-    * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
-    * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
+* [home-stack](#home-stack)
+  * [Table of contents](#table-of-contents)
+    * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
+      * [Create Namespaces](#create-namespaces)
+      * [Create ConfigMap](#create-configmap)
+      * [Create Secrets](#create-secrets)
+      * [Create Network policy](#create-network-policy)
+      * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
+      * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
     * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
-    * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
-    * [Home GIT Commit CronJob](#home-git-commit-cronjob)
-    * [Statement Parser Service - Pod/Deployment/Service](#)
-    * [Dashboard Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
-    * [Jaeger Service](#jaeger-service)
-    * [Delete Stack](#delete-stack)
-* [Kubernetes Dashboard](#kubernetes-dashboard)
+      * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
+      * [Home GIT Commit CronJob](#home-git-commit-cronjob)
+      * [Statement Parser Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
+      * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
+      * [Jaeger Service](#jaeger-service)
+      * [Delete Stack](#delete-stack)
+  * [Kubernetes Dashboard](#kubernetes-dashboard)
     * [Pod/Deployment/Service](#poddeploymentservice)
     * [Kubernetes Metrics Server](#kubernetes-metrics-server)
-* [Ingress](#ingress)
-  * [Enable Ingress Controller](#ingress-controller---enable-nginx-ingress-controller)
-  * [Deploy Ingress](#ingress-1)
-* [Horizon Autoscaling](#horizon-autoscaling)
-  * [Create HorizonTalPodAutoscaler](#create-horizontalpodautoscaler)
-  * [Update Scale to 1](#update-scale-to-1)
-* [Miscellaneous commands](#miscellaneous-commands)
-  * [Get all](#get-all)
-  * [Get Pod Log](#get-pod-log)
-  * [Describe a Pod](#describe-a-pod)
-  * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
-  * [Describe a spec](#describe-a-spec)
-* [Service Mesh - Istio](#service-mesh---istio)
-  * [Install](#install)
-* [Deployment Architecture](#deployment-architecture)
-  * [Services](#services)
+    * [Ingress](#ingress)
+      * [Ingress Controller - Enable Nginx Ingress Controller](#ingress-controller---enable-nginx-ingress-controller)
+      * [Ingress](#ingress-1)
+  * [RBAC](#rbac)
+    * [Enable RBAC](#enable-rbac)
+    * [Create roll binding for cluster admin user: alok](#create-roll-binding-for-cluster-admin-user--alok)
+    * [Create user alok](#create-user-alok)
+      * [Create CSR for user alok](#create-csr-for-user-alok)
+      * [Sign User CSR on master node](#sign-user-csr-on-master-node)
+      * [Copy User Cert and CA cert](#copy-user-cert-and-ca-cert)
+      * [Create Cluster](#create-cluster)
+      * [Create User Credentials](#create-user-credentials)
+      * [Create User Context](#create-user-context)
+      * [Use the context](#use-the-context)
+    * [Horizon Autoscaling](#horizon-autoscaling)
+      * [Create HorizonTalPodAutoscaler](#create-horizontalpodautoscaler)
+      * [Update Scale to 1](#update-scale-to-1)
+    * [Miscellaneous commands](#miscellaneous-commands)
+      * [Get all](#get-all)
+      * [Get Pod Log](#get-pod-log)
+      * [Describe a Pod](#describe-a-pod)
+      * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
+      * [Describe a spec](#describe-a-spec)
+  * [Service Mesh - Istio](#service-mesh---istio)
+    * [Install](#install)
+  * [Deployment Architecture](#deployment-architecture)
+    * [Services](#services)
 <!-- TOC -->
 
 ### Deployment of home-stack Kubernetes Stack
@@ -261,24 +274,25 @@ microk8s enable ingress
 ```shell
 kubectl apply -f yaml/ingress.yaml --namespace=home-stack
 ```
-### RBAC
-#### Enable RBAC
+## RBAC
+### Enable RBAC
 ```
 microk8s enable rbac
 ```
-#### Create roll binding for cluster admin user: alok. So that remotely cluster opertaion can be performed
+### Create roll binding for cluster admin user: alok
+So that remotely cluster opertaion can be performed
 ```shell
 kubectl apply -f yaml/home-user-rback-cluster-admin-user.yaml
 ```
-#### Create user alok
-##### Create CSR for user alok
+### Create user alok
+#### Create CSR for user alok
 ```shell
 cd ~/cert/k8s
 openssl genrsa -out alok.key 2048
 openssl req -new -key alok.key -out alok-csr.pem -subj "/CN=alok/O=home-stack/O=ingress"
 scp alok-csr.pem alok@jgte:cert/
 ```
-##### Sign User CSR on master node
+#### Sign User CSR on master node
 ```
 openssl x509 -req -in ~/cert/alok-csr.pem -CA /var/snap/microk8s/current/certs/ca.crt -CAkey /var/snap/microk8s/current/certs/ca.key -CAcreateserial -out ~/cert/alok-crt.pem -days 365
 ```
@@ -293,22 +307,22 @@ Note: add below entry in /etc/hosts
 ```
 192.168.1.200   jgte kubernetes
 ```
-##### Create Cluster
+#### Create Cluster
 ```shell
 kubectl config set-cluster home-cluster --server=https://kubernetes:16443 --certificate-authority=/Users/aloksingh/cert/k8s/ca.crt --embed-certs=true
 ```
 ```shell
 cat ~/.kube/config
 ````
-##### Create User Credentials
+#### Create User Credentials
 ```shell
 kubectl config set-credentials alok --client-certificate=/Users/aloksingh/cert/k8s/alok-crt.pem --client-key=/Users/aloksingh/cert/k8s/alok.key --embed-certs=true
 ```
-##### Create User Context
+#### Create User Context
 ```shell
 kubectl config set-context alok-home --cluster=home-cluster --namespace=home-stack --user alok
 ```
-##### Use the context
+#### Use the context
 ```shell
 kubectl config use-context alok-home
 ```
