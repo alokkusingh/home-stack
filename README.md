@@ -54,255 +54,302 @@ As of now it is deployed on single node cluster.
 
 ### Deployment of home-stack Kubernetes Stack
 #### Create Namespaces
-````
+```shell
 kubectl apply -f yaml/namespace.yaml
-````
+```
 #### Create ConfigMap
-````
+```shell
 kubectl apply -f yaml/config-map.yaml
-````
+```
 #### Create Secrets
-````
+```shell
 kubectl apply -f yaml/secrets.yaml
-````
+```
 #### Create Network policy
-````
+```shell
 kubectl apply -f yaml/networkpolicy.yaml
-````
+```
 #### MySQL Service - Pod/Deployment/Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/mysql-service.yaml 
-````
-````
+``shell
 kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl exec -it pod/mysql-0 --namespace home-stack -- mysql -u root -p home-stack
-````
-````
+```
+```shell
 kubectl logs pod/mysql-0 --namespace home-stack
-````
-````
+```
+```shell
 mysql -u root -p home-stack --host 127.0.0.1 --port 32306
-````
+```
 ---
 **Note:**
 >[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
 ---
 #### Home API Service - Pod/Deployment/Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-api-service.yaml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/home-api-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/home-api-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl exec -it pod/home-api-deployment-0 --namespace home-stack -- bash
-````
-````
+```
+```shell
 kubectl exec -it pod/home-api-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
-````
-````
+```
+```shell
 kubectl logs pod/home-api-deployment-0 --namespace home-stack
-````
-````
+```
+```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
-````
+```
 ### Home Auth Service - Pod/Deployment/Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/home-auth-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/home-auth-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl exec -it pod/home-auth-deployment-0 --namespace home-stack -- bash
-````
-````
+```
+```shell
 kubectl exec -it pod/home-auth-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
-````
-````
+```
+```shell
 kubectl logs pod/home-auth-deployment-0 --namespace home-stack
-````
-````
+```
+```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
-````
+```
 #### Home ETL Service - Pod/Statefulset/Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-etl-service.yaml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/home-etl-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/home-etl-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl exec -it pod/home-etl-deployment-0 --namespace home-stack -- bash
-````
-````
+```
+```shell
 kubectl exec -it pod/home-etl-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
-````
-````
+```
+```shell
 kubectl logs pod/home-etl-deployment-0 --namespace home-stack
-````
-````
+```
+```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
-````
+```
 #### Home GIT Commit CronJob
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/git-commit-cronjob.yaml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
-````
+```
 #### Statement Parser Service - Pod/Deployment/Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/stmt-parser-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- bash
-````
-````
+```
+```shell
 kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- tail -f /opt/logs/spring-batch.log
-````
-````
+```
+```shell
 kubectl logs pod/stmtparser-deployment-0 --namespace home-stack
-````
-````
+```
+```shell
 kubectl rollout restart statefulset.apps/stmtparser-deployment -n home-stack
-````
+```
 #### Dashboard Service - Pod/Deployment/Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/dashboard-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/dashboard-service.yaml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- /bin/sh
-````
-````
+```
+```shell
 kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
-````
+```
 #### Jaeger Service
-````
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/jaeger-all-in-one-template.yml 
-````
-````
+```
+```shell
 kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
-````
-````
+```
+```shell
 kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
-````
+```
 #### Delete Stack
-````
+```shell
 kubectl delete namespace home-stack 
-````
+```
 ## Kubernetes Dashboard
 ### Pod/Deployment/Service
-````
+```shell
 kubectl apply -f yaml/kubernetes-dashboard.yaml
-````
-````
+```
+```shell
 kubectl delete -f yaml/kubernetes-dashboard.yaml
-````
-````
+```
+```shell
 kubectl get all --namespace kubernetes-dashboard
-````
-````
-kubectl create token kubernetes-dashboard --duration=999999h -n kubernetes-dashboard
-````
-the below note needed
-````
-kubectl get secrets -n kubernetes-dashboard
-````
-````
-kubectl get secret kubernetes-dashboard-token-wtmbt -n kubernetes-dashboard -o jsonpath="{.data.token}" | base64 --decode
-````
+```
+```shell
+kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
+```
+```shell
+kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kubernetes-dashboard
+```
+Note: use this token for Kubernetes Dashboard login
 
 ### Kubernetes Metrics Server
-````
+```shell
 kubectl apply -f yaml/metrix-server.yaml
-````
-````
+```
+```shell
 kubectl delete -f yaml/metrix-server.yaml
-````
-````
+```
+```shell
 kubectl get deployment metrics-server -n kube-system
-````
-````
+```
+```shell
 kubectl top nodes
-````
+```
 ### Ingress
 #### Ingress Controller - Enable Nginx Ingress Controller
 This will deploy a daemonset nginx-ingress-microk8s-controller
-````
+```shell
 microk8s enable ingress
-````
+```
 #### Ingress
-````
+```shell
 kubectl apply -f yaml/ingress.yaml --namespace=home-stack
+```
+### RBAC
+#### Enable RBAC
+```
+microk8s enable rbac
+```
+#### Create roll binding for cluster admin user: alok. So that remotely cluster opertaion can be performed
+```shell
+kubectl apply -f yaml/home-user-rback-cluster-admin-user.yaml
+```
+#### Create user alok
+##### Create CSR for user alok
+```shell
+cd ~/cert/k8s
+openssl genrsa -out alok.key 2048
+openssl req -new -key alok.key -out alok-csr.pem -subj "/CN=alok/O=home-stack/O=ingress"
+scp alok-csr.pem alok@jgte:cert/
+```
+##### Sign User CSR on master node
+```
+openssl x509 -req -in ~/cert/alok-csr.pem -CA /var/snap/microk8s/current/certs/ca.crt -CAkey /var/snap/microk8s/current/certs/ca.key -CAcreateserial -out ~/cert/alok-crt.pem -days 365
+```
+#### Copy User Cert and CA cert
+```shell
+scp alok@jgte:cert/alok-crt.pem ~/cert/k8s
+```
+```shell
+scp alok@jgte:/var/snap/microk8s/current/certs/ca.crt ~/cert/k8s
+```
+Note: add below entry in /etc/hosts
+```
+192.168.1.200   jgte kubernetes
+```
+##### Create Cluster
+```shell
+kubectl config set-cluster home-cluster --server=https://kubernetes:16443 --certificate-authority=/Users/aloksingh/cert/k8s/ca.crt --embed-certs=true
+```
+```shell
+cat ~/.kube/config
 ````
+##### Create User Credentials
+```shell
+kubectl config set-credentials alok --client-certificate=/Users/aloksingh/cert/k8s/alok-crt.pem --client-key=/Users/aloksingh/cert/k8s/alok.key --embed-certs=true
+```
+##### Create User Context
+```shell
+kubectl config set-context alok-home --cluster=home-cluster --namespace=home-stack --user alok
+```
+##### Use the context
+```shell
+kubectl config use-context alok-home
+```
 ### Horizon Autoscaling
 #### Create HorizonTalPodAutoscaler
-````
+```shell
 kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
-````
-````
+```
+```shell
 kubectl get hpa --namespace home-stack
-````
+```
 
 #### Update Scale to 1
-````
+```shell
 kubectl edit hpa dashboard-deployment --namespace home-stack
-````
-````
+```
+```shell
 kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
-````
+```
 
 ### Miscellaneous commands
 #### Get all 
-````
-kubectl get all --namespace home-stack
-````
+```shell
+kubectl get all --all-namespaces
+```
 #### Get Pod Log
-````
+```shell
 kubectl logs pod/dashboard-deployment-65cf5b8858-7x8z8 --namespace home-stack
-````
+```
 #### Describe a Pod
-````
+```shell
 kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-stack
-````
+```
 #### Get All Pods under All Namespaces
-````
+```shell
 kubectl get -A pods
-````
+```
 #### Describe a spec
-````
+```shell
 kubectl explain --api-version="batch/v1beta1" cronjobs.spec
-````
+```
 ## Service Mesh - Istio
 ### Install
 
