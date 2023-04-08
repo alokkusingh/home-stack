@@ -248,6 +248,9 @@ kubectl delete -f yaml/kubernetes-dashboard.yaml
 kubectl get all --namespace kubernetes-dashboard
 ```
 ```shell
+kubectl get svc --namespace kubernetes-dashboard
+```
+```shell
 kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
 ```
 ```shell
@@ -272,7 +275,7 @@ kubectl top nodes
 ### Ingress Controller - Enable Nginx Ingress Controller
 This will deploy a daemonset nginx-ingress-microk8s-controller
 ```shell
-microk8s enable ingress
+ssh alok@jgte microk8s enable ingress
 ```
 ### Ingress
 ```shell
@@ -348,9 +351,24 @@ kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
 ```
 
 ## Miscellaneous commands
-### Get all 
+### Client and Server version
+```shell
+kubectl version --output=json
+```
+### Get all from all namespaces
 ```shell
 kubectl get all --all-namespaces
+```
+### Get all Services
+```shell
+kubectl get svc --all-namespaces 
+```
+### Describe a Service
+```shell
+kubectl describe svc dashboard-service --namespace home-stack
+```
+```shell
+kubectl describe svc kubernetes-dashboard --namespace kubernetes-dashboard
 ```
 ### Get Pod Log
 ```shell
