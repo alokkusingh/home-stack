@@ -355,6 +355,16 @@ kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
 ```shell
 kubectl version --output=json
 ```
+### Get Node Details
+This gives details about nodes including images in local
+```shell
+kubectl get nodes -o yaml
+```
+### Get Cluster Dump
+This gives cluster dump including all pods log
+```shell
+kubectl cluster-info dump > ~/k8s/cluster-dump.log
+```
 ### Get all from all namespaces
 ```shell
 kubectl get all --all-namespaces
