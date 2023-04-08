@@ -17,7 +17,7 @@ As of now it is deployed on single node cluster.
 
 ## Table of contents 
 <!-- TOC -->
-* [home-stack](#home-stack)
+* [Home Stack](#home-stack)
   * [Table of contents](#table-of-contents)
   * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
     * [Create Namespaces](#create-namespaces)
@@ -61,6 +61,9 @@ As of now it is deployed on single node cluster.
     * [Describe a spec](#describe-a-spec)
   * [Service Mesh - Istio](#service-mesh---istio)
     * [Install](#install)
+  * [Backup](#backup)
+    * [Config Map](#config-map)
+    * [Secrets](#secrets)
   * [Deployment Architecture](#deployment-architecture)
     * [Services](#services)
 <!-- TOC -->
@@ -277,8 +280,8 @@ kubectl apply -f yaml/ingress.yaml --namespace=home-stack
 ```
 ## RBAC
 ### Enable RBAC
-```
-microk8s enable rbac
+```shell
+ssh alok@jgte microk8s enable rbac
 ```
 ### Create roll binding for cluster admin user: alok
 So that remotely cluster opertaion can be performed
@@ -294,8 +297,8 @@ openssl req -new -key alok.key -out alok-csr.pem -subj "/CN=alok/O=home-stack/O=
 scp alok-csr.pem alok@jgte:cert/
 ```
 #### Sign User CSR on master node
-```
-openssl x509 -req -in ~/cert/alok-csr.pem -CA /var/snap/microk8s/current/certs/ca.crt -CAkey /var/snap/microk8s/current/certs/ca.key -CAcreateserial -out ~/cert/alok-crt.pem -days 365
+```shell
+ssh alok@jgte openssl x509 -req -in ~/cert/alok-csr.pem -CA /var/snap/microk8s/current/certs/ca.crt -CAkey /var/snap/microk8s/current/certs/ca.key -CAcreateserial -out ~/cert/alok-crt.pem -days 365
 ```
 #### Copy User Cert and CA cert
 ```shell
@@ -371,6 +374,23 @@ kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 ---
 >To be explored - seems microk8s isteo addon not supported for ARMx64 architecture. Where the same is supported for minikube.
 ---
+## Backup
+### Config Map
+This is needed as some config items are directly updated in the cluster through Kubernetes Dashboard for security reason
+```shell
+kubectl get configmap --namespace=home-stack stmt-parser-cofig -o yaml > ~/k8s/stmt-parser-cofig.yaml
+kubectl get configmap --namespace=home-stack home-etl-cofig -o yaml > ~/k8s/home-etl-cofig.yaml
+kubectl get configmap --namespace=home-stack home-api-cofig -o yaml > ~/k8s/home-api-cofig.yaml
+kubectl get configmap --namespace=home-stack home-auth-cofig -o yaml > ~/k8s/home-auth-cofig.yaml
+kubectl get configmap --namespace=home-stack dashboard-cofig -o yaml > ~/k8s/dashboard-cofig.yaml
+kubectl get configmap --namespace=home-stack home-common-cofig -o yaml > ~/k8s/home-common-cofig.yaml
+kubectl get configmap --namespace=home-stack nginx-conf -o yaml > ~/k8s/nginx-conf.yaml
+```
+### Secrets
+This is needed as some secret items are directly updated in the cluster through Kubernetes Dashboard for security reason
+```shell
+kubectl get secrets --namespace=home-stack mysql-secrets -o yaml > ~/k8s/mysql-secrets.yaml
+```
 
 ## Deployment Architecture
 ![alt text](https://github.com/alokkusingh/home-stack/blob/main/draw-io/image/HomeStack.drawio.png)
