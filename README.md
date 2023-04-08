@@ -310,13 +310,13 @@ scp alok@jgte:cert/alok-crt.pem ~/cert/k8s
 ```shell
 scp alok@jgte:/var/snap/microk8s/current/certs/ca.crt ~/cert/k8s
 ```
-Note: add below entry in /etc/hosts
-```
-192.168.1.200   jgte kubernetes
-```
 #### Create Cluster
 ```shell
 kubectl config set-cluster home-cluster --server=https://kubernetes:16443 --certificate-authority=/Users/aloksingh/cert/k8s/ca.crt --embed-certs=true
+```
+Note: add below entry in `/etc/hosts`
+```
+192.168.1.200   jgte kubernetes
 ```
 ```shell
 cat ~/.kube/config
@@ -334,7 +334,7 @@ kubectl config set-context alok-home --cluster=home-cluster --namespace=home-sta
 kubectl config use-context alok-home
 ```
 ## Horizon Autoscaling
-### Create HorizonTalPodAutoscaler
+### Create Horizontal Pod Autoscaler
 ```shell
 kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
 ```
