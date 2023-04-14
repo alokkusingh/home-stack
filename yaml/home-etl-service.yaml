@@ -147,6 +147,26 @@ spec:
                 configMapKeyRef:
                   name: home-etl-cofig
                   key: logging-level-com-alok
+            - name: CRON_EXPENSE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: cron-expense
+            - name: CRON_INVESTMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: cron-investment
+            - name: CRON_TAX
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: cron-tax
+            - name: CRON_ODION
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: cron-odion
       volumes:
         - name: stmt-volume
           hostPath:
