@@ -22,3 +22,6 @@
 [submodule "home-etl-service"]
 	path = home-etl-service
 	url = https://github.com/alokkusingh/home-etl-service.git
+[submodule "home-scheduler-task"]
+	path = home-scheduler-task
+	url = https://github.com/alokkusingh/home-scheduler-task.git
