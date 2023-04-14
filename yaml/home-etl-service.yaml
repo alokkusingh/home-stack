@@ -108,6 +108,45 @@ spec:
               memory: 512Mi
             requests:
               memory: 256Mi
+        - name: home-scheduler-container
+          image: alokkusingh/home-scheduler-task:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /local/api/actuator/health/liveness
+              port: 8082
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /local/api/actuator/health/readiness
+              port: 8082
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 3
+          ports:
+            - containerPort: 8082
+          resources:
+            limits:
+              memory: 256Mi
+            requests:
+              memory: 128Mi
+          env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: spring-profiles-active
+            - name: LOGGING_LEVEL_COM_ALOK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: logging-level-com-alok
       volumes:
         - name: stmt-volume
           hostPath:
