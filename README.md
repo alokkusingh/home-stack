@@ -5,7 +5,7 @@
 <p style='margin-top:1em; text-align:center'>
 <b>Home Project Stack</b></p>
 <p style='margin-left:1em;'>
-The stack is deployed using Kubernetes cluster enabled using microk8s. microk8s is installed using snap package manger. Package is provided by Canonical (publisher of Ubuntu).<br>
+The stack is deployed using Kubernetes cluster enabled using microk8s (https://microk8s.io/docs). microk8s is installed using snap package manger. Package is provided by Canonical (publisher of Ubuntu).<br>
 - Resources: quad-core ARMx64 processor with 8GB RAM<br>
 - Kernel: GNU/Linux 5.4.0-1058-raspi aarch64<br>
 - OS: Ubuntu 20.04.4<br><br>
@@ -365,6 +365,9 @@ This gives details about nodes including images in local
 ```shell
 kubectl get nodes -o yaml
 ```
+```shell
+kubectl describe nodes
+```
 ### Get Cluster Dump
 This gives cluster dump including all pods log
 ```shell
@@ -395,7 +398,7 @@ kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-sta
 ```
 ### Get All Pods under All Namespaces
 ```shell
-kubectl get -A pods
+kubectl get po -A -o wide
 ```
 ### Describe a spec
 ```shell
