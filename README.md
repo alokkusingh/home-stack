@@ -394,7 +394,11 @@ kubectl logs pod/dashboard-deployment-65cf5b8858-7x8z8 --namespace home-stack
 ```
 ### Describe a Pod
 ```shell
-kubectl describe pod/dashboard-deployment-65cf5b8858-7x8z8  --namespace=home-stack
+kubectl describe pod home-etl-deployment-0  --namespace=home-stack
+```
+### top a pod
+```shell
+kubectl top pod home-etl-deployment-0  --containers
 ```
 ### Get All Pods under All Namespaces
 ```shell
@@ -404,6 +408,7 @@ kubectl get po -A -o wide
 ```shell
 kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 ```
+kubectl cheat sheet - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 ## Service Mesh - Istio
 ### Install
 
