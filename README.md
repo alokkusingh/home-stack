@@ -222,6 +222,9 @@ kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
 ### Delete Stack
 ```
+kubectl delete namespace home-stack-dmz
+```
+```
 kubectl delete namespace home-stack 
 ```
 ```
