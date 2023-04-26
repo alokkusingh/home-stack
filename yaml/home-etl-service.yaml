@@ -27,6 +27,7 @@ spec:
     metadata:
       labels:
         app: home-etl
+        network/db-access: "true"
     spec:
       containers:
         - name: home-etl-container

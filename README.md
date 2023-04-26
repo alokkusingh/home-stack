@@ -29,7 +29,6 @@ As of now it is deployed on single node cluster.
     * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
     * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
     * [Home GIT Commit CronJob](#home-git-commit-cronjob)
-    * [Statement Parser Service - Pod/Deployment/Service](#statement-parser-service---poddeploymentservice)
     * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
     * [Jaeger Service](#jaeger-service)
     * [Delete Stack](#delete-stack)
@@ -193,28 +192,6 @@ kubectl apply -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 ```
 ```shell
 kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
-```
-### Statement Parser Service - Pod/Deployment/Service
-```shell
-kubectl apply --validate=true --dry-run=client -f yaml/stmt-parser-service.yaml 
-```
-```shell
-kubectl apply -f yaml/stmt-parser-service.yaml  --namespace=home-stack
-```
-```shell
-kubectl delete -f yaml/stmt-parser-service.yaml  --namespace=home-stack
-```
-```shell
-kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- bash
-```
-```shell
-kubectl exec -it pod/stmtparser-deployment-0 --namespace home-stack -- tail -f /opt/logs/spring-batch.log
-```
-```shell
-kubectl logs pod/stmtparser-deployment-0 --namespace home-stack
-```
-```shell
-kubectl rollout restart statefulset.apps/stmtparser-deployment -n home-stack
 ```
 ### Dashboard Service - Pod/Deployment/Service
 ```shell

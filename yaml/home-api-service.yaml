@@ -34,6 +34,7 @@ spec:
     metadata:
       labels:
         app: home-api
+        network/db-access: "true"
     spec:
       containers:
         - name: home-api-container
