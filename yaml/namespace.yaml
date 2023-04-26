@@ -11,3 +11,10 @@ metadata:
   name: "home-stack-db"
   labels:
     name: "home-stack-db"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "home-stack-dmz"
+  labels:
+    name: "home-stack-dmz"

@@ -198,16 +198,16 @@ kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
 ```
 ```shell
-kubectl apply -f yaml/dashboard-service.yaml  --namespace=home-stack
+kubectl apply -f yaml/dashboard-service.yaml
 ```
 ```shell
-kubectl delete -f yaml/dashboard-service.yaml  --namespace=home-stack
+kubectl delete -f yaml/dashboard-service.yaml
 ```
 ```shell
-kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack -- /bin/sh
+kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack-dmz -- /bin/sh
 ```
 ```shell
-kubectl logs deployment.apps/dashboard-deployment --namespace home-stack
+kubectl logs deployment.apps/dashboard-deployment --namespace home-stack-dmz
 ```
 ### Jaeger Service
 ```shell
@@ -267,9 +267,13 @@ This will deploy a daemonset nginx-ingress-microk8s-controller
 ```shell
 ssh alok@jgte microk8s enable ingress
 ```
-### Ingress
+### Ingress Create
 ```shell
-kubectl apply -f yaml/ingress.yaml --namespace=home-stack
+kubectl apply -f yaml/ingress.yaml
+```
+### Ingress Delete
+```shell
+kubectl delete -f yaml/ingress.yaml
 ```
 ## RBAC
 ### Enable RBAC
