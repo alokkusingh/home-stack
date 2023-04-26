@@ -5,7 +5,7 @@ metadata:
   namespace: home-stack
 data:
   db-schema: home-stack
-  db-url: jdbc:mysql://mysql:3306/home-stack
+  db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
   logging-level-com-zaxxer-hikari: TRACE
   logging-level-com-alok: INFO
@@ -20,7 +20,7 @@ metadata:
   namespace: home-stack
 data:
   db-schema: home-stack
-  db-url: jdbc:mysql://mysql:3306/home-stack
+  db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
   logging-level-com-zaxxer-hikari: TRACE
   logging-level-com-alok: INFO
@@ -39,7 +39,7 @@ metadata:
   namespace: home-stack
 data:
   db-schema: home-stack
-  db-url: jdbc:mysql://mysql:3306/home-stack
+  db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
   logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
   logging-level-com-zaxxer-hikari: TRACE
   logging-level-com-alok: INFO

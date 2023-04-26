@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-  namespace: home-stack
+  namespace: home-stack-db
 spec:
   ports:
     - port: 3306
@@ -16,7 +16,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: mysql
-  namespace: home-stack
+  namespace: home-stack-db
 spec:
   serviceName: mysql
   selector:
@@ -61,7 +61,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: mysql-pv-volume
-  namespace: home-stack
+  namespace: home-stack-db
   labels:
     type: local
 spec:
@@ -77,7 +77,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
-  namespace: home-stack
+  namespace: home-stack-db
 spec:
   storageClassName: manual
   accessModes:

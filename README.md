@@ -100,16 +100,16 @@ kubectl apply -f yaml/networkpolicy.yaml
 kubectl apply --validate=true --dry-run=client -f yaml/mysql-service.yaml 
 ```
 ```shell
-kubectl apply -f yaml/mysql-service.yaml  --namespace=home-stack
+kubectl apply -f yaml/mysql-service.yaml
 ```
 ```shell
-kubectl delete -f yaml/mysql-service.yaml  --namespace=home-stack
+kubectl delete -f yaml/mysql-service.yaml
 ```
 ```shell
-kubectl exec -it pod/mysql-0 --namespace home-stack -- mysql -u root -p home-stack
+kubectl exec -it pod/mysql-0 --namespace home-stack-db -- mysql -u root -p home-stack
 ```
 ```shell
-kubectl logs pod/mysql-0 --namespace home-stack
+kubectl logs pod/mysql-0 --namespace home-stack-db
 ```
 ```shell
 mysql -u root -p home-stack --host 127.0.0.1 --port 32306
@@ -245,6 +245,9 @@ kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ### Delete Stack
 ```
 kubectl delete namespace home-stack 
+```
+```
+kubectl delete namespace home-stack-db 
 ```
 ## Kubernetes Dashboard
 ### Pod/Deployment/Service

@@ -4,3 +4,10 @@ metadata:
   name: "home-stack"
   labels:
     name: "home-stack"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "home-stack-db"
+  labels:
+    name: "home-stack-db"
