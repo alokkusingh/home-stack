@@ -391,6 +391,12 @@ kubectl get po -A -o wide
 ```
 ### Describe a spec
 ```shell
+kubectl explain --api-version="networking.k8s.io/v1" NetworkPolicy.spec
+```
+```shell
+kubectl explain --api-version="networking.k8s.io/v1" NetworkPolicy.spec.ingress
+```
+```shell
 kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 ```
 kubectl cheat sheet - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
