@@ -62,6 +62,7 @@ As of now it is deployed on single node cluster.
     * [Describe a Service](#describe-a-service)
     * [Get Pod Log](#get-pod-log)
     * [Describe a Pod](#describe-a-pod)
+    * [top a pod](#top-a-pod)
     * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
     * [Describe a spec](#describe-a-spec)
   * [Service Mesh - Istio](#service-mesh---istio)
@@ -69,6 +70,10 @@ As of now it is deployed on single node cluster.
   * [Backup](#backup)
     * [Config Map](#config-map)
     * [Secrets](#secrets)
+  * [Network Monitoring](#network-monitoring)
+    * [Kubeshark](#kubeshark)
+      * [Start Monitoring Pods](#start-monitoring-pods)
+      * [Stop Monitoring Pods](#stop-monitoring-pods)
   * [Deployment Architecture](#deployment-architecture)
     * [Services](#services)
 <!-- TOC -->
@@ -431,6 +436,17 @@ kubectl get configmap --namespace=home-stack nginx-conf -o yaml > ~/k8s/nginx-co
 This is needed as some secret items are directly updated in the cluster through Kubernetes Dashboard for security reason
 ```shell
 kubectl get secrets --namespace=home-stack mysql-secrets -o yaml > ~/k8s/mysql-secrets.yaml
+```
+## Network Monitoring
+### Kubeshark
+#### Start Monitoring Pods
+```shell
+kubeshark tap
+```
+Kubeshark dashboard is accessible using http://localhost:8899
+#### Stop Monitoring Pods
+```shell
+kubeshark clean
 ```
 
 ## Deployment Architecture
