@@ -97,6 +97,11 @@ spec:
                 configMapKeyRef:
                   name: home-etl-cofig
                   key: spring-datasource-hikari-maximum-pool-size
+            - name: GIT_BEARER-TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: git-bearer-token
           ports:
             - containerPort: 8081
           volumeMounts:
