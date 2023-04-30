@@ -424,12 +424,13 @@ kubectl get configmap --namespace=home-stack home-api-cofig -o yaml > ~/k8s/home
 kubectl get configmap --namespace=home-stack home-auth-cofig -o yaml > ~/k8s/home-auth-cofig.yaml
 kubectl get configmap --namespace=home-stack dashboard-cofig -o yaml > ~/k8s/dashboard-cofig.yaml
 kubectl get configmap --namespace=home-stack home-common-cofig -o yaml > ~/k8s/home-common-cofig.yaml
-kubectl get configmap --namespace=home-stack nginx-conf -o yaml > ~/k8s/nginx-conf.yaml
+kubectl get configmap --namespace=home-stack-dmz nginx-conf -o yaml > ~/k8s/nginx-conf.yaml
 ```
 ### Secrets
 This is needed as some secret items are directly updated in the cluster through Kubernetes Dashboard for security reason
 ```shell
 kubectl get secrets --namespace=home-stack mysql-secrets -o yaml > ~/k8s/mysql-secrets.yaml
+kubectl get secrets --namespace=home-stack-db mysql-secrets -o yaml > ~/k8s/mysql-secrets-db.yaml
 ```
 ## Network Monitoring
 ### Kubeshark
