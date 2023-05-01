@@ -245,10 +245,10 @@ kubectl get all --namespace kubernetes-dashboard
 kubectl get svc --namespace kubernetes-dashboard
 ```
 ```shell
-kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
+kubectl apply -f yaml/kubernetes-dashboard-rback-dashboard-admin-user.yaml
 ```
 ```shell
-kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kubernetes-dashboard
+kubectl create token k8s-dashboard-admin-user --duration=999999h -n kubernetes-dashboard
 ```
 Note: use this token for Kubernetes Dashboard login
 

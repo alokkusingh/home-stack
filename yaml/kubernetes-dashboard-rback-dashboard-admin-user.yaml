@@ -14,7 +14,7 @@ metadata:
   # "namespace" omitted since ClusterRoles are not namespaced
 rules:
   - apiGroups: ["", "extensions", "apps"]
-    resources: ["deployments", "pods", "services", "secrets", "namespaces"]
+    resources: ["*"]
     verbs: ["*"]
 
 ---
