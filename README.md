@@ -250,7 +250,16 @@ kubectl apply -f yaml/kubernetes-dashboard-rback-dashboard-admin-user.yaml
 ```shell
 kubectl create token k8s-dashboard-admin-user --duration=999999h -n kubernetes-dashboard
 ```
-Note: use this token for Kubernetes Dashboard login
+Note: the above doesnt have Ingress get role
+```shell
+kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
+```
+```shell
+kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kubernetes-dashboard
+```
+Note: the above doesnt have workloads get role
+
+Note: use one of this token for Kubernetes Dashboard login
 
 ### Kubernetes Metrics Server
 ```shell
@@ -376,7 +385,7 @@ kubectl get svc --all-namespaces
 ```
 ### Describe a Service
 ```shell
-kubectl describe svc dashboard-service --namespace home-stack
+kubectl describe svc dashboard-service --namespace home-stack-dmz
 ```
 ```shell
 kubectl describe svc kubernetes-dashboard --namespace kubernetes-dashboard

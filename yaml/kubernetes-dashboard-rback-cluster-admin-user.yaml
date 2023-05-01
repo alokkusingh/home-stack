@@ -1,4 +1,4 @@
-# Create a service account for an admin user - NOT in USE
+# Create a service account for an admin user
 apiVersion: v1
 kind: ServiceAccount
 metadata:
