@@ -34,6 +34,7 @@ spec:
     metadata:
       labels:
         app: home-auth
+        network/db-access: "true"
     spec:
       containers:
         - name: home-auth-container
@@ -43,7 +44,7 @@ spec:
             httpGet:
               path: /home/auth/actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 5
+            initialDelaySeconds: 30
             timeoutSeconds: 2
             periodSeconds: 10
             failureThreshold: 5
@@ -51,7 +52,7 @@ spec:
             httpGet:
               path: /home/auth/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 10
+            initialDelaySeconds: 60
             timeoutSeconds: 2
             periodSeconds: 30
             failureThreshold: 3
@@ -70,11 +71,56 @@ spec:
                 configMapKeyRef:
                   name: home-auth-cofig
                   key: oauth-google-client-id
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-user-name
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-password
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-com-zaxxer-hikari-HikariConfig
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-com-zaxxer-hikari
             - name: LOGGING_LEVEL_COM_ALOK
               valueFrom:
                 configMapKeyRef:
-                  name: home-auth-cofig
+                  name: home-api-cofig
                   key: logging-level-com-alok
+            - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: spring-datasource-hikari-minimum-idle
+            - name: SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: spring-datasource-hikari-maximum-pool-size
+            - name: APPLICATION_SECURITY_JWT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: home-auth-cofig
+                  key: application-security-jwt-secret
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-auth-cofig
+                  key: spring-profiles-active
       volumes:
         - name: tz-config
           hostPath:

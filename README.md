@@ -154,10 +154,13 @@ kubectl delete -f yaml/home-auth-service.yaml  --namespace=home-stack
 kubectl exec -it pod/home-auth-deployment-0 --namespace home-stack -- bash
 ```
 ```shell
-kubectl exec -it pod/home-auth-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
+read instance
 ```
 ```shell
-kubectl logs pod/home-auth-deployment-0 --namespace home-stack
+kubectl exec -it pod/home-auth-deployment-$instance --namespace home-stack -- tail -f /opt/logs/application.log
+```
+```shell
+kubectl logs pod/home-auth-deployment-$instance --namespace home-stack
 ```
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack

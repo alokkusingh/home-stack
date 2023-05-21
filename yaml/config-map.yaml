@@ -54,6 +54,7 @@ metadata:
   namespace: home-stack
 data:
   test: some-test
+  spring-profiles-active: prod
 ---
 apiVersion: v1
 kind: ConfigMap
