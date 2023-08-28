@@ -25,3 +25,6 @@
 [submodule "home-scheduler-task"]
 	path = home-scheduler-task
 	url = https://github.com/alokkusingh/home-scheduler-task.git
+[submodule "liquibase"]
+	path = liquibase
+	url = https://github.com/alokkusingh/liquibase.git
