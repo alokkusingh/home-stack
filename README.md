@@ -97,6 +97,9 @@ kubectl apply -f yaml/networkpolicy.yaml
 ```
 ### MySQL Service - Pod/Deployment/Service
 ```shell
+ssh alok@jgte mkdir -p /home/alok/data/mysql
+```
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/mysql-service.yaml 
 ```
 ```shell
@@ -104,6 +107,10 @@ kubectl apply -f yaml/mysql-service.yaml
 ```
 ```shell
 kubectl delete -f yaml/mysql-service.yaml
+```
+```shell
+kubectl exec -it pod/mysql-0 --namespace home-stack-db -- mysql -u root -p sys
+CREATE DATABASE `home-stack`;
 ```
 ```shell
 kubectl exec -it pod/mysql-0 --namespace home-stack-db -- mysql -u root -p home-stack
