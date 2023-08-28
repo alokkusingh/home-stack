@@ -123,6 +123,8 @@ mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 ```
 ---
 **Note:**
+>Run liquibase to create batch tables and add application users and roles
+
 >[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
 ---
 ### Home API Service - Pod/Deployment/Service
