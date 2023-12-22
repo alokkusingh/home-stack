@@ -28,3 +28,6 @@
 [submodule "liquibase"]
 	path = liquibase
 	url = https://github.com/alokkusingh/liquibase.git
+[submodule "home-category-api"]
+	path = home-category-api
+	url = https://github.com/alokkusingh/home-category-api.git
