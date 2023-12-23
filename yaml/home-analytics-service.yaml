@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-analytics-service
+  namespace: home-stack
+spec:
+  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
+  selector:
+    # XX-YYY
+    app: home-analytics
+  # Defining headless service
+  #clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 50051
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-analytics-deployment
+  labels:
+    # This should be same as Service spec:selector
+    # XX-YYY
+    app: home-analytics
+  namespace: home-stack
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: home-analytics
+  template:
+    metadata:
+      labels:
+        app: home-analytics
+        network/db-access: "false"
+    spec:
+      containers:
+        - name: home-category-api
+          image: alokkusingh/home-category-api:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 50051
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            tcpSocket:
+              port: 50051
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 30
+            failureThreshold: 3
+          ports:
+            - containerPort: 50051
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
+      volumes:
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File

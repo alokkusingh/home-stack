@@ -174,6 +174,22 @@ kubectl logs pod/home-auth-deployment-$instance --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
+### Home Analytics Service - Pod/Deployment/Service
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/home-analytics-service.yaml 
+```
+```shell
+kubectl apply -f yaml/home-analytics-service.yaml  --namespace=home-stack
+```
+```shell
+kubectl delete -f yaml/home-analytics-service.yaml  --namespace=home-stack
+```
+```shell
+read instance
+```
+```shell
+kubectl logs pod/home-auth-analytics-$instance --namespace home-stack
+```
 ### Home ETL Service - Pod/Statefulset/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-etl-service.yaml 
@@ -262,7 +278,6 @@ kubectl apply -f yaml/kubernetes-dashboard-rback-dashboard-admin-user.yaml
 ```shell
 kubectl create token k8s-dashboard-admin-user --duration=999999h -n kubernetes-dashboard
 ```
-Note: the above doesnt have Ingress get role
 ```shell
 kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
 ```
