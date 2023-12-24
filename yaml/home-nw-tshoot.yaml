@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-nw-tshoot-service
+  namespace: home-stack
+spec:
+  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
+  selector:
+    # XX-YYY
+    app: nw-tshoots
+  # Defining headless service
+  clusterIP: None
+  #ports:
+  #  - protocol: TCP
+  #    port: 50051
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: home-nw-tshoot-deployment
+  labels:
+    # This should be same as Service spec:selector
+    # XX-YYY
+    app: home-nw-tshoot
+  namespace: home-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-nw-tshoot
+  template:
+    metadata:
+      labels:
+        app: home-nw-tshoot
+        network/db-access: "true"
+    spec:
+      containers:
+        - name: netshoot
+          image: nicolaka/netshoot:latest
+          imagePullPolicy: Always
+          args:
+            - /bin/sh
+            - -c
+            - touch /tmp/healthy; sleep 300; rm -f /tmp/healthy; sleep 1
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /tmp/healthy
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 256Mi
+      volumes:
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File
