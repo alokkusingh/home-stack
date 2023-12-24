@@ -17,16 +17,18 @@ As of now it is deployed on single node cluster.
 
 ## Table of contents 
 <!-- TOC -->
-* [Home Stack](#home-stack)
-  * [Table of contents](#table-of-contents)
+* [Home Stack](#home-stack-)
+  * [Table of contents](#table-of-contents-)
   * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
     * [Create Namespaces](#create-namespaces)
     * [Create ConfigMap](#create-configmap)
     * [Create Secrets](#create-secrets)
     * [Create Network policy](#create-network-policy)
     * [MySQL Service - Pod/Deployment/Service](#mysql-service---poddeploymentservice)
+    * [Home Network Troubleshoot - Pod/Statefulset/Service](#home-network-troubleshoot---podstatefulsetservice)
     * [Home API Service - Pod/Deployment/Service](#home-api-service---poddeploymentservice)
     * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
+    * [Home Analytics Service - Pod/Deployment/Service](#home-analytics-service---poddeploymentservice)
     * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
     * [Home GIT Commit CronJob](#home-git-commit-cronjob)
     * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
@@ -41,7 +43,7 @@ As of now it is deployed on single node cluster.
     * [Ingress Delete](#ingress-delete)
   * [RBAC](#rbac)
     * [Enable RBAC](#enable-rbac)
-    * [Create roll binding for cluster admin user: alok](#create-roll-binding-for-cluster-admin-user--alok)
+    * [Create roll binding for cluster admin user: alok](#create-roll-binding-for-cluster-admin-user-alok)
     * [Create user alok](#create-user-alok)
       * [Create CSR for user alok](#create-csr-for-user-alok)
       * [Sign User CSR on master node](#sign-user-csr-on-master-node)
@@ -127,6 +129,19 @@ mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 
 >[Follow the link to configure sqldeveloper on Mac to connect to MySQL server remotely](https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/ "https://cybercafe.dev/setup-mysql-and-sql-developer-on-macos/")
 ---
+### Home Network Troubleshoot - Pod/Statefulset/Service
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/home-nw-tshoot.yaml 
+```
+```shell
+kubectl apply -f yaml/home-nw-tshoot.yaml  --namespace=home-stack
+```
+```shell
+kubectl delete -f yaml/home-nw-tshoot.yaml  --namespace=home-stack
+```
+```shell
+kubectl exec -it pod/home-nw-tshoot-deployment-0 --namespace home-stack -- bash
+```
 ### Home API Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-api-service.yaml 
