@@ -140,7 +140,7 @@ kubectl apply -f yaml/home-nw-tshoot.yaml  --namespace=home-stack
 kubectl delete -f yaml/home-nw-tshoot.yaml  --namespace=home-stack
 ```
 ```shell
-kubectl exec -it pod/home-nw-tshoot-deployment-0 --namespace home-stack -- bash
+kubectl exec -it pod/home-nw-tshoot-deployment-0 --namespace home-stack -- zsh
 ```
 ### Home API Service - Pod/Deployment/Service
 ```shell
