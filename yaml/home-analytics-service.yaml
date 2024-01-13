@@ -41,14 +41,14 @@ spec:
           image: alokkusingh/home-category-api:latest
           imagePullPolicy: Always
           livenessProbe:
-            tcpSocket:
+            grpc:
               port: 50051
             initialDelaySeconds: 5
             timeoutSeconds: 2
             periodSeconds: 10
             failureThreshold: 5
           readinessProbe:
-            tcpSocket:
+            grpc:
               port: 50051
             initialDelaySeconds: 10
             timeoutSeconds: 2
