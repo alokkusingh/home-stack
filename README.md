@@ -203,7 +203,10 @@ kubectl delete -f yaml/home-analytics-service.yaml  --namespace=home-stack
 read instance
 ```
 ```shell
-kubectl logs pod/home-auth-analytics-$instance --namespace home-stack
+kubectl logs pod/home-analytics-deployment-$instance --namespace home-stack
+```
+```shell
+kubectl exec -it pod/home-analytics-deployment-$instance --namespace home-stack -- bash
 ```
 ### Home ETL Service - Pod/Statefulset/Service
 ```shell
@@ -457,6 +460,9 @@ kubectl explain --api-version="networking.k8s.io/v1" NetworkPolicy.spec.ingress
 ```
 ```shell
 kubectl explain --api-version="batch/v1beta1" cronjobs.spec
+```
+```shell
+kubectl get crd 
 ```
 kubectl cheat sheet - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 ## Service Mesh - Istio
