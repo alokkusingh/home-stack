@@ -24,7 +24,7 @@ metadata:
     app: home-auth
   namespace: home-stack
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
   selector:
@@ -44,18 +44,18 @@ spec:
             httpGet:
               path: /home/auth/actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 30
-            timeoutSeconds: 2
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
             periodSeconds: 10
-            failureThreshold: 5
+            failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /home/auth/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 60
-            timeoutSeconds: 2
+            initialDelaySeconds: 90
+            timeoutSeconds: 5
             periodSeconds: 30
-            failureThreshold: 3
+            failureThreshold: 10
           ports:
             - containerPort: 8081
           resources:
