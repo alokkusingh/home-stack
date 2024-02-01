@@ -24,7 +24,8 @@ metadata:
     app: home-api
   namespace: home-stack
 spec:
-  replicas: 1
+  # commenting the replicas as this will be controlled by HPA
+  #replicas: 1
   strategy:
     type: RollingUpdate
   selector:

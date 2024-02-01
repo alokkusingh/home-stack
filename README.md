@@ -54,6 +54,7 @@ As of now it is deployed on single node cluster.
       * [Use the context](#use-the-context)
   * [Horizon Autoscaling](#horizon-autoscaling)
     * [Create Horizontal Pod Autoscaler](#create-horizontal-pod-autoscaler)
+    * [Manually Autoscale](#manually-autoscale)
     * [Update Scale to 1](#update-scale-to-1)
   * [Miscellaneous commands](#miscellaneous-commands)
     * [Client and Server version](#client-and-server-version)
@@ -387,6 +388,13 @@ kubectl config use-context alok-home
 ```
 ## Horizon Autoscaling
 ### Create Horizontal Pod Autoscaler
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/home-hpa.yaml
+```
+```shell
+kubectl apply -f yaml/home-hpa.yaml  --namespace=home-stack
+```
+### Manually Autoscale
 ```shell
 kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
 ```
