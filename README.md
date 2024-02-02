@@ -394,6 +394,18 @@ kubectl apply --validate=true --dry-run=client -f yaml/home-hpa.yaml
 ```shell
 kubectl apply -f yaml/home-hpa.yaml  --namespace=home-stack
 ```
+```shell
+kubectl get hpa
+```
+```shell
+kubectl describe hpa home-auth-hpa
+```
+```shell
+kubectl describe hpa home-api-hpa
+```
+```shell
+kubectl describe hpa home-analytics-hpa
+```
 ### Manually Autoscale
 ```shell
 kubectl autoscale deployment dashboard-deployment --min=2 --max=3 -n home-stack
@@ -453,7 +465,10 @@ kubectl describe pod home-etl-deployment-0  --namespace=home-stack
 ```
 ### top a pod
 ```shell
-kubectl top pod home-etl-deployment-0  --containers
+kubectl top pods
+```
+```shell
+kubectl top pod home-etl-deployment-0 --containers
 ```
 ### Get All Pods under All Namespaces
 ```shell

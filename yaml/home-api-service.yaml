@@ -63,6 +63,7 @@ spec:
             limits:
               memory: 512Mi
             requests:
+              cpu: 200m
               memory: 256Mi
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,

@@ -61,6 +61,7 @@ spec:
             limits:
               memory: 512Mi
             requests:
+              cpu: 100m
               memory: 256Mi
       volumes:
         - name: tz-config

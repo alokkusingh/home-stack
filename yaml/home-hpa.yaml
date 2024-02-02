@@ -16,25 +16,26 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
-    - type: Pods
-      pods:
-        metric:
-          name: packets-per-second
-        target:
-          type: AverageValue
-          averageValue: 1k
-    - type: Object
-      object:
-        metric:
-          name: requests-per-second
-        describedObject:
-          apiVersion: networking.k8s.io/v1
-          kind: Ingress
-          name: ingress-home
-        target:
-          type: Value
-          value: 10k
+          averageUtilization: 80
+#    - type: Pods
+#      pods:
+#        metric:
+#          name: packets-per-second
+#        target:
+#          type: AverageValue
+#          averageValue: 1k
+# TODO: Not able to resolve below Ingress as the Ingress is in different namespace
+#    - type: Object
+#      object:
+#        metric:
+#          name: requests-per-second
+#        describedObject:
+#          apiVersion: networking.k8s.io/v1
+#          kind: Ingress
+#          name: ingress-home
+#        target:
+#          type: Value
+#          value: 10k
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -47,31 +48,34 @@ spec:
     name: home-api-deployment
   minReplicas: 1
   maxReplicas: 2
+  # https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html#spec-metrics-resource
+  # https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html#spec-metrics-pods
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
-    - type: Pods
-      pods:
-        metric:
-          name: packets-per-second
-        target:
-          type: AverageValue
-          averageValue: 1k
-    - type: Object
-      object:
-        metric:
-          name: requests-per-second
-        describedObject:
-          apiVersion: networking.k8s.io/v1
-          kind: Ingress
-          name: ingress-home
-        target:
-          type: Value
-          value: 10k
+          averageUtilization: 80
+#    - type: Pods
+#      pods:
+#        metric:
+#          name: packets-per-second
+#        target:
+#          type: AverageValue
+#          averageValue: 1k
+# TODO: Not able to resolve below Ingress as the Ingress is in different namespace
+#    - type: Object
+#      object:
+#        metric:
+#          name: requests-per-second
+#        describedObject:
+#          apiVersion: networking.k8s.io/v1
+#          kind: Ingress
+#          name: ingress-home
+#        target:
+#          type: Value
+#          value: 10k
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -90,22 +94,23 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 50
-    - type: Pods
-      pods:
-        metric:
-          name: packets-per-second
-        target:
-          type: AverageValue
-          averageValue: 1k
-    - type: Object
-      object:
-        metric:
-          name: requests-per-second
-        describedObject:
-          apiVersion: networking.k8s.io/v1
-          kind: Ingress
-          name: ingress-home
-        target:
-          type: Value
-          value: 10k
+          averageUtilization: 80
+#    - type: Pods
+#      pods:
+#        metric:
+#          name: packets-per-second
+#        target:
+#          type: AverageValue
+#          averageValue: 1k
+# TODO: Not able to resolve below Ingress as the Ingress is in different namespace
+#    - type: Object
+#      object:
+#        metric:
+#          name: requests-per-second
+#        describedObject:
+#          apiVersion: networking.k8s.io/v1
+#          kind: Ingress
+#          name: ingress-home
+#        target:
+#          type: Value
+#          value: 10k
