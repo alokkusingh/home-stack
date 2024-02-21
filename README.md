@@ -19,6 +19,7 @@ As of now it is deployed on single node cluster.
 <!-- TOC -->
 * [Home Stack](#home-stack-)
   * [Table of contents](#table-of-contents-)
+  * [Prerequisites](#prerequisites)
   * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
     * [Create Namespaces](#create-namespaces)
     * [Create ConfigMap](#create-configmap)
@@ -80,7 +81,8 @@ As of now it is deployed on single node cluster.
   * [Deployment Architecture](#deployment-architecture)
     * [Services](#services)
 <!-- TOC -->
-
+## Prerequisites
+[Raspberry Pi Kubernetes Setup](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md)
 ## Deployment of home-stack Kubernetes Stack
 ### Create Namespaces
 ```shell
@@ -98,6 +100,7 @@ kubectl apply -f yaml/secrets.yaml
 ```shell
 kubectl apply -f yaml/networkpolicy.yaml
 ```
+---
 ### MySQL Service - Pod/Deployment/Service
 ```shell
 ssh alok@jgte mkdir -p /home/alok/data/mysql
@@ -124,7 +127,6 @@ kubectl logs pod/mysql-0 --namespace home-stack-db
 ```shell
 mysql -u root -p home-stack --host 127.0.0.1 --port 32306
 ```
----
 **Note:**
 >Run liquibase to create batch tables and add application users and roles
 
@@ -143,6 +145,7 @@ kubectl delete -f yaml/home-nw-tshoot.yaml  --namespace=home-stack
 ```shell
 kubectl exec -it pod/home-nw-tshoot-deployment-0 --namespace home-stack -- zsh
 ```
+---
 ### Home API Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-api-service.yaml 
@@ -165,6 +168,7 @@ kubectl logs pod/home-api-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
+---
 ### Home Auth Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
@@ -190,6 +194,7 @@ kubectl logs pod/home-auth-deployment-$instance --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
+---
 ### Home Analytics Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-analytics-service.yaml 
@@ -209,6 +214,7 @@ kubectl logs pod/home-analytics-deployment-$instance --namespace home-stack
 ```shell
 kubectl exec -it pod/home-analytics-deployment-$instance --namespace home-stack -- bash
 ```
+---
 ### Home ETL Service - Pod/Statefulset/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-etl-service.yaml 
@@ -231,6 +237,7 @@ kubectl logs pod/home-etl-deployment-0 --namespace home-stack
 ```shell
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
+---
 ### Home GIT Commit CronJob
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/git-commit-cronjob.yaml 
@@ -241,6 +248,7 @@ kubectl apply -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 ```shell
 kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 ```
+---
 ### Dashboard Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
@@ -257,6 +265,7 @@ kubectl exec -it deployment.apps/dashboard-deployment --namespace home-stack-dmz
 ```shell
 kubectl logs deployment.apps/dashboard-deployment --namespace home-stack-dmz
 ```
+---
 ### Jaeger Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/jaeger-all-in-one-template.yml 
@@ -267,6 +276,7 @@ kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```shell
 kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
+---
 ### Delete Stack
 ```
 kubectl delete namespace home-stack-dmz
@@ -277,6 +287,7 @@ kubectl delete namespace home-stack
 ```
 kubectl delete namespace home-stack-db 
 ```
+---
 ## Kubernetes Dashboard
 ### Pod/Deployment/Service
 ```shell
@@ -307,6 +318,7 @@ Note: the above doesnt have workloads get role
 
 Note: use one of this token for Kubernetes Dashboard login
 
+---
 ### Kubernetes Metrics Server
 ```shell
 kubectl apply -f yaml/metrix-server.yaml
@@ -320,12 +332,8 @@ kubectl get deployment metrics-server -n kube-system
 ```shell
 kubectl top nodes
 ```
+---
 ## Ingress
-### Ingress Controller - Enable Nginx Ingress Controller
-This will deploy a daemonset nginx-ingress-microk8s-controller
-```shell
-ssh alok@jgte microk8s enable ingress
-```
 ### Ingress Create
 ```shell
 kubectl apply -f yaml/ingress.yaml
@@ -334,58 +342,17 @@ kubectl apply -f yaml/ingress.yaml
 ```shell
 kubectl delete -f yaml/ingress.yaml
 ```
+---
 ## RBAC
-### Enable RBAC
-```shell
-ssh alok@jgte microk8s enable rbac
-```
-### Create roll binding for cluster admin user: alok
+### Create roll binding for cluster admin user: `alok`
 So that remotely cluster opertaion can be performed
 ```shell
 kubectl apply -f yaml/home-user-rback-cluster-admin-user.yaml
 ```
 ### Create user alok
-#### Create CSR for user alok
-```shell
-cd ~/cert/k8s
-openssl genrsa -out alok.key 2048
-openssl req -new -key alok.key -out alok-csr.pem -subj "/CN=alok/O=home-stack/O=ingress"
-scp alok-csr.pem alok@jgte:cert/
-```
-#### Sign User CSR on master node
-```shell
-ssh alok@jgte openssl x509 -req -in ~/cert/alok-csr.pem -CA /var/snap/microk8s/current/certs/ca.crt -CAkey /var/snap/microk8s/current/certs/ca.key -CAcreateserial -out ~/cert/alok-crt.pem -days 365
-```
-#### Copy User Cert and CA cert
-```shell
-scp alok@jgte:cert/alok-crt.pem ~/cert/k8s
-```
-```shell
-scp alok@jgte:/var/snap/microk8s/current/certs/ca.crt ~/cert/k8s
-```
-#### Create Cluster
-```shell
-kubectl config set-cluster home-cluster --server=https://kubernetes:16443 --certificate-authority=/Users/aloksingh/cert/k8s/ca.crt --embed-certs=true
-```
-Note: add below entry in `/etc/hosts`
-```
-192.168.1.200   jgte kubernetes
-```
-```shell
-cat ~/.kube/config
-````
-#### Create User Credentials
-```shell
-kubectl config set-credentials alok --client-certificate=/Users/aloksingh/cert/k8s/alok-crt.pem --client-key=/Users/aloksingh/cert/k8s/alok.key --embed-certs=true
-```
-#### Create User Context
-```shell
-kubectl config set-context alok-home --cluster=home-cluster --namespace=home-stack --user alok
-```
-#### Use the context
-```shell
-kubectl config use-context alok-home
-```
+[Please refer here](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md#create-remote-user---alok)
+
+---
 ## Horizon Autoscaling
 ### Create Horizontal Pod Autoscaler
 ```shell
@@ -421,7 +388,7 @@ kubectl edit hpa dashboard-deployment --namespace home-stack
 ```shell
 kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
 ```
-
+---
 ## Miscellaneous commands
 ### Client and Server version
 ```shell
@@ -488,6 +455,8 @@ kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 kubectl get crd 
 ```
 kubectl cheat sheet - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+---
 ## Service Mesh - Istio
 ### Install
 
@@ -512,6 +481,7 @@ This is needed as some secret items are directly updated in the cluster through 
 kubectl get secrets --namespace=home-stack mysql-secrets -o yaml > ~/k8s/mysql-secrets.yaml
 kubectl get secrets --namespace=home-stack-db mysql-secrets -o yaml > ~/k8s/mysql-secrets-db.yaml
 ```
+---
 ## Network Monitoring
 ### Kubeshark
 #### Start Monitoring Pods
@@ -523,7 +493,7 @@ Kubeshark dashboard is accessible using http://localhost:8899
 ```shell
 kubeshark clean
 ```
-
+---
 ## Deployment Architecture
 ![alt text](https://github.com/alokkusingh/home-stack/blob/main/draw-io/image/HomeStack.drawio.png)
 
@@ -542,6 +512,7 @@ kubeshark clean
 | Jaeger Dashboard          |                                               | NodePort                 | Deployment                               | http://jgte:31686/                 |                                                                                                                                                   |
 | Ingress Controller        | Nginx Ingress Controller                      | NodePort                 | DaemonSet                                | Port: 443                          | API/ETL/Dashboard are behind Nginx but still we have Dashboard accessible directly (from mobile cant access host name - require local DNS server) |
 
+---
 ```mermaid
 graph LR
     A[Write Code] --> B{Does it work?}
