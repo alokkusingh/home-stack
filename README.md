@@ -1,5 +1,6 @@
 # Home Stack 
 
+---
 <div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
 <span>
 <p style='margin-top:1em; text-align:center'>
@@ -15,8 +16,12 @@ As of now it is deployed on single node cluster.
 </p></span>
 </div>
 
+---
+
 ## Table of contents 
 <!-- TOC -->
+
+---
 * [Home Stack](#home-stack-)
   * [Table of contents](#table-of-contents-)
   * [Prerequisites](#prerequisites)
@@ -39,20 +44,11 @@ As of now it is deployed on single node cluster.
     * [Pod/Deployment/Service](#poddeploymentservice)
     * [Kubernetes Metrics Server](#kubernetes-metrics-server)
   * [Ingress](#ingress)
-    * [Ingress Controller - Enable Nginx Ingress Controller](#ingress-controller---enable-nginx-ingress-controller)
     * [Ingress Create](#ingress-create)
     * [Ingress Delete](#ingress-delete)
   * [RBAC](#rbac)
-    * [Enable RBAC](#enable-rbac)
-    * [Create roll binding for cluster admin user: alok](#create-roll-binding-for-cluster-admin-user-alok)
+    * [Create roll binding for cluster admin user: `alok`](#create-roll-binding-for-cluster-admin-user-alok)
     * [Create user alok](#create-user-alok)
-      * [Create CSR for user alok](#create-csr-for-user-alok)
-      * [Sign User CSR on master node](#sign-user-csr-on-master-node)
-      * [Copy User Cert and CA cert](#copy-user-cert-and-ca-cert)
-      * [Create Cluster](#create-cluster)
-      * [Create User Credentials](#create-user-credentials)
-      * [Create User Context](#create-user-context)
-      * [Use the context](#use-the-context)
   * [Horizon Autoscaling](#horizon-autoscaling)
     * [Create Horizontal Pod Autoscaler](#create-horizontal-pod-autoscaler)
     * [Manually Autoscale](#manually-autoscale)
@@ -81,8 +77,10 @@ As of now it is deployed on single node cluster.
   * [Deployment Architecture](#deployment-architecture)
     * [Services](#services)
 <!-- TOC -->
+---
 ## Prerequisites
-[Raspberry Pi Kubernetes Setup](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md)
+* [Kubernetes Setup on Raspberry Pi](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md)
+---
 ## Deployment of home-stack Kubernetes Stack
 ### Create Namespaces
 ```shell
