@@ -1,6 +1,5 @@
 # Home Stack 
 
----
 <div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
 <span>
 <p style='margin-top:1em; text-align:center'>
@@ -16,17 +15,18 @@ As of now it is deployed on single node cluster.
 </p></span>
 </div>
 
----
 
 ## Table of contents 
 <!-- TOC -->
-
----
 * [Home Stack](#home-stack-)
   * [Table of contents](#table-of-contents-)
   * [Prerequisites](#prerequisites)
   * [Deployment of home-stack Kubernetes Stack](#deployment-of-home-stack-kubernetes-stack)
     * [Create Namespaces](#create-namespaces)
+    * [Roll Binding for cluster admin user: `alok`](#roll-binding-for-cluster-admin-user-alok)
+      * [Setup remote user alok](#setup-remote-user-alok)
+    * [Kubernetes Dashboard](#kubernetes-dashboard)
+    * [Kubernetes Metrics Server](#kubernetes-metrics-server)
     * [Create ConfigMap](#create-configmap)
     * [Create Secrets](#create-secrets)
     * [Create Network policy](#create-network-policy)
@@ -36,19 +36,13 @@ As of now it is deployed on single node cluster.
     * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
     * [Home Analytics Service - Pod/Deployment/Service](#home-analytics-service---poddeploymentservice)
     * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
-    * [Home GIT Commit CronJob](#home-git-commit-cronjob)
+    * [Home GIT Commit CronJob (retired)](#home-git-commit-cronjob-retired)
     * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
     * [Jaeger Service](#jaeger-service)
     * [Delete Stack](#delete-stack)
-  * [Kubernetes Dashboard](#kubernetes-dashboard)
-    * [Pod/Deployment/Service](#poddeploymentservice)
-    * [Kubernetes Metrics Server](#kubernetes-metrics-server)
   * [Ingress](#ingress)
     * [Ingress Create](#ingress-create)
     * [Ingress Delete](#ingress-delete)
-  * [RBAC](#rbac)
-    * [Create roll binding for cluster admin user: `alok`](#create-roll-binding-for-cluster-admin-user-alok)
-    * [Create user alok](#create-user-alok)
   * [Horizon Autoscaling](#horizon-autoscaling)
     * [Create Horizontal Pod Autoscaler](#create-horizontal-pod-autoscaler)
     * [Manually Autoscale](#manually-autoscale)
@@ -77,19 +71,91 @@ As of now it is deployed on single node cluster.
   * [Deployment Architecture](#deployment-architecture)
     * [Services](#services)
 <!-- TOC -->
----
 ## Prerequisites
 * [Kubernetes Setup on Raspberry Pi](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md)
 ---
 ## Deployment of home-stack Kubernetes Stack
 ### Create Namespaces
 ```shell
-kubectl apply -f yaml/namespace.yaml
+ssh alok@jgte "mkdir yaml"
 ```
+```shell
+scp yaml/namespace.yaml alok@jgte:yaml/
+```
+```shell
+ssh alok@jgte "kubectl apply -f yaml/namespace.yaml"
+```
+### Roll Binding for cluster admin user: `alok`
+So that cluster operation can be performed by running `kubectl` remotely
+```shell
+scp yaml/home-user-rback-cluster-admin-user.yaml alok@jgte:yaml/
+```
+```shell
+ssh alok@jgte "kubectl apply -f yaml/home-user-rback-cluster-admin-user.yaml"
+```
+#### Setup remote user alok
+[Please refer here](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md#create-remote-user---alok)
+
+---
+### Kubernetes Dashboard
+```shell
+kubectl apply -f yaml/kubernetes-dashboard.yaml
+```
+Note: the dashboard service type is LoadBalancer and host IP (static) is assigned. The Dashboard can be access directly - https://jgte:8443/
+```shell
+kubectl delete -f yaml/kubernetes-dashboard.yaml
+```
+```shell
+kubectl get all --namespace kubernetes-dashboard
+```
+```shell
+kubectl get svc --namespace kubernetes-dashboard
+```
+```shell
+kubectl apply -f yaml/kubernetes-dashboard-rback-dashboard-admin-user.yaml
+```
+```shell
+kubectl create token k8s-dashboard-admin-user --duration=999999h -n kubernetes-dashboard
+```
+```shell
+kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
+```
+```shell
+kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kubernetes-dashboard
+```
+Note: the above doesnt have workloads get role
+
+Note: use one of this token for Kubernetes Dashboard login
+
+---
+### Kubernetes Metrics Server
+```shell
+kubectl apply -f yaml/metrix-server.yaml
+```
+```shell
+kubectl delete -f yaml/metrix-server.yaml
+```
+```shell
+kubectl get deployment metrics-server -n kube-system
+```
+```shell
+kubectl top nodes
+```
+---
 ### Create ConfigMap
 ```shell
 kubectl apply -f yaml/config-map.yaml
 ```
+Note: add/update below configs from backup `~/k8s`
+1. home-api-cofig (home-stack)
+   2. iot-secure-keystore-password
+   3. iot-secure-truststore-password
+4. home-auth-cofig (home-stack)
+   5. application-security-jwt-secret 
+   6. oauth-google-client-id
+   7. logging-level-com-alok
+8. home-etl-cofig (home-stack)
+   9. git-bearer-token
 ### Create Secrets
 ```shell
 kubectl apply -f yaml/secrets.yaml
@@ -113,7 +179,9 @@ kubectl apply -f yaml/mysql-service.yaml
 kubectl delete -f yaml/mysql-service.yaml
 ```
 ```shell
-kubectl exec -it pod/mysql-0 --namespace home-stack-db -- mysql -u root -p sys
+kubectl exec -it pod/mysql-0 --namespace home-stack-db -- mysql -u root -p<<password>>
+```
+```
 CREATE DATABASE `home-stack`;
 ```
 ```shell
@@ -236,7 +304,7 @@ kubectl logs pod/home-etl-deployment-0 --namespace home-stack
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
 ---
-### Home GIT Commit CronJob
+### Home GIT Commit CronJob (retired)
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/git-commit-cronjob.yaml 
 ```
@@ -286,51 +354,7 @@ kubectl delete namespace home-stack
 kubectl delete namespace home-stack-db 
 ```
 ---
-## Kubernetes Dashboard
-### Pod/Deployment/Service
-```shell
-kubectl apply -f yaml/kubernetes-dashboard.yaml
-```
-```shell
-kubectl delete -f yaml/kubernetes-dashboard.yaml
-```
-```shell
-kubectl get all --namespace kubernetes-dashboard
-```
-```shell
-kubectl get svc --namespace kubernetes-dashboard
-```
-```shell
-kubectl apply -f yaml/kubernetes-dashboard-rback-dashboard-admin-user.yaml
-```
-```shell
-kubectl create token k8s-dashboard-admin-user --duration=999999h -n kubernetes-dashboard
-```
-```shell
-kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
-```
-```shell
-kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kubernetes-dashboard
-```
-Note: the above doesnt have workloads get role
 
-Note: use one of this token for Kubernetes Dashboard login
-
----
-### Kubernetes Metrics Server
-```shell
-kubectl apply -f yaml/metrix-server.yaml
-```
-```shell
-kubectl delete -f yaml/metrix-server.yaml
-```
-```shell
-kubectl get deployment metrics-server -n kube-system
-```
-```shell
-kubectl top nodes
-```
----
 ## Ingress
 ### Ingress Create
 ```shell
@@ -340,16 +364,6 @@ kubectl apply -f yaml/ingress.yaml
 ```shell
 kubectl delete -f yaml/ingress.yaml
 ```
----
-## RBAC
-### Create roll binding for cluster admin user: `alok`
-So that remotely cluster opertaion can be performed
-```shell
-kubectl apply -f yaml/home-user-rback-cluster-admin-user.yaml
-```
-### Create user alok
-[Please refer here](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md#create-remote-user---alok)
-
 ---
 ## Horizon Autoscaling
 ### Create Horizontal Pod Autoscaler
