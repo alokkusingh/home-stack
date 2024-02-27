@@ -121,16 +121,16 @@ spec:
             httpGet:
               path: /local/api/actuator/health/liveness
               port: 8082
-            initialDelaySeconds: 5
-            timeoutSeconds: 2
-            periodSeconds: 10
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+            periodSeconds: 15
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /local/api/actuator/health/readiness
               port: 8082
-            initialDelaySeconds: 10
-            timeoutSeconds: 2
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
             periodSeconds: 30
             failureThreshold: 3
           ports:
