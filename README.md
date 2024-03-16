@@ -414,6 +414,9 @@ kubectl get nodes -o yaml
 ```shell
 kubectl describe nodes
 ```
+```shell
+kubectl get ResourceQuota
+```
 ### Get Cluster Dump
 This gives cluster dump including all pods log
 ```shell
@@ -455,6 +458,9 @@ kubectl get po -A -o wide
 ```
 ### Describe a spec
 ```shell
+kubectl api-resources 
+```
+```shell
 kubectl explain --api-version="networking.k8s.io/v1" NetworkPolicy.spec
 ```
 ```shell
@@ -465,6 +471,12 @@ kubectl explain --api-version="batch/v1beta1" cronjobs.spec
 ```
 ```shell
 kubectl get crd 
+```
+```shell
+kubectl explain --api-version="apiregistration.k8s.io/v1" APIService
+```
+```shell
+kubectl explain --api-version="apiextensions.k8s.io/v1" CustomResourceDefinition
 ```
 kubectl cheat sheet - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
