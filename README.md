@@ -126,7 +126,6 @@ kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kube
 Note: the above doesnt have workloads get role
 
 Note: use one of this token for Kubernetes Dashboard login
-
 ---
 ### Kubernetes Metrics Server
 ```shell
@@ -363,6 +362,32 @@ kubectl apply -f yaml/ingress.yaml
 ### Ingress Delete
 ```shell
 kubectl delete -f yaml/ingress.yaml
+```
+### Ingress Describe
+```shell
+kubectl get ingress -n home-stack-dmz
+```
+```shell
+kubectl describe ingress -n home-stack-dmz
+```
+```shell
+kubectl describe ingress ingress-home-jgte --namespace home-stack-dmz
+```
+```shell
+kubectl get all --namespace ingress
+```
+```shell
+kubectl describe daemonset.apps/nginx-ingress-microk8s-controller --namespace ingress
+```
+```shell
+kubectl describe pod/nginx-ingress-microk8s-controller-8wmwc --namespace ingress 
+```
+### Ingress Logs
+```shell
+kubectl get all --namespace ingress
+```
+```shell
+kubectl logs nginx-ingress-microk8s-controller-8wmwc  --namespace ingress
 ```
 ---
 ## Horizon Autoscaling

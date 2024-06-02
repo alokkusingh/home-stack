@@ -37,16 +37,16 @@ spec:
             httpGet:
               path: /home/etl/actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 30
-            timeoutSeconds: 2
-            periodSeconds: 10
-            failureThreshold: 5
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 15
+            failureThreshold: 10
           readinessProbe:
             httpGet:
               path: /home/etl/actuator/health/readiness
               port: 8081
             initialDelaySeconds: 60
-            timeoutSeconds: 2
+            timeoutSeconds: 5
             periodSeconds: 30
             failureThreshold: 3
           env:
@@ -111,8 +111,10 @@ spec:
             #  mountPath: /etc/localtime
           resources:
             limits:
+              # determining the system memory size
               memory: 512Mi
             requests:
+              # is just for the Kubernetes cluster to find the node that matches the requested memory to run the pod on it
               memory: 256Mi
         - name: home-scheduler-container
           image: alokkusingh/home-scheduler-task:latest

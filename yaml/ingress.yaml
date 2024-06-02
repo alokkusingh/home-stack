@@ -1,7 +1,37 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-home
+  name: ingress-home-jgte
+  namespace: home-stack-dmz
+  annotations:
+    nginx.org/proxy-connect-timeout: "30s"
+    nginx.org/proxy-read-timeout: "20s"
+    nginx.org/client-max-body-size: "4m"
+    # not working
+#    nginx.org/location-snippets: |
+#      if ($request_method != GET) {
+#        return 403;
+#      }
+    #nginx.ingress.kubernetes.io/rewrite-target: /$
+    #kubernetes.io/ingress.class: nginx
+spec:
+  #ingressClassName: nginx
+  rules:
+    - host: jgte
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-service
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-home-cloudflare
   namespace: home-stack-dmz
   annotations:
     nginx.org/proxy-connect-timeout: "30s"
@@ -12,68 +42,16 @@ metadata:
 spec:
   #ingressClassName: nginx
   rules:
-    - host: jgte
-      http:
-        paths:
-          - path: /home/api
-            pathType: Prefix
-            backend:
-              service:
-                name: home-api-service
-                port:
-                  number: 8081
-          - path: /home/etl
-            pathType: Prefix
-            backend:
-              service:
-                name: home-etl-service
-                port:
-                  number: 8081
-          - path: /home/auth
-            pathType: Prefix
-            backend:
-              service:
-                name: home-auth-service
-                port:
-                  number: 8081
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: dashboard-service
-                port:
-                  number: 80
-    - host: alok-home.com
-      http:
-        paths:
-          - path: /home/api
-            pathType: Prefix
-            backend:
-              service:
-                name: home-api-service
-                port:
-                  number: 8081
-          - path: /home/etl
-            pathType: Prefix
-            backend:
-              service:
-                name: home-etl-service
-                port:
-                  number: 8081
-          - path: /home/auth
-            pathType: Prefix
-            backend:
-              service:
-                name: home-auth-service
-                port:
-                  number: 8081
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: dashboard-service
-                port:
-                  number: 80
+#    - host: jgte
+#      http:
+#        paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: dashboard-service
+#                port:
+#                  number: 80
     - host: dashboard.aloklive.info
       http:
         paths:
@@ -103,5 +81,51 @@ spec:
             backend:
               service:
                 name: defaultbackend
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-home-vhost
+  namespace: home-stack-dmz
+  annotations:
+    nginx.org/proxy-connect-timeout: "30s"
+    nginx.org/proxy-read-timeout: "20s"
+    nginx.org/client-max-body-size: "4m"
+    #nginx.ingress.kubernetes.io/rewrite-target: /$
+    #kubernetes.io/ingress.class: nginx
+spec:
+  #ingressClassName: nginx
+  rules:
+    - host: alok-home.com
+      http:
+        paths:
+          - path: /home/api
+            pathType: Prefix
+            backend:
+              service:
+                name: home-api-service
+                port:
+                  number: 8081
+          - path: /home/etl
+            pathType: Prefix
+            backend:
+              service:
+                name: home-etl-service
+                port:
+                  number: 8081
+          - path: /home/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: home-auth-service
+                port:
+                  number: 8081
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dashboard-service
                 port:
                   number: 80
