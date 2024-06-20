@@ -34,3 +34,6 @@
 [submodule "RaspberryPi-Kubernetes"]
 	path = RaspberryPi-Kubernetes
 	url = https://github.com/alokkusingh/RaspberryPi-Kubernetes.git
+[submodule "home-auth-service"]
+	path = home-auth-service
+	url = https://github.com/alokkusingh/home-auth-service.git
