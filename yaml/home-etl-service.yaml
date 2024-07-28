@@ -102,6 +102,16 @@ spec:
                 configMapKeyRef:
                   name: home-etl-cofig
                   key: git-bearer-token
+            - name: FORM_EXPENSE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: form-expense-url
+            - name: FORM_ESTATE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: form-estate-url
           ports:
             - containerPort: 8081
           volumeMounts:
