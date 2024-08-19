@@ -1,0 +1,110 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-email-service
+  namespace: home-stack
+spec:
+  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
+  selector:
+    # XX-YYY
+    app: home-email
+  # Defining headless service
+  #clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-email-deployment
+  labels:
+    # This should be same as Service spec:selector
+    # XX-YYY
+    app: home-email
+  namespace: home-stack
+spec:
+  # commenting the replicas as this will be controlled by HPA
+  #replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: home-email
+  template:
+    metadata:
+      labels:
+        app: home-email
+        network/db-access: "true"
+    spec:
+      containers:
+        - name: home-api-container
+          image: alokkusingh/email-service:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /home/email/actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 60
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /home/email/actuator/health/readiness
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 60
+            failureThreshold: 3
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: spring-profiles-active
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-user-name
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-password
+            - name: LOGGING_LEVEL_COM_ALOK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-com-alok
+            - name: EMAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: email-password
+            - name: SPRING_MAIL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: email-password
+      volumes:
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File

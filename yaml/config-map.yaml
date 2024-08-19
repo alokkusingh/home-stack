@@ -50,6 +50,17 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: home-email-cofig
+  namespace: home-stack
+data:
+  db-schema: home-stack
+  db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
+  logging-level-com-alok: INFO
+  spring-profiles-active: "prod"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: home-auth-cofig
   namespace: home-stack
 data:
@@ -122,6 +133,11 @@ data:
           server home-auth-service.home-stack.svc.cluster.local:8081;
           keepalive 30;
        }
+    
+      upstream home-email {
+          server home-email-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
 
        server {
           # IP whitelisting
@@ -173,6 +189,23 @@ data:
           location /home/etl {
              rewrite ^/home/etl/(.*) /home/etl/$1 break;
              proxy_pass  	     http://home-etl/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+    
+          location /home/email {
+             rewrite ^/home/email/(.*) /home/email/$1 break;
+             proxy_pass  	     http://home-email/;
              proxy_set_header  Host             $host:8081;
              proxy_set_header  X-Real-IP        $remote_addr;
              proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;

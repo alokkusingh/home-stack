@@ -234,6 +234,16 @@ kubectl logs pod/home-api-deployment-0 --namespace home-stack
 kubectl rollout restart statefulset.apps/home-api-deployment -n home-stack
 ```
 ---
+### Home Email Service - Pod/Deployment/Service
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/home-email-service.yaml 
+```
+```shell
+kubectl apply -f yaml/home-email-service.yaml  --namespace=home-stack
+```
+```shell
+kubectl delete -f yaml/home-email-service.yaml  --namespace=home-stack
+```
 ### Home Auth Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
