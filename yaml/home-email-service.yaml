@@ -102,7 +102,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: home-email-cofig
-                  key: email-password
+                  key: spring-mail-password
+            - name: SPRING_MAIL_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: spring-mail-username
       volumes:
         - name: tz-config
           hostPath:
