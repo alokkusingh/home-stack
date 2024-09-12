@@ -40,3 +40,6 @@
 [submodule "email-service"]
 	path = email-service
 	url = https://github.com/alokkusingh/email-service.git
+[submodule "graalvm-builder"]
+	path = graalvm-builder
+	url = https://github.com/alokkusingh/graalvm-builder.git
