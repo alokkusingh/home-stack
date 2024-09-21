@@ -545,6 +545,7 @@ kubectl get configmap --namespace=home-stack home-auth-cofig -o yaml > ~/k8s/hom
 kubectl get configmap --namespace=home-stack dashboard-cofig -o yaml > ~/k8s/dashboard-cofig.yaml
 kubectl get configmap --namespace=home-stack home-common-cofig -o yaml > ~/k8s/home-common-cofig.yaml
 kubectl get configmap --namespace=home-stack-dmz nginx-conf -o yaml > ~/k8s/nginx-conf.yaml
+kubectl get configmap --namespace=home-stack home-email-cofig  -o yaml > ~/k8s/home-email-cofig.yaml
 ```
 ### Secrets
 This is needed as some secret items are directly updated in the cluster through Kubernetes Dashboard for security reason
