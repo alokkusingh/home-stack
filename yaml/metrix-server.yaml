@@ -127,6 +127,8 @@ spec:
       labels:
         k8s-app: metrics-server
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: jgte
       hostNetwork: true # Alok: added
       containers:
       - args:
@@ -163,8 +165,6 @@ spec:
         volumeMounts:
         - mountPath: /tmp
           name: tmp-dir
-      nodeSelector:
-        kubernetes.io/os: linux
       priorityClassName: system-cluster-critical
       serviceAccountName: metrics-server
       volumes:

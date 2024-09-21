@@ -34,6 +34,8 @@ spec:
         app: home-nw-tshoot
         network/db-access: "true"
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: khbr
       containers:
         - name: netshoot
           image: nicolaka/netshoot:latest

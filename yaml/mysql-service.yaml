@@ -29,6 +29,8 @@ spec:
       labels:
         app: mysql
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: jgte
       containers:
         - image: mysql:8.0-oracle
           name: mysql

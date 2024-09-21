@@ -97,6 +97,18 @@ ssh alok@jgte "kubectl apply -f yaml/home-user-rback-cluster-admin-user.yaml"
 [Please refer here](https://github.com/alokkusingh/RaspberryPi-Kubernetes/blob/main/README.md#create-remote-user---alok)
 
 ---
+### Node Taint
+#### Master Node
+at the end - to remove
+```shell
+kubectl taint nodes jgte nodeType=master:NoSchedule-
+```
+#### Worker Node
+at the end - to remove
+```shell
+kubectl taint nodes khbr nodeType=worker:NoSchedule-
+```
+#### Worker Node
 ### Kubernetes Dashboard
 ```shell
 kubectl apply -f yaml/kubernetes-dashboard.yaml

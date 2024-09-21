@@ -8,7 +8,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: home-auth-deployment
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 2
   metrics:
     - type: Resource
@@ -46,7 +46,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: home-api-deployment
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 2
   # https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html#spec-metrics-resource
   # https://docs.openshift.com/container-platform/4.11/rest_api/autoscale_apis/horizontalpodautoscaler-autoscaling-v2.html#spec-metrics-pods
@@ -87,7 +87,7 @@ spec:
     kind: Deployment
     name: home-analytics-deployment
   minReplicas: 1
-  maxReplicas: 2
+  maxReplicas: 1
   metrics:
     - type: Resource
       resource:

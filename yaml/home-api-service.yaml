@@ -37,6 +37,8 @@ spec:
         app: home-api
         network/db-access: "true"
     spec:
+#      nodeSelector:
+#        kubernetes.io/hostname: jgte
       containers:
         - name: home-api-container
           image: alokkusingh/home-api-service:latest

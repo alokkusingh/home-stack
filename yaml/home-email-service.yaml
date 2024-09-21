@@ -37,6 +37,8 @@ spec:
         app: home-email
         network/db-access: "true"
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: khbr
       containers:
         - name: home-api-container
           image: alokkusingh/email-service:latest

@@ -37,6 +37,8 @@ spec:
         app: home-analytics
         network/db-access: "false"
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: khbr
       containers:
         - name: home-category-api
           image: alokkusingh/home-category-api:latest

@@ -35,6 +35,8 @@ spec:
       labels:
         app: dashboard
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: khbr
       containers:
         - name: dashboard-container
           image: alokkusingh/home-dashboard

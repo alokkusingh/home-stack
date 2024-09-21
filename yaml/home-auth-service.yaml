@@ -37,6 +37,8 @@ spec:
         app: home-auth
         network/db-access: "true"
     spec:
+#      nodeSelector:
+#        kubernetes.io/hostname: jgte
       containers:
         - name: home-auth-container
           image: alokkusingh/home-auth-service:latest

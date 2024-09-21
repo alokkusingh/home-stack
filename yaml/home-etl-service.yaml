@@ -29,6 +29,8 @@ spec:
         app: home-etl
         network/db-access: "true"
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: jgte
       containers:
         - name: home-etl-container
           image: alokkusingh/home-etl-service:latest
