@@ -28,7 +28,6 @@ As of now it is deployed on single node cluster.
     * [Node Taint](#node-taint)
       * [Master Node](#master-node)
       * [Worker Node](#worker-node)
-      * [Worker Node](#worker-node-1)
     * [Kubernetes Dashboard](#kubernetes-dashboard)
   * [Note: use one of this token for Kubernetes Dashboard login](#note-use-one-of-this-token-for-kubernetes-dashboard-login)
     * [Kubernetes Metrics Server](#kubernetes-metrics-server)
@@ -116,7 +115,6 @@ at the end - to remove
 ```shell
 kubectl taint nodes khbr nodeType=worker:NoSchedule-
 ```
-#### Worker Node
 ### Kubernetes Dashboard
 ```shell
 kubectl apply -f yaml/kubernetes-dashboard.yaml
