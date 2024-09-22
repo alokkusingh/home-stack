@@ -6,9 +6,9 @@ metadata:
 data:
   db-schema: home-stack
   db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
-  logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
-  logging-level-com-zaxxer-hikari: TRACE
-  logging-level-com-alok: INFO
+  logging-level-com-zaxxer-hikari-HikariConfig: INFO
+  logging-level-com-zaxxer-hikari: INFO
+  logging-level-com-alok: DEBUG
   spring-datasource-hikari-minimum-idle: "2"
   spring-datasource-hikari-maximum-pool-size: "10"
   spring-profiles-active: "prod"
@@ -21,9 +21,9 @@ metadata:
 data:
   db-schema: home-stack
   db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
-  logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
-  logging-level-com-zaxxer-hikari: TRACE
-  logging-level-com-alok: INFO
+  logging-level-com-zaxxer-hikari-HikariConfig: INFO
+  logging-level-com-zaxxer-hikari: INFO
+  logging-level-com-alok: DEBUG
   spring-datasource-hikari-minimum-idle: "2"
   spring-datasource-hikari-maximum-pool-size: "10"
   spring-profiles-active: "prod"
@@ -40,9 +40,9 @@ metadata:
 data:
   db-schema: home-stack
   db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
-  logging-level-com-zaxxer-hikari-HikariConfig: DEBUG
-  logging-level-com-zaxxer-hikari: TRACE
-  logging-level-com-alok: INFO
+  logging-level-com-zaxxer-hikari-HikariConfig: INFO
+  logging-level-com-zaxxer-hikari: INFO
+  logging-level-com-alok: DEBUG
   spring-datasource-hikari-minimum-idle: "2"
   spring-datasource-hikari-maximum-pool-size: "10"
   spring-profiles-active: "prod"
@@ -55,7 +55,7 @@ metadata:
 data:
   db-schema: home-stack
   db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
-  logging-level-com-alok: INFO
+  logging-level-com-alok: DEBUG
   spring-profiles-active: "prod"
 ---
 apiVersion: v1
@@ -66,6 +66,7 @@ metadata:
 data:
   test: some-test
   spring-profiles-active: prod
+  logging-level-com-alok: DEBUG
 ---
 apiVersion: v1
 kind: ConfigMap
