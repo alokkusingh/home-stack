@@ -89,6 +89,16 @@ spec:
                 configMapKeyRef:
                   name: home-etl-cofig
                   key: logging-level-com-alok
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: logging-level-org-springframework
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK_SECURITY
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: logging-level-org-springframework-security
             - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
               valueFrom:
                 configMapKeyRef:

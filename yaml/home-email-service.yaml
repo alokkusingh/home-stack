@@ -90,11 +90,36 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: stmt-password
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-com-zaxxer-hikari-HikariConfig
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-com-zaxxer-hikari
             - name: LOGGING_LEVEL_COM_ALOK
               valueFrom:
                 configMapKeyRef:
                   name: home-email-cofig
                   key: logging-level-com-alok
+            - name: LOGGING_LEVEL_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-root
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-org-springframework
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK_SECURITY
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-org-springframework-security
             - name: EMAIL_PASSWORD
               valueFrom:
                 configMapKeyRef:

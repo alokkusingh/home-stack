@@ -48,7 +48,7 @@ spec:
               path: /home/api/actuator/health/liveness
               port: 8081
             initialDelaySeconds: 5
-            timeoutSeconds: 2
+            timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 5
           readinessProbe:
@@ -56,7 +56,7 @@ spec:
               path: /home/api/actuator/health/readiness
               port: 8081
             initialDelaySeconds: 10
-            timeoutSeconds: 2
+            timeoutSeconds: 5
             periodSeconds: 30
             failureThreshold: 3
           ports:
@@ -105,6 +105,16 @@ spec:
                 configMapKeyRef:
                   name: home-api-cofig
                   key: logging-level-com-alok
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-org-springframework
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK_SECURITY
+              valueFrom:
+                configMapKeyRef:
+                  name: home-api-cofig
+                  key: logging-level-org-springframework-security
             - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
               valueFrom:
                 configMapKeyRef:
