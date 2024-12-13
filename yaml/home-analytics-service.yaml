@@ -37,8 +37,19 @@ spec:
         app: home-analytics
         network/db-access: "false"
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: khbr
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+              - key: node.kubernetes.io/microk8s-worker
+                operator: In
+                values:
+                - microk8s-worker
+#                - microk8s-controlplane
+#      nodeSelector:
+#        kubernetes.io/hostname: khbr
       containers:
         - name: home-category-api
           image: alokkusingh/home-category-api:latest

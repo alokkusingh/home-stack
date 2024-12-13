@@ -1,0 +1,138 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-search-service
+  namespace: home-stack
+spec:
+  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
+  selector:
+    # XX-YYY
+    app: home-search
+  # Defining headless service
+  #clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-search-deployment
+  labels:
+    # This should be same as Service spec:selector
+    # XX-YYY
+    app: home-search
+  namespace: home-stack
+spec:
+  # commenting the replicas as this will be controlled by HPA
+  #replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: home-search
+  template:
+    metadata:
+      labels:
+        app: home-search
+        network/db-access: "true"
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node.kubernetes.io/microk8s-worker
+                    operator: In
+                    values:
+                      - microk8s-worker
+      #                - microk8s-controlplane
+#      nodeSelector:
+#        kubernetes.io/hostname: khbr
+      containers:
+        - name: home-api-container
+          image: alokkusingh/home-search-service:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /home/search/actuator/health/liveness
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 60
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /home/search/actuator/health/readiness
+              port: 8081
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            periodSeconds: 60
+            failureThreshold: 3
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          env:
+            # In Spring Boot, any property can be overridden by an environment variable of the same name,
+            # with the characters changed to upper case, and the dots changed to underscores
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: spring-profiles-active
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: db-url
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-user-name
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secrets
+                  key: stmt-password
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-com-zaxxer-hikari-HikariConfig
+            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-com-zaxxer-hikari
+            - name: LOGGING_LEVEL_COM_ALOK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-com-alok
+            - name: LOGGING_LEVEL_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-root
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-org-springframework
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK_SECURITY
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: logging-level-org-springframework-security
+      volumes:
+        - name: tz-config
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Kolkata
+            type: File

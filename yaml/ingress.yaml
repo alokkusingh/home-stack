@@ -122,6 +122,13 @@ spec:
                 name: home-auth-service
                 port:
                   number: 8081
+          - path: /home/search
+            pathType: Prefix
+            backend:
+              service:
+                name: home-search -service
+                port:
+                  number: 8081
           - path: /
             pathType: Prefix
             backend:
