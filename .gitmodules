@@ -43,3 +43,6 @@
 [submodule "graalvm-builder"]
 	path = graalvm-builder
 	url = https://github.com/alokkusingh/graalvm-builder.git
+[submodule "home-search-service"]
+	path = home-search-service
+	url = https://github.com/alokkusingh/home-search-service.git
