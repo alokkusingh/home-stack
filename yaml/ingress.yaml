@@ -52,7 +52,7 @@ spec:
 #                name: dashboard-service
 #                port:
 #                  number: 80
-    - host: dashboard.aloklive.info
+    - host: hdash.alok.digital
       http:
         paths:
           - path: /
