@@ -40,6 +40,7 @@ As of now it is deployed on 2 nodes cluster.
     * [Home Email Service - Pod/Deployment/Service](#home-email-service---poddeploymentservice)
     * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
     * [Home Analytics Service - Pod/Deployment/Service](#home-analytics-service---poddeploymentservice)
+    * [Home Search Service - Pod/Deployment/Service](#home-search-service---poddeploymentservice)
     * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
     * [Home GIT Commit CronJob (retired)](#home-git-commit-cronjob-retired)
     * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
