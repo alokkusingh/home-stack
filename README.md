@@ -51,7 +51,7 @@ As of now it is deployed on 2 nodes cluster.
     * [Ingress Delete](#ingress-delete)
     * [Ingress Describe](#ingress-describe)
     * [Ingress Logs](#ingress-logs)
-  * [Horizon Autoscaling](#horizon-autoscaling)
+  * [Horizontal Autoscaling](#horizontal-autoscaling)
     * [Create Horizontal Pod Autoscaler](#create-horizontal-pod-autoscaler)
     * [Manually Autoscale](#manually-autoscale)
     * [Update Scale to 1](#update-scale-to-1)
@@ -439,7 +439,7 @@ kubectl get all --namespace ingress
 kubectl logs nginx-ingress-microk8s-controller-8wmwc  --namespace ingress
 ```
 ---
-## Horizon Autoscaling
+## Horizontal Autoscaling
 ### Create Horizontal Pod Autoscaler
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-hpa.yaml
