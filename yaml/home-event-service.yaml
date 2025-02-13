@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-email-service
+  name: home-event-service
   namespace: home-stack
 spec:
   # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
   selector:
     # XX-YYY
-    app: home-email
+    app: home-event
   # Defining headless service
   #clusterIP: None
   ports:
@@ -17,11 +17,11 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: home-email-deployment
+  name: home-event-deployment
   labels:
     # This should be same as Service spec:selector
     # XX-YYY
-    app: home-email
+    app: home-event
   namespace: home-stack
 spec:
   # commenting the replicas as this will be controlled by HPA
@@ -30,12 +30,12 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: home-email
+      app: home-event
   template:
     metadata:
       labels:
-        app: home-email
-        network/db-access: "true"
+        app: home-event
+        network/db-access: "false"
     spec:
       affinity:
         nodeAffinity:
@@ -51,12 +51,12 @@ spec:
 #      nodeSelector:
 #        kubernetes.io/hostname: khbr
       containers:
-        - name: home-api-container
-          image: alokkusingh/email-service:latest
+        - name: home-event-container
+          image: alokkusingh/home-event-service:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
-              path: /home/email/actuator/health/liveness
+              path: /home/event/actuator/health/liveness
               port: 8081
             initialDelaySeconds: 60
             timeoutSeconds: 5
@@ -64,7 +64,7 @@ spec:
             failureThreshold: 5
           readinessProbe:
             httpGet:
-              path: /home/email/actuator/health/readiness
+              path: /home/event/actuator/health/readiness
               port: 8081
             initialDelaySeconds: 60
             timeoutSeconds: 5
@@ -84,68 +84,28 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
-                  name: home-email-cofig
+                  name: home-event-cofig
                   key: spring-profiles-active
-            - name: SPRING_DATASOURCE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: home-email-cofig
-                  key: db-url
-            - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secrets
-                  key: stmt-user-name
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-secrets
-                  key: stmt-password
-            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
-              valueFrom:
-                configMapKeyRef:
-                  name: home-email-cofig
-                  key: logging-level-com-zaxxer-hikari-HikariConfig
-            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
-              valueFrom:
-                configMapKeyRef:
-                  name: home-email-cofig
-                  key: logging-level-com-zaxxer-hikari
             - name: LOGGING_LEVEL_COM_ALOK
               valueFrom:
                 configMapKeyRef:
-                  name: home-email-cofig
+                  name: home-event-cofig
                   key: logging-level-com-alok
             - name: LOGGING_LEVEL_ROOT
               valueFrom:
                 configMapKeyRef:
-                  name: home-email-cofig
+                  name: home-event-cofig
                   key: logging-level-root
             - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK
               valueFrom:
                 configMapKeyRef:
-                  name: home-email-cofig
+                  name: home-event-cofig
                   key: logging-level-org-springframework
             - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK_SECURITY
               valueFrom:
                 configMapKeyRef:
-                  name: home-email-cofig
+                  name: home-event-cofig
                   key: logging-level-org-springframework-security
-            - name: EMAIL_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: home-email-cofig
-                  key: email-password
-            - name: SPRING_MAIL_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: home-email-cofig
-                  key: spring-mail-password
-            - name: SPRING_MAIL_USERNAME
-              valueFrom:
-                configMapKeyRef:
-                  name: home-email-cofig
-                  key: spring-mail-username
       volumes:
         - name: tz-config
           hostPath:

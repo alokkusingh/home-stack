@@ -328,6 +328,25 @@ kubectl logs pod/home-search-deployment-$instance --namespace home-stack
 ```shell
 kubectl exec -it pod/home-search-deployment-$instance --namespace home-stack -- bash
 ```
+### Home Event Service - Pod/Deployment/Service
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/home-event-service.yaml 
+```
+```shell
+kubectl apply -f yaml/home-event-service.yaml  --namespace=home-stack
+```
+```shell
+kubectl delete -f yaml/home-event-service.yaml  --namespace=home-stack
+```
+```shell
+read instance
+```
+```shell
+kubectl logs pod/home-event-deployment-$instance --namespace home-stack
+```
+```shell
+kubectl exec -it pod/home-event-deployment-$instance --namespace home-stack -- bash
+```
 ---
 ### Home ETL Service - Pod/Statefulset/Service
 ```shell

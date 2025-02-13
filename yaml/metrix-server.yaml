@@ -127,8 +127,19 @@ spec:
       labels:
         k8s-app: metrics-server
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: jgte
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node.kubernetes.io/microk8s-worker
+                    operator: In
+                    values:
+#                      - microk8s-worker
+                      - microk8s-controlplane
+#      nodeSelector:
+#        kubernetes.io/hostname: jgte
       hostNetwork: true # Alok: added
       containers:
       - args:

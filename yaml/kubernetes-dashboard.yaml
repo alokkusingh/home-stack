@@ -228,12 +228,23 @@ spec:
         - name: tmp-volume
           emptyDir: {}
       serviceAccountName: kubernetes-dashboard
-      nodeSelector:
-        kubernetes.io/hostname: jgte
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node.kubernetes.io/microk8s-worker
+                    operator: In
+                    values:
+                      - microk8s-worker
+      #                - microk8s-controlplane
+#      nodeSelector:
+#        kubernetes.io/hostname: jgte
       # Comment the following tolerations if Dashboard must not be deployed on master
-      tolerations:
-        - key: node-role.kubernetes.io/master
-          effect: NoSchedule
+#      tolerations:
+#        - key: node-role.kubernetes.io/master
+#          effect: NoSchedule
 
 ---
 

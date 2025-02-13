@@ -75,6 +75,18 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: home-event-cofig
+  namespace: home-stack
+data:
+  logging-level-com-alok: DEBUG
+  logging-level-root: WARN
+  logging-level-org-springframework: INFO
+  logging-level-org-springframework-security: INFO
+  spring-profiles-active: "prod"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: home-auth-cofig
   namespace: home-stack
 data:
@@ -159,6 +171,11 @@ data:
     
       upstream home-email {
           server home-email-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+    
+      upstream home-event {
+          server home-event-service.home-stack.svc.cluster.local:8081;
           keepalive 30;
        }
 
@@ -246,6 +263,23 @@ data:
           location /home/email {
              rewrite ^/home/email/(.*) /home/email/$1 break;
              proxy_pass  	     http://home-email/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+    
+          location /home/event {
+             rewrite ^/home/event/(.*) /home/event/$1 break;
+             proxy_pass  	     http://home-event/;
              proxy_set_header  Host             $host:8081;
              proxy_set_header  X-Real-IP        $remote_addr;
              proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
