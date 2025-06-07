@@ -41,6 +41,7 @@ As of now it is deployed on 2 nodes cluster.
     * [Home Auth Service - Pod/Deployment/Service](#home-auth-service---poddeploymentservice)
     * [Home Analytics Service - Pod/Deployment/Service](#home-analytics-service---poddeploymentservice)
     * [Home Search Service - Pod/Deployment/Service](#home-search-service---poddeploymentservice)
+    * [Home Event Service - Pod/Deployment/Service](#home-event-service---poddeploymentservice)
     * [Home ETL Service - Pod/Statefulset/Service](#home-etl-service---podstatefulsetservice)
     * [Home GIT Commit CronJob (retired)](#home-git-commit-cronjob-retired)
     * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
@@ -57,6 +58,7 @@ As of now it is deployed on 2 nodes cluster.
     * [Update Scale to 1](#update-scale-to-1)
   * [Miscellaneous commands](#miscellaneous-commands)
     * [Client and Server version](#client-and-server-version)
+    * [API Resources](#api-resources)
     * [Get Node Details](#get-node-details)
     * [Get Cluster Dump](#get-cluster-dump)
     * [Get all from all namespaces](#get-all-from-all-namespaces)
@@ -67,6 +69,11 @@ As of now it is deployed on 2 nodes cluster.
     * [top a pod](#top-a-pod)
     * [Get All Pods under All Namespaces](#get-all-pods-under-all-namespaces)
     * [Describe a spec](#describe-a-spec)
+    * [List all Docker images in Microk8s cluster (within the cluster node)](#list-all-docker-images-in-microk8s-cluster-within-the-cluster-node)
+    * [Prune Docker Images from Microk8s CLuster](#prune-docker-images-from-microk8s-cluster)
+      * [Install crictl](#install-crictl)
+      * [Configure crictl for Microk8s](#configure-crictl-for-microk8s)
+      * [Prune Images](#prune-images)
   * [Service Mesh - Istio](#service-mesh---istio)
     * [Install](#install)
   * [Backup](#backup)
@@ -499,6 +506,10 @@ kubectl scale -n home-stack deployment dashboard-deployment --replicas=1
 ```shell
 kubectl version --output=json
 ```
+### API Resources
+```shell
+kubectl api-resources
+```
 ### Get Node Details
 This gives details about nodes including images in local
 ```shell
@@ -571,6 +582,33 @@ kubectl explain --api-version="apiregistration.k8s.io/v1" APIService
 ```shell
 kubectl explain --api-version="apiextensions.k8s.io/v1" CustomResourceDefinition
 ```
+### List all Docker images in Microk8s cluster (within the cluster node)
+```shell
+sudo microk8s ctr images ls
+```
+### Prune Docker Images from Microk8s CLuster
+#### Install crictl
+```shell
+VERSION="v1.26.0" # check latest version in /releases page
+curl -L https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-${VERSION}-linux-arm64.tar.gz --output crictl-${VERSION}-linux-arm64.tar.gz
+sudo tar zxvf crictl-$VERSION-linux-arm64.tar.gz -C /usr/local/bin
+rm -f crictl-$VERSION-linux-arm64.tar.gz
+```
+#### Configure crictl for Microk8s
+```shell
+sudo vim /etc/crictl.yaml 
+```
+```shell
+runtime-endpoint: unix:///var/snap/microk8s/common/run/containerd.sock
+image-endpoint: unix:///var/snap/microk8s/common/run/containerd.sock
+timeout: 10
+debug: true
+```
+#### Prune Images
+```shell
+sudo crictl rmi --prune
+```
+
 kubectl cheat sheet - https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 ---
