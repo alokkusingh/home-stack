@@ -130,11 +130,20 @@ spec:
                 configMapKeyRef:
                   name: home-auth-cofig
                   key: application-security-jwt-secret
+            - name: APPLICATION_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: home-auth-cofig
+                  key: application-secret
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
                   name: home-auth-cofig
                   key: spring-profiles-active
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
       volumes:
         - name: tz-config
           hostPath:

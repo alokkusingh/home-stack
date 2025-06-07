@@ -66,10 +66,10 @@ spec:
             httpGet:
               path: /home/email/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 60
+            initialDelaySeconds: 90
             timeoutSeconds: 5
             periodSeconds: 60
-            failureThreshold: 3
+            failureThreshold: 5
           ports:
             - containerPort: 8081
           resources:
@@ -146,6 +146,11 @@ spec:
                 configMapKeyRef:
                   name: home-email-cofig
                   key: spring-mail-username
+            - name: APPLICATION_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: home-email-cofig
+                  key: application-secret
       volumes:
         - name: tz-config
           hostPath:

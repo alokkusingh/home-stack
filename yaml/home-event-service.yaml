@@ -58,17 +58,17 @@ spec:
             httpGet:
               path: /home/event/actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             timeoutSeconds: 5
-            periodSeconds: 60
+            periodSeconds: 30
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /home/event/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
             timeoutSeconds: 5
-            periodSeconds: 60
+            periodSeconds: 30
             failureThreshold: 3
           ports:
             - containerPort: 8081
