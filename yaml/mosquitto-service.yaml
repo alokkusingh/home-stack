@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto-service
+  namespace: home-stack-iot
+spec:
+  selector:
+    app: mosquitto
+  ports:
+    - port: 1883
+      nodePort: 31883
+      name: mqtt
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto-deployment
+  namespace: home-stack-iot
+spec:
+  selector:
+    matchLabels:
+      app: mosquitto
+  replicas: 1 # Number of pods (typically 1 for a basic setup)
+  template:
+    metadata:
+      labels:
+        app: mosquitto
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: khbr # Specify the node where you want to run the Mosquitto pod
+      containers:
+        - name: mosquitto
+          image: eclipse-mosquitto:2.0.21
+          ports:
+            - containerPort: 1883 # MQTT port
+              name: mqtt
+          volumeMounts:
+            - name: mosquitto-config
+              mountPath: /mosquitto/config
+              readOnly: true
+      volumes:
+        - name: mosquitto-config
+          configMap:
+            name: mosquitto-config # Name of the ConfigMap containing your mosquitto.conf

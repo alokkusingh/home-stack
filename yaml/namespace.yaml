@@ -18,3 +18,10 @@ metadata:
   name: "home-stack-dmz"
   labels:
     name: "home-stack-dmz"
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "home-stack-iot"
+  labels:
+    name: "home-stack-iot"

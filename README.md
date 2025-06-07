@@ -417,6 +417,17 @@ kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
 ---
+### MQTT Service
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/mosquitto-service.yaml 
+```
+```shell
+kubectl apply -f yaml/mosquitto-service.yaml  --namespace=home-stack-iot
+```
+```shell
+kubectl delete -f yaml/mosquitto-service.yaml --namespace=home-stack-iot
+```
+---
 ### Delete Stack
 ```
 kubectl delete namespace home-stack-dmz
