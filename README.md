@@ -422,10 +422,16 @@ kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 kubectl apply --validate=true --dry-run=client -f yaml/mosquitto-service.yaml 
 ```
 ```shell
-kubectl apply -f yaml/mosquitto-service.yaml  --namespace=home-stack-iot
+kubectl create secret tls mosquitto-secret --cert=../iot-home-stack/secret/server.crt --key=../iot-home-stack/secret/server.key --namespace=home-stack-iot
 ```
 ```shell
-kubectl delete -f yaml/mosquitto-service.yaml --namespace=home-stack-iot
+kubectl create secret generic mosquitto-ca-secret --from-file=../iot-home-stack/secret/mqtt-signer-ca.crt --namespace=home-stack-iot
+```
+```shell
+kubectl apply -f yaml/iot-mosquitto-service.yaml  --namespace=home-stack-iot
+```
+```shell
+kubectl delete -f yaml/iot-mosquitto-service.yaml --namespace=home-stack-iot
 ```
 ---
 ### Delete Stack

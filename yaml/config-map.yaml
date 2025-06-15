@@ -438,10 +438,10 @@ data:
     # TLS encryption.
 
     # Path to the PEM encoded server certificate.
-    #certfile
+    certfile /etc/tls/tls.crt
 
     # Path to the PEM encoded keyfile.
-    #keyfile
+    keyfile /etc/tls/tls.key
 
     # If you wish to control which encryption ciphers are used, use the ciphers
     # option. The list of available ciphers can be optained using the "openssl
@@ -472,7 +472,7 @@ data:
     # the client must provide a valid certificate in order for the network
     # connection to proceed. This allows access to the broker to be controlled
     # outside of the mechanisms provided by MQTT.
-    #require_certificate false
+    require_certificate true
 
     # cafile and capath define methods of accessing the PEM encoded
     # Certificate Authority certificates that will be considered trusted when
@@ -483,14 +483,14 @@ data:
     # certificate files must have ".crt" as the file ending and you must run
     # "openssl rehash <path to capath>" each time you add/remove a certificate.
     # capath is not supported for websockets.
-    #cafile
+    cafile /etc/ca/mqtt-signer-ca.crt
     #capath
 
 
     # If require_certificate is true, you may set use_identity_as_username to true
     # to use the CN value from the client certificate as a username. If this is
     # true, the password_file option will not be used for this listener.
-    #use_identity_as_username false
+    use_identity_as_username true
 
     # -----------------------------------------------------------------
     # Pre-shared-key based SSL/TLS support
@@ -653,7 +653,7 @@ data:
     # Defaults to false, unless there are no listeners defined in the configuration
     # file, in which case it is set to true, but connections are only allowed from
     # the local machine.
-    #allow_anonymous false
+    allow_anonymous false
 
     # -----------------------------------------------------------------
     # Default authentication and topic access control
