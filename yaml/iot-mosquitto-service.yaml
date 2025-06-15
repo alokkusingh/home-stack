@@ -39,7 +39,19 @@ spec:
             - name: mosquitto-config
               mountPath: /mosquitto/config
               readOnly: true
+            - name: mosquitto-secret
+              mountPath: "/etc/tls" # Adjust the mount path as needed
+              readOnly: true
+            - name: mosquitto-ca-secret
+              mountPath: "/etc/ca" # Adjust the mount path as needed
+              readOnly: true
       volumes:
         - name: mosquitto-config
           configMap:
             name: mosquitto-config # Name of the ConfigMap containing your mosquitto.conf
+        - name: mosquitto-secret
+          secret:
+            secretName: mosquitto-secret
+        - name: mosquitto-ca-secret
+          secret:
+            secretName: mosquitto-ca-secret
