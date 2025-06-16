@@ -734,7 +734,7 @@ data:
     #
     # If an plugin is used as well as acl_file, the plugin check will be
     # made first.
-    #acl_file
+    acl_file /etc/acl/acl.conf
 
     # -----------------------------------------------------------------
     # External authentication and topic access plugin options
