@@ -1,0 +1,209 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+  namespace: home-stack-dmz
+data:
+  nginx.conf: |
+    #load_module modules/ngx_http_opentracing_module.so;
+
+    worker_processes  1;
+
+    error_log /var/log/nginx/error.log info;
+
+    events {
+       # Limit: Connections with Clinet + COnnections with Worker Servers
+       worker_connections  1024;
+    }
+
+    http {
+
+       # Turn on tracing for all requests
+       # opentracing on;
+
+       # Set up Jaeger as the vendor tracer to use
+       # opentracing_load_tracer /usr/local/lib/libjaegertracing_plugin.so /etc/jaeger-nginx-config.json;
+
+       include       mime.types;
+       default_type  application/octet-stream;
+
+       log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+       '$status $body_bytes_sent "$upstream_response_time" "$http_referer" '
+       '"$http_user_agent" "$http_x_forwarded_for"';
+
+       access_log /var/log/nginx/access.log main;
+    
+    
+       upstream home-api {
+          server home-api-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+    
+      upstream home-search {
+          server home-search-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+    
+       upstream home-etl {
+          server home-etl-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+    
+       upstream home-auth {
+          server home-auth-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+    
+      upstream home-email {
+          server home-email-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+    
+      upstream home-event {
+          server home-event-service.home-stack.svc.cluster.local:8081;
+          keepalive 30;
+       }
+
+       server {
+          # IP whitelisting
+          # allow 192.168.0.151; # Mac-Book Air
+          # allow 192.168.0.152;
+          # allow 192.168.0.153; # iPhone
+          # allow 192.168.0.154; # motoG
+          # allow 192.168.1.155; # Mac-Book Pro
+          # deny all;
+
+          listen 80;
+          root   /usr/share/nginx/html;
+          index  index.html index.htm;
+
+          # opentracing_operation_name $request_method;
+
+          # opentracing_tag http_user_agent $http_user_agent;
+          # opentracing_tag http_uri $request_uri;
+
+          log_subrequest on;
+
+          location / {
+             #root   /usr/share/nginx/html;
+             #index  index.html index.htm;
+             try_files $uri /index.html;
+
+             # opentracing_propagate_context;
+          }
+    
+    
+          location /home/api {
+             rewrite ^/home/api/(.*) /home/api/$1 break;
+             proxy_pass  	     http://home-api/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+    
+          location /home/search {
+             rewrite ^/home/search/(.*) /home/search/$1 break;
+             proxy_pass  	     http://home-search/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+    
+    
+          location /home/etl {
+             rewrite ^/home/etl/(.*) /home/etl/$1 break;
+             proxy_pass  	     http://home-etl/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+    
+          location /home/email {
+             rewrite ^/home/email/(.*) /home/email/$1 break;
+             proxy_pass  	     http://home-email/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+    
+          location /home/event {
+             rewrite ^/home/event/(.*) /home/event/$1 break;
+             proxy_pass  	     http://home-event/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+    
+             chunked_transfer_encoding off;
+             proxy_read_timeout 24h;
+
+             # opentracing_propagate_context;
+          }
+    
+          location /home/auth {
+             rewrite ^/home/auth/(.*) /home/auth/$1 break;
+             proxy_pass  	     http://home-auth/;
+             proxy_set_header  Host             $host:8081;
+             proxy_set_header  X-Real-IP        $remote_addr;
+             proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header  Via    		      "nginx";
+
+             proxy_pass_request_body on;
+             proxy_pass_request_headers on;
+
+             proxy_http_version 1.1;
+             proxy_set_header "Connection" "";
+
+             # opentracing_propagate_context;
+          }
+
+          error_page   500 502 503 504  /50x.html;
+          location = /50x.html {
+             root   html;
+          }
+       }
+
+       include servers/*;
+    }

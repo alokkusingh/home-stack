@@ -391,6 +391,9 @@ kubectl delete -f yaml/git-commit-cronjob.yaml  --namespace=home-stack
 ---
 ### Dashboard Service - Pod/Deployment/Service
 ```shell
+kubectl apply -f yaml/dashboard-nginx-config-map.yaml
+```
+```shell
 kubectl apply --validate=true --dry-run=client -f yaml/dashboard-service.yaml 
 ```
 ```shell
@@ -418,6 +421,9 @@ kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
 ---
 ### MQTT Service
+```shell
+kubectl apply -f yaml/iot-config-map.yaml
+```
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/mosquitto-service.yaml 
 ```

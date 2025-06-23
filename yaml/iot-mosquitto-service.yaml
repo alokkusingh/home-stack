@@ -45,6 +45,9 @@ spec:
             - name: mosquitto-ca-secret
               mountPath: "/etc/ca" # Adjust the mount path as needed
               readOnly: true
+            - name: mosquitto-acl-secret
+              mountPath: "/etc/acl" # Adjust the mount path as needed
+              readOnly: true
       volumes:
         - name: mosquitto-config
           configMap:
@@ -55,3 +58,6 @@ spec:
         - name: mosquitto-ca-secret
           secret:
             secretName: mosquitto-ca-secret
+        - name: mosquitto-acl-secret
+          secret:
+            secretName: mosquitto-acl-secret
