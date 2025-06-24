@@ -420,7 +420,7 @@ kubectl apply -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 kubectl delete -f yaml/jaeger-all-in-one-template.yml  --namespace=home-stack
 ```
 ---
-### MQTT Service
+### Mosquitto MqTT Service
 ```shell
 kubectl apply -f yaml/iot-config-map.yaml
 ```
@@ -441,6 +441,22 @@ kubectl apply -f yaml/iot-mosquitto-service.yaml  --namespace=home-stack-iot
 ```
 ```shell
 kubectl delete -f yaml/iot-mosquitto-service.yaml --namespace=home-stack-iot
+```
+### IoT Telemetry Service
+```shell
+kubectl apply -f yaml/iot-telemetry-config-map.yaml
+```
+```shell
+kubectl create secret generic iot-telemetry-secret --from-file=keystore.jks=../iot-home-stack/secret/mqtt.client.home-telemetry-svc.jks --namespace=home-stack-iot
+```
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/iot-telemetry-service.yaml 
+```
+```shell
+kubectl apply -f yaml/iot-telemetry-service.yaml  --namespace=home-stack-iot
+```
+```shell
+kubectl delete -f yaml/iot-telemetry-service.yaml --namespace=home-stack-iot
 ```
 ---
 ### Delete Stack

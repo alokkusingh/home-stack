@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iot-telemetry-config
+  namespace: home-stack-iot
+data:
+  db-schema: home-stack
+  db-url: jdbc:mysql://mysql.home-stack-db.svc.cluster.local:3306/home-stack
+  logging-level-com-zaxxer-hikari-HikariConfig: INFO
+  logging-level-com-zaxxer-hikari: INFO
+  logging-level-com-alok: DEBUG
+  logging-level-org-springframework: INFO
+  logging-level-org-springframework-security: INFO
+  logging-level-root: WARN
+  spring-datasource-hikari-minimum-idle: "2"
+  spring-datasource-hikari-maximum-pool-size: "10"
+  spring-profiles-active: "prod"
