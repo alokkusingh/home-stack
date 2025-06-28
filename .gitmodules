@@ -49,3 +49,6 @@
 [submodule "iot-home-stack"]
 	path = iot-home-stack
 	url = https://github.com/alokkusingh/iot-home-stack.git
+[submodule "iot-device"]
+	path = iot-device
+	url = https://github.com/alokkusingh/iot-device.git

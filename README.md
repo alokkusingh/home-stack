@@ -434,6 +434,9 @@ kubectl create secret tls mosquitto-secret --cert=../iot-home-stack/secret/serve
 kubectl create secret generic mosquitto-ca-secret --from-file=../iot-home-stack/secret/mqtt-signer-ca.crt --namespace=home-stack-iot
 ```
 ```shell
+kubectl delete secret mosquitto-acl-secret --namespace=home-stack-iot
+```
+```shell
 kubectl create secret generic mosquitto-acl-secret --from-file=../iot-home-stack/secret/acl.conf --namespace=home-stack-iot
 ```
 ```shell
