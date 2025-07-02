@@ -29,7 +29,6 @@ As of now it is deployed on 2 nodes cluster.
       * [Master Node](#master-node)
       * [Worker Node](#worker-node)
     * [Kubernetes Dashboard](#kubernetes-dashboard)
-  * [Note: use one of this token for Kubernetes Dashboard login](#note-use-one-of-this-token-for-kubernetes-dashboard-login)
     * [Kubernetes Metrics Server](#kubernetes-metrics-server)
     * [Create ConfigMap](#create-configmap)
     * [Create Secrets](#create-secrets)
@@ -46,6 +45,8 @@ As of now it is deployed on 2 nodes cluster.
     * [Home GIT Commit CronJob (retired)](#home-git-commit-cronjob-retired)
     * [Dashboard Service - Pod/Deployment/Service](#dashboard-service---poddeploymentservice)
     * [Jaeger Service](#jaeger-service)
+    * [Mosquitto MqTT Service](#mosquitto-mqtt-service)
+    * [IoT Telemetry Service](#iot-telemetry-service)
     * [Delete Stack](#delete-stack)
   * [Ingress](#ingress)
     * [Ingress Create](#ingress-create)
@@ -127,7 +128,9 @@ kubectl taint nodes khbr nodeType=worker:NoSchedule-
 ```shell
 kubectl apply -f yaml/kubernetes-dashboard.yaml
 ```
+```text
 Note: the dashboard service type is LoadBalancer and host IP (static) is assigned. The Dashboard can be access directly - https://jgte:8443/
+```
 ```shell
 kubectl delete -f yaml/kubernetes-dashboard.yaml
 ```
@@ -149,9 +152,11 @@ kubectl apply -f yaml/kubernetes-dashboard-rback-cluster-admin-user.yaml
 ```shell
 kubectl create token k8s-dashboard-cluster-admin-user --duration=999999h -n kubernetes-dashboard
 ```
-Note: the above doesnt have workloads get role
-
-Note: use one of this token for Kubernetes Dashboard login
+```text
+Notes:
+- the last one doesnt have workloads get role
+- use one of this token for Kubernetes Dashboard login
+```
 ---
 ### Kubernetes Metrics Server
 ```shell
