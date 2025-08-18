@@ -124,6 +124,11 @@ spec:
                 configMapKeyRef:
                   name: home-etl-cofig
                   key: form-estate-url
+            - name: RANGE_EXPENSE-SHEET
+              valueFrom:
+                configMapKeyRef:
+                  name: home-etl-cofig
+                  key: RANGE_EXPENSE-SHEET
           ports:
             - containerPort: 8081
           volumeMounts:
