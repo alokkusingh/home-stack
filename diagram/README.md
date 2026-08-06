@@ -335,14 +335,18 @@ mysql -h <node-ip> -P 32306 -u <user> -p
 
 Located in: `/Users/aloksingh/git/home-stack/yaml/`
 
-### Service Definitions
-- `home-api-service.yaml`
-- `home-auth-service.yaml`
-- `home-search-service.yaml`
-- `home-etl-service.yaml`
-- `iot-telemetry-service.yaml`
-- `iot-mosquitto-service.yaml`
-- `mysql-service.yaml`
+### Frontend & Presentation Layer
+- `dashboard-service.yaml` (web UI, NGINX reverse proxy, API gateway)
+- `dashboard-nginx-config-map.yaml` (NGINX configuration)
+
+### Backend Service Definitions
+- `home-api-service.yaml` (core API)
+- `home-auth-service.yaml` (authentication)
+- `home-search-service.yaml` (search engine)
+- `home-etl-service.yaml` (ETL pipeline)
+- `iot-telemetry-service.yaml` (IoT data collection)
+- `iot-mosquitto-service.yaml` (MQTT broker)
+- `mysql-service.yaml` (database)
 
 ### Configuration
 - `config-map.yaml` (general configuration)
@@ -361,10 +365,9 @@ Located in: `/Users/aloksingh/git/home-stack/yaml/`
 - `metrix-server.yaml` (metrics collection)
 - `jaeger-all-in-one-template.yml` (distributed tracing)
 
-### Utilities
+### Utilities & Troubleshooting
 - `home-nw-tshoot.yaml` (network troubleshooting pod)
 - `git-commit-cronjob.yaml` (scheduled git commits)
-- `dashboard-service.yaml` (dashboard UI)
 
 ---
 
