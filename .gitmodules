@@ -52,3 +52,6 @@
 [submodule "iot-device"]
 	path = iot-device
 	url = https://github.com/alokkusingh/iot-device.git
+[submodule "home-docs-service"]
+	path = home-docs-service
+	url = https://github.com/alokkusingh/home-docs-service.git
