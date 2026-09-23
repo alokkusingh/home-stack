@@ -3,11 +3,14 @@ kind: Service
 metadata:
   name: home-search-service
   namespace: home-stack
+  labels:
+    app: home-search-s
 spec:
   # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
+  # Maps Service to the Deployment
   selector:
     # XX-YYY
-    app: home-search
+    app: home-search-p
   # Defining headless service
   #clusterIP: None
   ports:
@@ -21,7 +24,7 @@ metadata:
   labels:
     # This should be same as Service spec:selector
     # XX-YYY
-    app: home-search
+    app: home-search-d
   namespace: home-stack
 spec:
   # commenting the replicas as this will be controlled by HPA
@@ -29,12 +32,14 @@ spec:
   strategy:
     type: RollingUpdate
   selector:
+    # Maps Deployment template to the Pods
     matchLabels:
-      app: home-search
+      app: home-search-p
   template:
     metadata:
+      # This is pod labels, which will be used to match the pod with the service
       labels:
-        app: home-search
+        app: home-search-p
         network/db-access: "true"
     spec:
       affinity:
@@ -54,6 +59,9 @@ spec:
         - name: home-api-container
           image: alokkusingh/home-search-service:latest
           imagePullPolicy: Always
+          # Purpose: Determines if a container is in a healthy, running state and capable of making progress
+          # Lifecycle Phase: Liveness probes monitor the ongoing health of a running application
+          # Action On Failure: Liveness probes trigger a container restart
           livenessProbe:
             httpGet:
               path: /home/search/actuator/health/liveness
@@ -62,6 +70,9 @@ spec:
             timeoutSeconds: 5
             periodSeconds: 60
             failureThreshold: 5
+          # Purpose: Determines if a container is ready to accept incoming traffic
+          # Lifecycle Phase: Readiness probes primarily manage when an application is considered ready to receive traffic, especially during startup or after a restart.
+          # Action on Failure: while readiness probes prevent traffic routing without restarting the container.
           readinessProbe:
             httpGet:
               path: /home/search/actuator/health/readiness

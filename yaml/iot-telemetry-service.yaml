@@ -74,19 +74,18 @@ spec:
             - name: mosquitto-ca-secret
               mountPath: "/etc/ca"
               readOnly: true
+          # set all environments fron Application's own ConfigMap
+          envFrom:
+            - configMapRef:
+                name: iot-telemetry-config
+          # set select environment variables from secrets or other ConfigMaps
           env:
-            # In Spring Boot, any property can be overridden by an environment variable of the same name,
-            # with the characters changed to upper case, and the dots changed to underscores
-            - name: SPRING_PROFILES_ACTIVE
+            # Directly set using K8S Dashboard
+            - name: KSPASSWORD
               valueFrom:
                 configMapKeyRef:
                   name: iot-telemetry-config
-                  key: spring-profiles-active
-            - name: SPRING_DATASOURCE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: db-url
+                  key: kspassword
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -97,46 +96,7 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: stmt-password
-            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI_HIKARICONFIG
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: logging-level-com-zaxxer-hikari-HikariConfig
-            - name: LOGGING_LEVEL_COM_ZAXXER_HIKARI
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: logging-level-com-zaxxer-hikari
-            - name: LOGGING_LEVEL_COM_ALOK
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: logging-level-com-alok
-            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: logging-level-org-springframework
-            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORFK_SECURITY
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: logging-level-org-springframework-security
-            - name: SPRING_DATASOURCE_HIKARI_MINIMUM-IDLE
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: spring-datasource-hikari-minimum-idle
-            - name: SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: spring-datasource-hikari-maximum-pool-size
-            - name: KSPASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: iot-telemetry-config
-                  key: kspassword
+
       volumes:
         - name: tz-config
           hostPath:

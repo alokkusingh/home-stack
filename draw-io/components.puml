@@ -1,0 +1,46 @@
+@startuml
+title Home Stack — Component Diagram
+package "API Layer" {
+  component "home-api-service" as API
+  component "rest-proxy" as RESTP
+}
+package "Auth & Commons" {
+  component "home-auth-service" as AUTH
+  component "home-commons" as COMMONS
+}
+package "Data & Background" {
+  component "home-etl-service" as ETL
+  component "home-scheduler-task" as SCHED
+  component "liquibase" as LIQUI
+}
+package "Search & Category" {
+  component "home-search-service" as SEARCH
+  component "home-category-api" as CAT
+}
+package "IoT" {
+  component "iot-device"
+  component "iot-telemetry-service" as TELE
+  component "mqtt-proxy" as MQTTP
+  component "iot-home-stack" as IOTSTACK
+}
+package "Auxiliary" {
+  component "email-service" as EMAIL
+  component "home-dashboard" as DASH
+  component "graalvm-builder" as BUILD
+}
+
+API --> AUTH : auth
+API --> COMMONS : shared libs
+API --> SEARCH : search
+API --> CAT : categories
+API --> DASH : UI data
+API --> EMAIL : send email
+
+TELE --> ETL : telemetry -> processed
+MQTTP --> TELE : MQTT ingest
+SCHED --> ETL : schedule
+LIQUI --> API : DB migrations
+BUILD --> API : build/deploy
+
+note bottom: Submodules present: home-dashboard, rest-proxy, mqtt-proxy, home-api-service, home-commons, home-etl-service, home-scheduler-task, liquibase, home-category-api, RaspberryPi-Kubernetes, home-auth-service, email-service, graalvm-builder, home-search-service, iot-telemetry-service, iot-home-stack, iot-device
+@enduml

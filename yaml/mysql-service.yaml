@@ -4,13 +4,14 @@ metadata:
   name: mysql
   namespace: home-stack-db
 spec:
-  ports:
-    - port: 3306
-      nodePort: 32306
+  #clusterIP: None # Tish makes service accessible within the cluster, mostly from for other pods to access
   type: NodePort
+  ports:
+    - port: 3306 # This is the port on which MySQL will be exposed as service within the cluster
+      targetPort: 3306 # This is the port on which MySQL listens, if not specified, it defaults to port above
+      nodePort: 32306  # This is the port on which MySQL will be accessible from outside the cluster, if not specified, it will be randomly assigned by Kubernetes
   selector:
     app: mysql
-  #clusterIP: None
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -59,6 +60,10 @@ spec:
             path: /usr/share/zoneinfo/Asia/Kolkata
             type: File
 ---
+# This is Static provisioning
+# The PVC will claim this volume based on the matching spec - storageClassName, accessModes, requested storage, ...
+
+# For Dynamic provisioning, you would typically have a StorageClass defined and based on provisioner PV will be created dynamically, and the PVC would reference that StorageClass. No need to define PV.
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -75,6 +80,7 @@ spec:
   hostPath:
     path: "/home/alok/data/mysql"
 ---
+# For scenario multiple instances of the pod has to have individual storage, you can use StatefulSet with PersistentVolumeClaim templates (volumeClaimTemplates)
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

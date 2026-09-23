@@ -1,0 +1,39 @@
+@startuml
+title Home Stack — Architecture
+actor User
+actor "IoT Device" as Device
+
+node "MQTT Proxy" as MQTT
+node "REST Proxy / API Gateway" as REST
+
+cloud "Kubernetes (RaspberryPi)" as K8s
+
+User --> REST : HTTP/REST
+Device --> MQTT : MQTT
+
+REST --> "home-api-service" : API calls
+"home-api-service" --> "home-auth-service" : auth checks
+"home-api-service" --> "home-category-api" : category data
+"home-api-service" --> "home-search-service" : search queries
+"home-api-service" --> "home-dashboard" : notifications/UI
+
+MQTT --> "iot-telemetry-service" : telemetry ingest
+"iot-telemetry-service" --> "home-etl-service" : processed data
+"home-etl-service" --> "home-commons" : shared logic
+
+"home-scheduler-task" --> "home-etl-service" : scheduled runs
+"email-service" --> "home-api-service" : outbound email
+
+"rest-proxy" --> "home-api-service" : proxy requests
+"mqtt-proxy" --> "iot-telemetry-service" : MQTT bridge
+
+"liquibase" --> "home-api-service" : DB migrations
+"graalvm-builder" --> "home-api-service" : build images
+
+K8s --> "home-api-service"
+K8s --> "iot-telemetry-service"
+K8s --> "home-dashboard"
+
+note left of "home-api-service": Uses home-commons, auth, category, search
+note right of K8s: Deployment manifests in RaspberryPi-Kubernetes
+@enduml

@@ -275,6 +275,29 @@ kubectl apply -f yaml/home-email-service.yaml  --namespace=home-stack
 ```shell
 kubectl delete -f yaml/home-email-service.yaml  --namespace=home-stack
 ```
+---
+### Home Docs Service - Pod/Deployment/Service
+```shell
+kubectl apply --validate=true --dry-run=client -f yaml/home-docs-service.yaml 
+```
+```shell
+kubectl apply -f yaml/home-docs-service.yaml  --namespace=home-stack
+```
+```shell
+kubectl delete -f yaml/home-docs-service.yaml  --namespace=home-stack
+```
+```shell
+kubectl exec -it pod/home-docs-deployment-0 --namespace home-stack -- bash
+```
+```shell
+kubectl exec -it pod/home-docs-deployment-0 --namespace home-stack -- tail -f /opt/logs/application.log
+```
+```shell
+kubectl logs pod/home-docs-deployment-0 --namespace home-stack
+```
+```shell
+kubectl rollout restart statefulset.apps/home-docs-deployment -n home-stack
+```
 ### Home Auth Service - Pod/Deployment/Service
 ```shell
 kubectl apply --validate=true --dry-run=client -f yaml/home-auth-service.yaml 
@@ -560,6 +583,15 @@ kubectl version --output=json
 ```shell
 kubectl api-resources
 ```
+```shell
+kubectl api-resources --namespaced=true
+```
+```shell
+kubectl api-resources --namespaced=false
+```
+```shell
+kubectl api-versions
+```
 ### Get Node Details
 This gives details about nodes including images in local
 ```shell
@@ -632,6 +664,17 @@ kubectl explain --api-version="apiregistration.k8s.io/v1" APIService
 ```shell
 kubectl explain --api-version="apiextensions.k8s.io/v1" CustomResourceDefinition
 ```
+### Know if I can access a resource
+```shell
+kubectl auth can-i get pods --namespace home-stack
+```
+```shell
+kubectl auth can-i get pods --as admin --namespace home-stack
+```
+```shell
+kubectl auth can-i get pods --as alok --namespace home-stack
+```
+```shell
 ### List all Docker images in Microk8s cluster (within the cluster node)
 ```shell
 sudo microk8s ctr images ls

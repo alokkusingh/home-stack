@@ -25,17 +25,19 @@ spec:
             - name: home-git
               image: alpine/git:2.36.3
               imagePullPolicy: IfNotPresent
-              args:
-                - cd /Users/aloksingh/BankStatements; git config --global --add safe.directory /Users/aloksingh/BankStatements; git config --global user.email "alok.ku.singh@gmail.com"; git init; git remote remove origin; git remote add origin $GIT_URL; git add . ; git commit -m "from k8s pod"; git push --set-upstream origin main;
-              command:
-                - /bin/sh
-                - -c
               env:
                 - name: GIT_URL
                   valueFrom:
                     configMapKeyRef:
                       name: home-common-cofig
                       key: git-url
+              # Command is nothing but overriding ENTRY_POINT in the image (--entrypoint when run docker run)
+              command:
+                - /bin/sh
+                - -c
+              # args are passed to the ENTRY_POINT of the image, same as CMD in Dockerfile
+              args:
+                - cd /Users/aloksingh/BankStatements; git config --global --add safe.directory /Users/aloksingh/BankStatements; git config --global user.email "alok.ku.singh@gmail.com"; git init; git remote remove origin; git remote add origin $GIT_URL; git add . ; git commit -m "from k8s pod"; git push --set-upstream origin main;
               volumeMounts:
                 - name: stmt-volume
                   mountPath: /Users/aloksingh/BankStatements

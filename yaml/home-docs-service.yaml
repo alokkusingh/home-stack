@@ -1,82 +1,61 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-api-service
+  name: home-docs-service
   namespace: home-stack
 spec:
-  # Service will act as load balancer - selector is matching underling instance(s). There can be one or more Deployment(s) with the same selector label
   selector:
-    # XX-YYY
-    app: home-api
+    app: home-docs-service
   # Defining headless service
   #clusterIP: None
-  Type: ClusterIP # Default type is ClusterIP, which is used to expose the service on a cluster-internal IP.
   ports:
-    - port: 8081
-      targetPort: 8081
-      protocol: TCP
+    - protocol: TCP
+      port: 8081
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: home-api-deployment
-  labels:
-    # This should be same as Service spec:selector
-    # XX-YYY
-    app: home-api
+  name: home-docs-deployment
   namespace: home-stack
 spec:
-  # commenting the replicas as this will be controlled by HPA
-  #replicas: 1
-  strategy:
-    type: RollingUpdate
+  serviceName: home-docs-service
   selector:
     matchLabels:
-      app: home-api
+      app: home-docs-service
+  replicas: 1
   template:
     metadata:
       labels:
-        app: home-api
+        app: home-docs-service
         network/db-access: "true"
     spec:
-#      nodeSelector:
-#        kubernetes.io/hostname: jgte
+      nodeSelector:
+        kubernetes.io/hostname: khbr
       containers:
-        - name: home-api-container
-          image: alokkusingh/home-api-service:latest
+        - name: home-docs-container
+          image: alokkusingh/home-docs-service:latest
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
-              path: /home/api/actuator/health/liveness
+              path: /home/docs/actuator/health/liveness
               port: 8081
-            initialDelaySeconds: 5
+            initialDelaySeconds: 30
             timeoutSeconds: 5
-            periodSeconds: 10
-            failureThreshold: 5
+            periodSeconds: 15
+            failureThreshold: 10
           readinessProbe:
             httpGet:
-              path: /home/api/actuator/health/readiness
+              path: /home/docs/actuator/health/readiness
               port: 8081
-            initialDelaySeconds: 10
+            initialDelaySeconds: 30
             timeoutSeconds: 5
             periodSeconds: 30
             failureThreshold: 3
-          ports:
-            - containerPort: 8081
-          resources:
-            limits:
-              memory: 512Mi
-            requests:
-              cpu: 200m
-              memory: 256Mi
           env:
             # In Spring Boot, any property can be overridden by an environment variable of the same name,
             # with the characters changed to upper case, and the dots changed to underscores
             - name: SPRING_PROFILES_ACTIVE
-              valueFrom:
-                configMapKeyRef:
-                  name: home-api-cofig
-                  key: spring-profiles-active
+              value: prod
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
@@ -127,17 +106,32 @@ spec:
                 configMapKeyRef:
                   name: home-api-cofig
                   key: spring-datasource-hikari-maximum-pool-size
-            - name: IOT_SECURE_TRUSTSTORE-PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: home-api-cofig
-                  key: iot-secure-truststore-password
-            - name: IOT_SECURE_KEYSTORE-PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: home-api-cofig
-                  key: iot-secure-keystore-password
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: notes-volume
+              mountPath: /Users/aloksingh
+            - name: docs-volume
+              mountPath: /Users/aloksingh/git/home-docs
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
       volumes:
+        - name: notes-volume
+          hostPath:
+            # directory location on host
+            path: /home/alok/git/home-notes
+            # this field is optional
+            type: Directory
+        - name: docs-volume
+          hostPath:
+            # directory location on host
+            path: /home/alok/git/home-docs
+            # this field is optional
+            type: Directory
         - name: tz-config
           hostPath:
             path: /usr/share/zoneinfo/Asia/Kolkata
